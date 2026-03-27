@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MBRN · Digital Tools — Local-First Architecture</title>
+  <meta name="description" content="MBRN ist ein Portfolio präziser Digital-Tools. Local-First. Zero Tracking. Gebaut für Menschen die klare Entscheidungen treffen." />
+  <meta property="og:title" content="MBRN · Digital Tools" />
+  <meta property="og:description" content="High-Performance Tools. Local-First Architecture. Zero Tracking." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:#030014;color:#eaeaf4;font-family:'Space Mono',monospace;min-height:100vh;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    button{font-family:inherit;cursor:pointer}
+
+    :root{
+      --black:#030014;
+      --dark:#080820;
+      --card-bg:rgba(10,10,34,.78);
+      --card-border:rgba(110,70,190,.2);
+      --accent:#b388ff;
+      --accent-dim:rgba(179,136,255,.12);
+      --accent-glow:rgba(179,136,255,.24);
+      --purple-glow:rgba(157,80,187,.28);
+      --blue:#38bdf8;
+      --white:#eaeaf4;
+      --white-dim:rgba(234,234,244,.45);
+      --white-faint:rgba(234,234,244,.06);
+      --border:rgba(90,70,170,.22);
+      --green:#4fffb0;
+      --gold:#e0b854;
+      --gold-dim:rgba(224,184,84,.12);
+      --gold-border:rgba(224,184,84,.32);
+      --red:#ff6b6b;
+      --font-d:'Syne',sans-serif;
+      --font-m:'Space Mono',monospace;
+      --r:10px; --rl:16px;
+    }
+
+    /* ── BG ─── */
+    .bg-base{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 25% 40%,#0c0830 0%,#030014 65%)}
+    .bg-glow{position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px)}
+    .bg-glow-1{width:800px;height:800px;top:-300px;right:-250px;opacity:.28;background:radial-gradient(circle,rgba(157,80,187,.45) 0%,transparent 70%)}
+    .bg-glow-2{width:600px;height:600px;bottom:-200px;left:-200px;opacity:.22;background:radial-gradient(circle,rgba(56,189,248,.2) 0%,transparent 70%)}
+    .bg-glow-3{width:500px;height:500px;top:45%;left:50%;transform:translate(-50%,-50%);opacity:.08;background:radial-gradient(circle,rgba(179,136,255,.4) 0%,transparent 70%)}
+    .bg-grid{position:fixed;inset:0;pointer-events:none;z-index:0;
+      background-image:linear-gradient(rgba(100,70,200,.05) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(100,70,200,.05) 1px,transparent 1px);
+      background-size:52px 52px}
+
+    /* ── NAV ─── */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:50;height:54px;
+      display:flex;align-items:center;justify-content:space-between;padding:0 24px;
+      background:rgba(3,0,20,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .nav-brand{display:flex;align-items:center;gap:10px}
+    .nav-logo{font-size:18px;color:var(--accent);filter:drop-shadow(0 0 8px var(--accent-glow))}
+    .nav-name{font-family:var(--font-d);font-size:15px;font-weight:800;letter-spacing:.08em;color:var(--white)}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .nav-link{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--white-dim);
+      background:var(--white-faint);border:1px solid var(--border);
+      padding:6px 14px;border-radius:99px;transition:all .2s}
+    .nav-link:hover{color:var(--accent);border-color:var(--accent-glow)}
+    .nav-status{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.08em;
+      color:var(--green);opacity:.8}
+    .nav-status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);
+      box-shadow:0 0 6px var(--green);animation:blink 2.5s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+    /* ── HERO ─── */
+    .hero{position:relative;z-index:1;min-height:100vh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:80px 24px 60px}
+
+    .hero-system-id{display:inline-flex;align-items:center;gap:8px;
+      font-size:9px;letter-spacing:.25em;text-transform:uppercase;
+      color:var(--accent);opacity:.7;margin-bottom:28px;
+      background:var(--accent-dim);border:1px solid rgba(179,136,255,.22);
+      padding:6px 16px;border-radius:99px;
+      animation:fadeUp .7s ease both}
+    .hero-system-id-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);
+      box-shadow:0 0 6px var(--accent-glow);animation:blink 2s infinite}
+
+    .hero-title{font-family:var(--font-d);font-weight:800;
+      font-size:clamp(64px,16vw,120px);line-height:.85;letter-spacing:-.03em;
+      text-transform:uppercase;
+      background:linear-gradient(135deg,#fff 0%,var(--accent) 45%,var(--blue) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      filter:drop-shadow(0 0 40px rgba(179,136,255,.15));
+      animation:fadeUp .7s .06s ease both}
+
+    .hero-tagline{font-family:var(--font-d);font-size:clamp(13px,2.5vw,18px);font-weight:400;
+      color:var(--white-dim);letter-spacing:.04em;margin-top:10px;
+      animation:fadeUp .7s .12s ease both}
+
+    .hero-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);
+      margin:28px auto;animation:fadeUp .7s .18s ease both}
+
+    .hero-desc{max-width:560px;font-size:13px;letter-spacing:.05em;
+      color:var(--white-dim);line-height:1.85;
+      animation:fadeUp .7s .22s ease both}
+
+    .hero-specs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px;
+      animation:fadeUp .7s .28s ease both}
+    .hero-spec{font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--white-dim);opacity:.65;
+      background:rgba(255,255,255,.04);border:1px solid var(--border);
+      padding:5px 14px;border-radius:99px}
+
+    .hero-scroll{margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:7px;
+      animation:fadeUp .7s .36s ease both;opacity:.4}
+    .hero-scroll-text{font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+    .hero-scroll-arrow{font-size:16px;animation:bounce 2.2s ease-in-out infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+    /* ── METRICS BAR ─── */
+    .metrics{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 24px;
+      animation:fadeUp .7s .3s ease both}
+    .metrics-inner{display:grid;grid-template-columns:repeat(3,1fr);
+      background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--rl);overflow:hidden;backdrop-filter:blur(18px)}
+    .metric{padding:20px 16px;text-align:center;border-right:1px solid var(--card-border)}
+    .metric:last-child{border-right:none}
+    .metric-num{font-family:var(--font-d);font-size:26px;font-weight:800;color:var(--accent);line-height:1;
+      filter:drop-shadow(0 0 10px var(--accent-glow))}
+    .metric-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--white-dim);opacity:.5;margin-top:5px}
+
+    /* ── TOOLS SECTION ─── */
+    .section{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:80px 24px}
+    .section-header{text-align:center;margin-bottom:48px}
+    .section-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;
+      color:var(--accent);opacity:.7;margin-bottom:12px}
+    .section-title{font-family:var(--font-d);font-size:clamp(26px,5vw,38px);font-weight:800;
+      letter-spacing:-.01em}
+    .section-sub{font-size:12px;color:var(--white-dim);letter-spacing:.04em;
+      line-height:1.7;margin-top:10px;max-width:500px;margin-left:auto;margin-right:auto}
+
+    /* TOOL GRID */
+    .tools-grid{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:640px){.tools-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:900px){.tools-grid{grid-template-columns:repeat(3,1fr)}}
+
+    .tool-card{position:relative;background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--rl);padding:26px;display:flex;flex-direction:column;gap:14px;
+      backdrop-filter:blur(22px);overflow:hidden;
+      transition:transform .25s cubic-bezier(.34,1.2,.64,1),
+                 border-color .25s,box-shadow .25s;
+      box-shadow:0 4px 24px rgba(157,80,187,.05),inset 0 1px 0 rgba(255,255,255,.03)}
+    .tool-card::after{content:'';position:absolute;inset:0;opacity:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(179,136,255,.07) 0%,transparent 60%);
+      transition:opacity .3s;pointer-events:none}
+    .tool-card:hover{transform:translateY(-5px);border-color:rgba(179,136,255,.38);
+      box-shadow:0 16px 48px rgba(157,80,187,.18),inset 0 1px 0 rgba(255,255,255,.05)}
+    .tool-card:hover::after{opacity:1}
+    .tool-card--featured{grid-column:1/-1}
+    @media(min-width:900px){.tool-card--featured{grid-column:span 2}}
+
+    /* Card badges */
+    .card-badge-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .card-category{display:inline-flex;align-items:center;gap:5px;
+      font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+      padding:3px 10px;border-radius:99px;border:1px solid}
+    .card-category--finance{color:var(--green);border-color:rgba(79,255,176,.3);background:rgba(79,255,176,.06)}
+    .card-category--numerology{color:var(--gold);border-color:var(--gold-border);background:var(--gold-dim)}
+    .card-category--discipline{color:var(--accent);border-color:rgba(179,136,255,.3);background:var(--accent-dim)}
+    .card-category-dot{width:4px;height:4px;border-radius:50%;background:currentColor;
+      box-shadow:0 0 5px currentColor;animation:blink 2.5s infinite}
+
+    .card-tier{font-size:8px;letter-spacing:.16em;text-transform:uppercase;
+      padding:3px 9px;border-radius:99px;border:1px solid;font-weight:700}
+    .card-tier--public{color:rgba(234,234,244,.4);border-color:rgba(234,234,244,.12);
+      background:rgba(255,255,255,.04)}
+    .card-tier--core{color:var(--accent);border-color:rgba(179,136,255,.25);background:var(--accent-dim)}
+    .card-tier--experimental{color:var(--gold);border-color:var(--gold-border);background:var(--gold-dim)}
+    .card-tier--premium{color:var(--green);border-color:rgba(79,255,176,.25);background:rgba(79,255,176,.06)}
+
+    .tool-icon{font-size:32px;line-height:1}
+    .tool-name{font-family:var(--font-d);font-size:20px;font-weight:800;letter-spacing:-.01em}
+    .tool-desc{font-size:12px;color:var(--white-dim);letter-spacing:.04em;line-height:1.7;flex:1}
+
+    .tool-specs{display:flex;flex-direction:column;gap:4px}
+    .tool-spec{font-size:10px;color:var(--white-dim);letter-spacing:.04em;opacity:.65;
+      display:flex;align-items:center;gap:7px}
+    .tool-spec::before{content:'·';color:var(--accent);flex-shrink:0}
+
+    .tool-footer{display:flex;align-items:center;justify-content:space-between;
+      padding-top:14px;border-top:1px solid var(--border)}
+    .btn-access{display:inline-flex;align-items:center;gap:7px;
+      background:var(--accent-dim);border:1px solid rgba(179,136,255,.28);
+      color:var(--accent);padding:9px 16px;border-radius:99px;
+      font-size:11px;font-weight:700;letter-spacing:.08em;
+      transition:all .2s}
+    .btn-access:hover{background:rgba(179,136,255,.22);box-shadow:0 0 18px var(--accent-glow)}
+    .btn-access-arrow{transition:transform .2s}
+    .btn-access:hover .btn-access-arrow{transform:translateX(3px)}
+    .tool-live{display:flex;align-items:center;gap:5px;
+      font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+    .live-dot{width:5px;height:5px;border-radius:50%;animation:blink 2.5s infinite}
+    .live-dot--on{background:var(--green);box-shadow:0 0 5px var(--green)}
+    .live-dot--beta{background:var(--gold);box-shadow:0 0 5px var(--gold)}
+    .live-label--on{color:var(--green);opacity:.8}
+    .live-label--beta{color:var(--gold);opacity:.8}
+
+    /* ── ARCHITECTURE SECTION ─── */
+    .arch{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 24px 80px}
+    .arch-card{background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--rl);backdrop-filter:blur(22px);overflow:hidden}
+    .arch-header{padding:32px 32px 24px;
+      background:radial-gradient(ellipse at 50% 0%,rgba(157,80,187,.1) 0%,transparent 60%);
+      border-bottom:1px solid var(--border)}
+    .arch-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;
+      color:var(--accent);opacity:.7;margin-bottom:12px}
+    .arch-title{font-family:var(--font-d);font-size:clamp(20px,3.5vw,28px);font-weight:800;
+      letter-spacing:-.01em;margin-bottom:10px}
+    .arch-desc{font-size:12px;color:var(--white-dim);letter-spacing:.04em;line-height:1.8;max-width:540px}
+    .arch-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:0;
+      border-top:1px solid var(--border)}
+    @media(min-width:640px){.arch-specs{grid-template-columns:repeat(4,1fr)}}
+    .arch-spec{padding:20px;text-align:center;border-right:1px solid var(--border)}
+    .arch-spec:last-child{border-right:none}
+    @media(max-width:639px){
+      .arch-spec:nth-child(2){border-right:none}
+      .arch-spec:nth-child(3){border-top:1px solid var(--border)}
+      .arch-spec:nth-child(4){border-top:1px solid var(--border);border-right:none}
+    }
+    .arch-spec-icon{font-size:20px;margin-bottom:8px}
+    .arch-spec-title{font-family:var(--font-d);font-size:12px;font-weight:700;
+      color:var(--white);margin-bottom:4px}
+    .arch-spec-text{font-size:10px;color:var(--white-dim);opacity:.55;
+      letter-spacing:.04em;line-height:1.5}
+
+    /* ── ROADMAP ─── */
+    .roadmap{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:0 24px 80px}
+    .roadmap-track{display:flex;flex-direction:column;gap:0;position:relative}
+    .roadmap-track::before{content:'';position:absolute;left:17px;top:18px;bottom:18px;
+      width:1px;background:linear-gradient(180deg,var(--accent-glow),rgba(179,136,255,.04))}
+    .roadmap-item{display:flex;gap:18px;align-items:flex-start;padding-bottom:24px}
+    .roadmap-node{width:34px;height:34px;border-radius:50%;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;font-size:12px;
+      position:relative;z-index:1;border:1px solid}
+    .roadmap-node--done{background:var(--accent-dim);border-color:rgba(179,136,255,.4);color:var(--accent)}
+    .roadmap-node--next{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold)}
+    .roadmap-node--future{background:rgba(255,255,255,.03);border-color:var(--border);color:var(--white-dim)}
+    .roadmap-body{padding-top:5px;flex:1}
+    .roadmap-status{display:inline-block;font-size:8px;letter-spacing:.14em;text-transform:uppercase;
+      padding:2px 8px;border-radius:99px;border:1px solid;margin-bottom:5px}
+    .roadmap-status--done{color:var(--green);border-color:rgba(79,255,176,.2);background:rgba(79,255,176,.06)}
+    .roadmap-status--next{color:var(--gold);border-color:var(--gold-border);background:var(--gold-dim)}
+    .roadmap-status--future{color:var(--white-dim);opacity:.5;border-color:var(--border);background:rgba(255,255,255,.03)}
+    .roadmap-name{font-family:var(--font-d);font-size:14px;font-weight:700;margin-bottom:3px}
+    .roadmap-desc{font-size:11px;color:var(--white-dim);letter-spacing:.04em;line-height:1.6;opacity:.65}
+
+    /* ── SUPPORT ─── */
+    .support{position:relative;z-index:1;text-align:center;padding:0 24px 80px}
+    .support-inner{max-width:520px;margin:0 auto;
+      background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--rl);padding:40px;backdrop-filter:blur(22px);
+      background:radial-gradient(ellipse at 50% 0%,rgba(157,80,187,.1) 0%,transparent 60%),var(--card-bg)}
+    .support-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;
+      color:var(--accent);opacity:.7;margin-bottom:14px}
+    .support-title{font-family:var(--font-d);font-size:clamp(20px,4vw,30px);font-weight:800;
+      letter-spacing:-.01em;margin-bottom:12px}
+    .support-desc{font-size:12px;color:var(--white-dim);letter-spacing:.04em;
+      line-height:1.75;margin-bottom:24px}
+    .btn-kofi{display:inline-flex;align-items:center;gap:9px;
+      background:transparent;border:1px solid rgba(255,94,91,.35);color:#ff5e5b;
+      padding:13px 26px;border-radius:99px;font-size:13px;font-weight:700;
+      letter-spacing:.08em;transition:all .2s}
+    .btn-kofi:hover{background:rgba(255,94,91,.1);box-shadow:0 0 24px rgba(255,94,91,.2)}
+
+    /* ── FOOTER ─── */
+    .footer{position:relative;z-index:1;padding:24px;border-top:1px solid var(--border)}
+    .footer-inner{max-width:700px;margin:0 auto;
+      display:flex;flex-direction:column;align-items:center;gap:12px}
+    .footer-brand{display:flex;align-items:center;gap:8px}
+    .footer-logo{font-size:16px;color:var(--accent);filter:drop-shadow(0 0 6px var(--accent-glow))}
+    .footer-name{font-family:var(--font-d);font-size:12px;font-weight:700;letter-spacing:.08em}
+    .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:5px}
+    .footer-link{font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+      color:rgba(234,234,244,.22);padding:4px 10px;border-radius:99px;
+      border:1px solid transparent;transition:all .2s}
+    .footer-link:hover{color:var(--white-dim);border-color:var(--border)}
+    .footer-copy{font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+      color:rgba(234,234,244,.18)}
+
+    /* ── ANIMS ─── */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+    .reveal{opacity:0;transform:translateY(22px);
+      transition:opacity .55s ease,transform .55s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    @media(max-width:480px){
+      .section{padding:60px 16px}
+      .arch,.roadmap,.support,.metrics{padding-left:16px;padding-right:16px}
+      .arch-header{padding:24px 20px 20px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-base"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+  <div class="bg-grid"></div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <span class="nav-logo">✦</span>
+      <span class="nav-name">MBRN</span>
+    </div>
+    <div class="nav-right">
+      <div class="nav-status">
+        <span class="nav-status-dot"></span>
+        <span>3 Tools Live</span>
+      </div>
+      <a class="nav-link" href="https://ko-fi.com/flasembrn" target="_blank" rel="noopener">Support</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-system-id">
+      <span class="hero-system-id-dot"></span>
+      System · Flase · MBRN Architecture
+    </div>
+    <h1 class="hero-title">MBRN<br/>Tools</h1>
+    <p class="hero-tagline">High-Performance Digital Assets. Built for Clarity.</p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      Präzise Tools für reale Entscheidungen. Jedes Produkt folgt einer klaren Architektur:
+      Local-First Processing, Zero-Tracking-Design und ein Fokus auf das Eine,
+      das wirklich zählt — das Ergebnis.
+    </p>
+    <div class="hero-specs">
+      <span class="hero-spec">Local-First Architecture</span>
+      <span class="hero-spec">Zero Tracking</span>
+      <span class="hero-spec">No Backend Required</span>
+      <span class="hero-spec">Open Access Core</span>
+    </div>
+    <div class="hero-scroll">
+      <span class="hero-scroll-text">System erkunden</span>
+      <span class="hero-scroll-arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <div class="metrics reveal">
+    <div class="metrics-inner">
+      <div class="metric">
+        <div class="metric-num" id="m-tools">3</div>
+        <div class="metric-label">Assets Deployed</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">0 KB</div>
+        <div class="metric-label">Data Transmitted</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">∞</div>
+        <div class="metric-label">Access Duration</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <section class="section" id="tools">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">✦ Das Asset-Portfolio</p>
+      <h2 class="section-title">Deployed Systems</h2>
+      <p class="section-sub">Jedes Tool ist ein eigenständiges, browserbasiertes System. Kein Account, kein Server-State — alles lokal, alles sofort.</p>
+    </div>
+
+    <div class="tools-grid">
+
+      <!-- FINANZ-RECHNER -->
+      <a class="tool-card tool-card--featured reveal" href="https://flase-mbrn.github.io/FinanzRechner/" target="_blank">
+        <div class="card-badge-row">
+          <div class="card-category card-category--finance">
+            <span class="card-category-dot"></span>
+            Financial Intelligence
+          </div>
+          <span class="card-tier card-tier--core">PUBLIC CORE</span>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap">
+          <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+            <span class="tool-icon">💸</span>
+            <h3 class="tool-name">Investitions-Projektion</h3>
+            <p class="tool-desc">
+              Was wärst du heute wert — wenn du früher angefangen hättest?
+              Echtzeit-Kursintegration, vier Anlagemodelle, steuerbereinigter Output.
+              Das Ergebnis triggert eine Entscheidung.
+            </p>
+          </div>
+          <div class="tool-specs" style="min-width:190px">
+            <div class="tool-spec">Live BTC & ETH via CoinGecko API</div>
+            <div class="tool-spec">S&P 500 · World ETF · BTC · Sparkonto</div>
+            <div class="tool-spec">Inflation individuell konfigurierbar</div>
+            <div class="tool-spec">Abgeltungssteuer-Kalkulation (DE)</div>
+            <div class="tool-spec">Jahres-Matrix aufklappbar</div>
+            <div class="tool-spec">Reverse-Engine: Zielbetrag → Datum</div>
+            <div class="tool-spec">Export 1:1 Post & 9:16 Story</div>
+          </div>
+        </div>
+
+        <div class="tool-footer">
+          <div class="btn-access">
+            System öffnen <span class="btn-access-arrow">→</span>
+          </div>
+          <div class="tool-live">
+            <span class="live-dot live-dot--on"></span>
+            <span class="live-label--on">Operational</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- NUMEROLOGIE -->
+      <a class="tool-card reveal" href="https://flase-mbrn.github.io/NumerologieRechner/" target="_blank">
+        <div class="card-badge-row">
+          <div class="card-category card-category--numerology">
+            <span class="card-category-dot"></span>
+            Pattern Analysis
+          </div>
+          <span class="card-tier card-tier--experimental">EXPERIMENTAL</span>
+        </div>
+        <span class="tool-icon">✦</span>
+        <h3 class="tool-name">Numerologie-System</h3>
+        <p class="tool-desc">
+          36 Kennzahlen. Lo-Shu Psychomatrix. Pythagoreisches System.
+          Dein vollständiger Lebens-Archetypus — ohne Registrierung, ohne Datenweitergabe.
+        </p>
+        <div class="tool-specs">
+          <div class="tool-spec">36 numerologische Parameter</div>
+          <div class="tool-spec">Lo-Shu Psychomatrix Analyse</div>
+          <div class="tool-spec">Kompatibilitäts-Engine</div>
+          <div class="tool-spec">Shareable Output-Card</div>
+        </div>
+        <div class="tool-footer">
+          <div class="btn-access">
+            System öffnen <span class="btn-access-arrow">→</span>
+          </div>
+          <div class="tool-live">
+            <span class="live-dot live-dot--beta"></span>
+            <span class="live-label--beta">Beta</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- DISZIPLIN TRACKER -->
+      <a class="tool-card reveal" href="https://flase-mbrn.github.io/discipline-tracker/" target="_blank">
+        <div class="card-badge-row">
+          <div class="card-category card-category--discipline">
+            <span class="card-category-dot"></span>
+            Behavioral Systems
+          </div>
+          <span class="card-tier card-tier--premium">FREEMIUM</span>
+        </div>
+        <span class="tool-icon">🎯</span>
+        <h3 class="tool-name">30-Tage Disziplin-System</h3>
+        <p class="tool-desc">
+          Habit-Tracking ohne Overhead. Eine Gewohnheit, 30 Tage,
+          täglicher Commit. Streak-Engine, Cross-Device Sync via URL-State.
+        </p>
+        <div class="tool-specs">
+          <div class="tool-spec">Streak-Engine mit Best-Series Tracking</div>
+          <div class="tool-spec">URL-State Snapshot (kein Account nötig)</div>
+          <div class="tool-spec">Output-Card 1:1 & 9:16 (Canvas)</div>
+          <div class="tool-spec">Premium: 3 parallele Challenge-Instanzen</div>
+        </div>
+        <div class="tool-footer">
+          <div class="btn-access">
+            System öffnen <span class="btn-access-arrow">→</span>
+          </div>
+          <div class="tool-live">
+            <span class="live-dot live-dot--on"></span>
+            <span class="live-label--on">Operational</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section class="arch">
+    <div class="arch-card reveal">
+      <div class="arch-header">
+        <p class="arch-eyebrow">✦ Design-Entscheidungen</p>
+        <h2 class="arch-title">Local-First Architecture</h2>
+        <p class="arch-desc">
+          Alle MBRN-Systeme folgen demselben Architekturprinzip: Berechnungen, State und Outputs
+          entstehen ausschließlich im Browser des Nutzers. Kein Backend, keine Datenbank,
+          keine Abhängigkeit von externen Servern — außer für Echtzeit-Marktdaten.
+          Das ist keine Einschränkung. Es ist eine bewusste Entscheidung.
+        </p>
+      </div>
+      <div class="arch-specs">
+        <div class="arch-spec">
+          <div class="arch-spec-icon">🔒</div>
+          <div class="arch-spec-title">Zero Data Egress</div>
+          <div class="arch-spec-text">Keine personenbezogenen Daten verlassen den Browser</div>
+        </div>
+        <div class="arch-spec">
+          <div class="arch-spec-icon">⚡</div>
+          <div class="arch-spec-title">Instant Execution</div>
+          <div class="arch-spec-text">Kein Server-Roundtrip — alle Berechnungen in Echtzeit</div>
+        </div>
+        <div class="arch-spec">
+          <div class="arch-spec-icon">∞</div>
+          <div class="arch-spec-title">Persistent Access</div>
+          <div class="arch-spec-text">Kein Account, kein Ablaufdatum, kein Paywall</div>
+        </div>
+        <div class="arch-spec">
+          <div class="arch-spec-icon">◈</div>
+          <div class="arch-spec-title">Portable State</div>
+          <div class="arch-spec-text">URL-kodierter State für Cross-Device ohne Login</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="roadmap">
+    <div class="section-header reveal" style="text-align:center;margin-bottom:36px">
+      <p class="section-eyebrow">✦ Entwicklungs-Pipeline</p>
+      <h2 class="section-title">Roadmap</h2>
+    </div>
+    <div class="roadmap-track">
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-node roadmap-node--done">✓</div>
+        <div class="roadmap-body">
+          <span class="roadmap-status roadmap-status--done">Deployed</span>
+          <div class="roadmap-name">Disziplin Challenge System</div>
+          <div class="roadmap-desc">Habit-Tracker mit Streak-Engine, URL-Snapshot-Sync, Canvas-Export und Premium-Tier.</div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-node roadmap-node--done">✓</div>
+        <div class="roadmap-body">
+          <span class="roadmap-status roadmap-status--done">Deployed</span>
+          <div class="roadmap-name">Investitions-Projektion Engine</div>
+          <div class="roadmap-desc">Live-Kurs-Integration, 4 Szenarien, Steuermodul, Jahres-Matrix, Reverse-Engine, Dual-Format Export.</div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-node roadmap-node--done">✓</div>
+        <div class="roadmap-body">
+          <span class="roadmap-status roadmap-status--done">Deployed · Beta</span>
+          <div class="roadmap-name">Numerologie-Analyse-System</div>
+          <div class="roadmap-desc">36 Kennzahlen, Lo-Shu Psychomatrix, Kompatibilitäts-Engine, Output-Card Generator.</div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-node roadmap-node--next">→</div>
+        <div class="roadmap-body">
+          <span class="roadmap-status roadmap-status--next">In Entwicklung</span>
+          <div class="roadmap-name">Bewerbungs-Generator (KI-gestützt)</div>
+          <div class="roadmap-desc">ATS-optimiertes Anschreiben aus Stellenausschreibung + Profil. Keyword-Analyse, strukturierter Output.</div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-node roadmap-node--future">◈</div>
+        <div class="roadmap-body">
+          <span class="roadmap-status roadmap-status--future">Geplant</span>
+          <div class="roadmap-name">Freelance-Angebots-System</div>
+          <div class="roadmap-desc">Professionelles Angebots-PDF aus Eingaben. Stundensatz, Scope, Timeline — direkter Download.</div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-node roadmap-node--future">◈</div>
+        <div class="roadmap-body">
+          <span class="roadmap-status roadmap-status--future">Geplant</span>
+          <div class="roadmap-name">Immobilien-Rendite-Engine</div>
+          <div class="roadmap-desc">Mietrendite, Kaufnebenkosten-Kalkulator, Finanzierungsvergleich — spezialisiert auf den deutschen Markt.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="support">
+    <div class="support-inner reveal">
+      <p class="support-eyebrow">✦ Das System am Laufen halten</p>
+      <h2 class="support-title">Alle Tools bleiben<br/>dauerhaft zugänglich.</h2>
+      <p class="support-desc">
+        MBRN-Tools werden ohne Werbung, ohne Tracking und ohne Bezahlschranken betrieben.
+        Wer das unterstützen möchte — freiwillig, ohne Verpflichtung.
+      </p>
+      <a class="btn-kofi" href="https://ko-fi.com/flasembrn" target="_blank" rel="noopener">
+        ☕ Ko-fi
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">✦</span>
+        <span class="footer-name">MBRN · Flase</span>
+      </div>
+      <div class="footer-links">
+        <a class="footer-link" href="https://flase-mbrn.github.io/FinanzRechner/" target="_blank">Finanz-System</a>
+        <a class="footer-link" href="https://numerology-calculator.neocities.org/" target="_blank">Numerologie</a>
+        <a class="footer-link" href="https://flase-mbrn.github.io/discipline-tracker/" target="_blank">Disziplin-System</a>
+        <a class="footer-link" href="https://ko-fi.com/flasembrn" target="_blank" rel="noopener">Ko-fi</a>
+        <a class="footer-link" href="https://flase.gumroad.com/l/mxjflg" target="_blank" rel="noopener">Gumroad</a>
+      </div>
+      <p class="footer-copy">MBRN · Local-First · Zero Tracking · 2025 · Flase</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll Reveal
+    (function(){
+      var els=document.querySelectorAll('.reveal');
+      var obs=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+        });
+      },{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+      els.forEach(function(el){obs.observe(el);});
+    })();
+
+    // Staggered cards
+    (function(){
+      document.querySelectorAll('.tool-card').forEach(function(c,i){
+        c.style.transitionDelay=(i*.09)+'s';
+      });
+    })();
+
+    // Counter animation
+    (function(){
+      var el=document.getElementById('m-tools');
+      if(!el)return;
+      var done=false;
+      new IntersectionObserver(function(entries){
+        if(entries[0].isIntersecting&&!done){
+          done=true;var n=0;
+          var t=setInterval(function(){n++;el.textContent=n;if(n>=3)clearInterval(t);},220);
+        }
+      }).observe(el);
+    })();
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# Numerologie Rechner v5.0 — Build Guide
+# Numerologie Rechner v7.0 — Build Guide
 
 ## Schnellstart
 
@@ -30,7 +30,7 @@ terser numerology.js -o numerology.min.js -c -m --source-map
 terser numerology.js -o numerology.min.js -c -m
 
 # Nur Kompression, keine Mangle
-terser numerology.js -o numerology.min.js -c -m reserved=['APP_VERSION']
+terser numerology.js -o numerology.min.js -c -m reserved=['const CACHE_VERSION = \'v7.0.0\';']
 ```
 
 Optionen:
@@ -70,7 +70,7 @@ Da GitHub Pages keine Build-Pipeline hat:
 2. Minifizierte Dateien committen:
    ```bash
    git add numerology.min.js style.min.css
-   git commit -m "v5.0: Add minified assets"
+   git commit -m "v7.0: Add minified assets"
    git push
    ```
 3. Für Development: Unminifizierte Versionen behalten

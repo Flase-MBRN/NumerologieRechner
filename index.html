@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Numerologie Rechner · Was sagt dein Name wirklich über dich aus?</title>
-  <meta name="description" content="Entdecke deinen Lebens-Archetypus: Lebenszahl, Seelenzahl, Karma und 33 weitere Kennzahlen — kostenlos, lokal, in Sekunden.">
+  <meta name="description" content="Berechne deine 36 persönlichen Zahlen: Lebenszahl, Seelenzahl, Karma — kostenlos, lokal in deinem Browser, ohne Datenspeicherung.">
   <link rel="canonical" href="https://flase-mbrn.github.io/NumerologieRechner/">
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://flase-mbrn.github.io/NumerologieRechner/">
@@ -16,7 +16,7 @@
   <meta property="og:locale"      content="de_DE">
   <meta name="twitter:card"       content="summary_large_image">
   <meta name="twitter:title"      content="Was sagt dein Name wirklich über dich aus?">
-  <meta name="twitter:description" content="Lebenszahl, Archetypus, Seelenzahl — kostenlos berechnen.">
+  <meta name="twitter:description" content="Berechne deine 36 persönlichen Zahlen kostenlos. Lokal im Browser, ohne Datenspeicherung.">
   <meta property="og:image:alt" content="Numerologie Rechner - Dein persönliches Zahlenprofil mit Lebenszahl, Seelenzahl und Archetyp">
   <meta name="twitter:image:alt" content="Numerologie Rechner - Dein persönliches Zahlenprofil">
   <link rel="manifest" href="manifest.json">
@@ -26,7 +26,7 @@
   <meta name="apple-mobile-web-app-title" content="Numerologie">
   <meta name="format-detection" content="telephone=no">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="shortcut icon" href="icon-192.png">
+  <link rel="icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -45,6 +45,8 @@
   </script>
 </head>
 <body>
+  <!-- Skip-Link für Accessibility -->
+  <a href="#main" class="skip-link">Zum Hauptinhalt springen</a>
 
   <!-- iOS Install Banner -->
   <div id="iosInstallBanner" class="ios-install-banner" hidden>
@@ -78,7 +80,7 @@
         <span class="brand-mark">
           <span class="brand-star" aria-hidden="true">✦</span>
           <span class="brand-name">Numerologie</span>
-          <span class="brand-version">v6.0</span>
+          <span class="brand-version">v7.0</span>
         </span>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Light Mode">☀</button>
       </div>
@@ -87,32 +89,54 @@
     <!-- HERO -->
     <div class="hero">
       <div class="hero-inner">
-        <p class="hero-eyebrow">✦ Pythagoreisches System · 36 Kennzahlen</p>
+        <!-- System-ID Badge wie MBRN -->
+        <div class="hero-system-badge">
+          <span class="system-badge-dot" aria-hidden="true"></span>
+          <span class="system-badge-text">System · Numerologie · v7.0</span>
+        </div>
+
         <h1 class="hero-headline">
-          Was sagt dein Name<br>
-          <em class="hero-hl">wirklich</em> über dich aus?
+          Deine Zahlen.<br>
+          <em class="hero-hl">Dein Archetypus.</em>
         </h1>
-        <p class="hero-subline">
-          Entdecke deinen <strong>Lebens-Archetypus</strong> — kostenlos, lokal, in Sekunden.
+
+        <p class="hero-tagline">
+          36 numerologische Kennzahlen. Pythagoreisches System. Lokale Berechnung.
         </p>
-        <div class="hero-trust" role="list">
-          <span role="listitem"><span aria-hidden="true">✓</span> Keine Datenspeicherung</span>
-          <span role="listitem"><span aria-hidden="true">✓</span> Lokal berechnet</span>
-          <span role="listitem"><span aria-hidden="true">✓</span> Kostenlos</span>
+
+        <div class="hero-divider" aria-hidden="true"></div>
+
+        <p class="hero-desc">
+          Entdecke deinen <strong>Lebens-Archetypus</strong> — in Sekunden, direkt in deinem Browser.
+          Keine Registrierung. Keine Datenspeicherung. Kein Backend.
+        </p>
+
+        <!-- Spec-Tags wie MBRN -->
+        <div class="hero-specs">
+          <span class="hero-spec">🔒 Zero Data Egress</span>
+          <span class="hero-spec">⚡ Instant Execution</span>
+          <span class="hero-spec">◈ 36 Parameter</span>
+          <span class="hero-spec">✦ Open Access</span>
         </div>
-        <div class="social-proof">
-          <div class="proof-stats">
-            <span class="proof-stat"><strong>36</strong> Kennzahlen</span>
-            <span class="proof-stat"><strong>Pythagoreisch</strong> System</span>
-          </div>
-          <p class="proof-quote">Berechne deine persönlichen Zahlen — lokal in deinem Browser.</p>
-        </div>
+
+        <!-- Privacy-Micro-Note -->
+        <p class="hero-privacy-note">
+          <span aria-hidden="true">🔒</span> Deine Daten bleiben auf deinem Gerät. Keine Cloud, kein Login, keine Tracking.
+        </p>
         <button class="hero-info-btn" id="heroInfoBtn" type="button" aria-expanded="false">
-          Was ist Numerologie? <span class="hero-info-caret" aria-hidden="true">↓</span>
+          <span class="info-btn-icon" aria-hidden="true">◈</span>
+          <span class="info-btn-text">System-Details</span>
+          <span class="hero-info-caret" aria-hidden="true">↓</span>
         </button>
         <div class="hero-info-body" id="heroInfoBody" hidden>
-          <p><strong>Numerologie</strong> verbindet Zahlen mit Lebensereignissen. Jeder Buchstabe deines Namens ergibt eine Zahl.</p>
-          <p>Dieses Tool nutzt <strong>pythagoreisches System</strong>, <strong>Y-Vokal-Regel</strong>, <strong>Komponenten-Methode</strong> und <strong>Lo-Shu Psychomatrix</strong>.</p>
+          <p><strong>Numerologie</strong> verbindet Zahlen mit Lebensmustern. Jeder Buchstabe deines Namens trägt eine Schwingung.</p>
+          <p>Dieses System nutzt: <strong>Pythagoreisches Zahlensystem</strong> · <strong>Y-Vokal-Regel</strong> · <strong>Komponenten-Methode</strong> · <strong>Lo-Shu Psychomatrix</strong></p>
+        </div>
+
+        <!-- Scroll-Indicator wie MBRN -->
+        <div class="hero-scroll" aria-hidden="true">
+          <span class="hero-scroll-text">System starten</span>
+          <span class="hero-scroll-arrow">↓</span>
         </div>
       </div>
     </div>
@@ -121,9 +145,25 @@
   <main class="content" id="main" role="main">
     <div class="container">
 
-      <!-- EINGABE -->
+        <!-- Letzte Berechnungen (wird per JS befüllt) -->
+        <div class="history-bar" id="historyBar" hidden>
+          <span class="history-label">Zuletzt berechnet:</span>
+          <div class="history-items" id="historyItems"></div>
+          <button class="history-clear" id="historyClear" type="button" aria-label="Verlauf löschen">✕</button>
+        </div>
       <section class="card form-card" aria-labelledby="form-title">
-        <h2 id="form-title" class="card-title">Deine Daten</h2>
+        <!-- MBRN-Style Card Header mit Category und Tier -->
+        <div class="card-header-row">
+          <div class="card-category card-category--core">
+            <span class="card-category-dot" aria-hidden="true"></span>
+            <span>Pattern Analysis</span>
+          </div>
+          <span class="card-tier card-tier--experimental">EXPERIMENTAL</span>
+        </div>
+
+        <h2 id="form-title" class="card-title">Numerologie-System</h2>
+        <p class="card-subtitle">Gib deine Daten ein. Das System berechnet 36 numerologische Parameter in Echtzeit.</p>
+
         <form id="numerologyForm" novalidate autocomplete="on">
           <fieldset class="form-fieldset">
             <legend class="sr-only">Numerologie Eingabefelder</legend>
@@ -142,12 +182,21 @@
             </div>
             <div class="button-row">
               <button type="submit" id="calcBtn" class="btn btn--primary btn--calc" aria-controls="resultsRegion">
-                <span class="btn-spinner-wrap" aria-hidden="true">✦</span>Jetzt berechnen
+                <span class="btn-spinner-wrap" aria-hidden="true">✦</span>System starten
               </button>
+              <button type="button" id="exampleBtn" class="btn btn--ghost" aria-label="Beispieldaten einfügen">Beispiel</button>
               <button type="reset" id="resetBtn" class="btn btn--secondary">Zurücksetzen</button>
             </div>
           </fieldset>
         </form>
+
+        <!-- System-Specs wie MBRN -->
+        <div class="card-specs">
+          <div class="card-spec">36 numerologische Parameter</div>
+          <div class="card-spec">Lo-Shu Psychomatrix</div>
+          <div class="card-spec">Kompatibilitäts-Engine</div>
+          <div class="card-spec">Shareable Output-Card</div>
+        </div>
       </section>
 
       <!-- ERGEBNISSE -->
@@ -162,7 +211,8 @@
         <!-- Leer-Zustand -->
         <div class="results-empty" id="resultsEmpty">
           <div class="results-empty-icon" aria-hidden="true">✦</div>
-          <p class="results-empty-text">Gib deinen Namen und Geburtstag ein<br>und entdecke deinen Archetypus.</p>
+          <p class="results-empty-text"><strong>Gib deinen Namen und Geburtstag ein</strong><br>und entdecke deine 36 persönlichen Zahlen.</p>
+          <p class="results-empty-hint" style="font-size: 0.7rem; color: var(--text-dim); margin-top: 8px;">🔒 Daten bleiben auf deinem Gerät</p>
         </div>
 
         <div id="resultsAnchor" aria-hidden="true"></div>
@@ -364,6 +414,43 @@
           <button class="btn btn--cta" id="ctaBtnCompare" type="button">◈ Kompatibilität prüfen</button>
         </div>
       </div>
+    </div>
+
+    <!-- ARCHITEKTUR SECTION (MBRN-Style) -->
+    <div class="container container--full" style="margin-top: 40px;">
+      <section class="arch-card" aria-labelledby="arch-title">
+        <div class="arch-header">
+          <p class="arch-eyebrow">✦ Design-Entscheidungen</p>
+          <h2 id="arch-title" class="arch-title">Local-First Architecture</h2>
+          <p class="arch-desc">
+            Dieses System folgt dem MBRN-Architekturprinzip: Alle Berechnungen, Daten und Outputs
+            entstehen ausschließlich in deinem Browser. Kein Backend, keine Datenbank,
+            keine Abhängigkeit von externen Servern. Das ist keine Einschränkung. Es ist eine bewusste Entscheidung für deine Privatsphäre.
+          </p>
+        </div>
+        <div class="arch-specs">
+          <div class="arch-spec">
+            <div class="arch-spec-icon">🔒</div>
+            <div class="arch-spec-title">Zero Data Egress</div>
+            <div class="arch-spec-text">Keine personenbezogenen Daten verlassen den Browser</div>
+          </div>
+          <div class="arch-spec">
+            <div class="arch-spec-icon">⚡</div>
+            <div class="arch-spec-title">Instant Execution</div>
+            <div class="arch-spec-text">Kein Server-Roundtrip — alle Berechnungen in Echtzeit</div>
+          </div>
+          <div class="arch-spec">
+            <div class="arch-spec-icon">∞</div>
+            <div class="arch-spec-title">Persistent Access</div>
+            <div class="arch-spec-text">Kein Account, kein Ablaufdatum, kein Paywall</div>
+          </div>
+          <div class="arch-spec">
+            <div class="arch-spec-icon">◈</div>
+            <div class="arch-spec-title">Portable State</div>
+            <div class="arch-spec-text">URL-kodierter State für Cross-Device ohne Login</div>
+          </div>
+        </div>
+      </section>
     </div>
 
   </main>

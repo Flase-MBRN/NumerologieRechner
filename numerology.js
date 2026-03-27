@@ -1,5 +1,5 @@
 /**
- * numerology.js — v6.0
+ * numerology.js — v7.0
  * ══════════════════════════════════════════════════════════
  *  Pythagorean Numerologie · 36 Kennzahlen
  *
@@ -10,7 +10,7 @@
  *  ✦ Quantum Score v2 (Varianz + Spread Kohärenz-Engine)
  *  ✦ Datum Auto-Format · ESC-Key Handler · iOS Banner · 9:16 Share
  *
- *  UI v6.0:
+ *  UI v7.0:
  *  ✦ Life Hero Display mit Archetypus
  *  ✦ Progressive Disclosure via Akkordeons
  *  ✦ Emotional Loading Overlay mit Cancel
@@ -162,13 +162,14 @@ function calculateLifePathComponent(date) {
     return reducePreserveMaster(day + month + year);
   } catch (err) {
     console.error('calculateLifePathComponent error:', err);
-    return 0;
+    return null; // Expliziter Fehler statt 0
   }
 }
 
 /** Formatierter Display-Wert für Lebensweg (Komponenten-Methode) */
 function formatLifePathComponent(date) {
   const raw = calculateLifePathComponent(date);
+  if (raw === null) return '—'; // Fehlerfall
   const base = reduceForceSingle(raw);
   if (MASTER_NUMBERS.has(raw) && raw !== base) return `${base}/${raw}`;
   return String(raw);
@@ -182,7 +183,9 @@ function lifePathComponentDetails(date) {
   const yearD = digitSum(parseInt(yStr, 10));
   const year  = reducePreserveMaster(yearD);
   const sum   = day + month + year;
-  return `Tag ${dStr}→${day}  +  Monat ${mStr}→${month}  +  Jahr ${yStr}→${yearD}→${year}  =  ${sum}→${formatLifePathComponent(date)}`;
+  const result = formatLifePathComponent(date);
+  if (result === '—') return 'Berechnung nicht möglich — bitte gültiges Datum prüfen';
+  return `Tag ${dStr}→${day}  +  Monat ${mStr}→${month}  +  Jahr ${yStr}→${yearD}→${year}  =  ${sum}→${result}`;
 }
 
 function calculateExpressionSum(name) {
@@ -1683,7 +1686,7 @@ function validateName(name) {
 
 
 /* ═══════════════════════════════════════════════════════════
-   23. HAUPTFORM-CONTROLLER  v5.0
+   23. HAUPTFORM-CONTROLLER  v7.0
    ═══════════════════════════════════════════════════════════ */
 
 function initForm() {
@@ -1694,10 +1697,29 @@ function initForm() {
   const dateErrEl = document.getElementById('dateError');
   const calcBtn   = document.getElementById('calcBtn');
   const resetBtn  = document.getElementById('resetBtn');
+  const exampleBtn = document.getElementById('exampleBtn');
   if (!form || !nameInput || !dateInput) return;
 
+  /* XSS-Schutz: Sanitize-Funktion für Text-Input */
+  function sanitizeInput(str) {
+    if (!str) return '';
+    return str.replace(/[<>\"']/g, ''); // Entferne potenziell gefährliche Zeichen
+  }
+
+  /* Beispiel-Button: Fügt Demo-Daten ein */
+  if (exampleBtn) {
+    exampleBtn.addEventListener('click', () => {
+      nameInput.value = 'Maria Müller';
+      dateInput.value = '15.03.1985';
+      updateFormState();
+      // Fokus auf den Submit-Button für direkte Berechnung
+      calcBtn?.focus();
+    });
+  }
+
   function updateFormState() {
-    const ns       = validateName(nameInput.value);
+    const nameValue = sanitizeInput(nameInput.value);
+    const ns       = validateName(nameValue);
     const dateOk   = isValidDate(dateInput.value.trim());
     const hasInput = dateInput.value.trim().length > 0;
     nameInput.classList.toggle('input-invalid', !ns.ok);
@@ -1705,7 +1727,7 @@ function initForm() {
     nameErrEl.textContent = ns.ok ? '' : ns.msg;
     dateInput.classList.toggle('input-invalid', hasInput && !dateOk);
     dateInput.classList.toggle('input-valid',   dateOk);
-    dateErrEl.textContent = (!dateOk && hasInput) ? 'Format: TT.MM.JJJJ (z.B. 11.12.2005)' : '';
+    dateErrEl.textContent = (!dateOk && hasInput) ? 'Format: TT.MM.JJJJ (z.B. 15.03.1985)' : '';
     const valid = ns.ok && dateOk;
     if (calcBtn) calcBtn.disabled = !valid;
     return valid;
@@ -1961,6 +1983,7 @@ function initForm() {
     }, 1200);
 
     updateShareURL(name, date);
+    addToHistory(name, date);
     const ra = document.getElementById('resultActions');
     if (ra) ra.hidden = false;
 
@@ -2400,6 +2423,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initShareCardFormat();
   initLoadingCancel();
   initESCKeyHandler();
+  initHistory();
   window.addEventListener('load', registerSW);
 
   if (window.innerWidth >= 768 && !new URLSearchParams(location.search).has('name')) {
@@ -2514,11 +2538,142 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/* ═══════════════════════════════════════════════════════════
+   28. HISTORY (LocalStorage) - Wiederkehrende Nutzung
+   ═══════════════════════════════════════════════════════════ */
+
+const HISTORY_KEY = 'numerologyHistory';
+const MAX_HISTORY = 5;
+
+function loadHistory() {
+  try {
+    const stored = localStorage.getItem(HISTORY_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch { return []; }
+}
+
+function saveHistory(history) {
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, MAX_HISTORY)));
+  } catch { /* noop */ }
+}
+
+function addToHistory(name, date) {
+  if (!name || !date) return;
+  const history = loadHistory();
+  // Remove duplicate if exists
+  const filtered = history.filter(h => h.name !== name || h.date !== date);
+  // Add to front
+  filtered.unshift({ name, date, timestamp: Date.now() });
+  saveHistory(filtered);
+  renderHistory();
+}
+
+function renderHistory() {
+  const bar = document.getElementById('historyBar');
+  const items = document.getElementById('historyItems');
+  if (!bar || !items) return;
+  
+  const history = loadHistory();
+  if (history.length === 0) {
+    bar.hidden = true;
+    return;
+  }
+  
+  items.innerHTML = history.map(h => {
+    const shortName = h.name.length > 15 ? h.name.substring(0, 13) + '…' : h.name;
+    const shortDate = h.date.replace(/\./g, '/');
+    return `<button class="history-chip" data-name="${escapeHtml(h.name)}" data-date="${escapeHtml(h.date)}" type="button">
+      <span class="h-name">${escapeHtml(shortName)}</span>
+      <span class="h-date">${escapeHtml(shortDate)}</span>
+    </button>`;
+  }).join('');
+  
+  // Add click handlers
+  items.querySelectorAll('.history-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const name = chip.dataset.name;
+      const date = chip.dataset.date;
+      const nameInput = document.getElementById('name');
+      const dateInput = document.getElementById('birthdate');
+      if (nameInput) nameInput.value = name;
+      if (dateInput) dateInput.value = date;
+      // Trigger update and submit
+      const form = document.getElementById('numerologyForm');
+      if (form) {
+        form.dispatchEvent(new Event('input', { bubbles: true }));
+        setTimeout(() => form.dispatchEvent(new Event('submit')), 100);
+      }
+      showToast(`Geladen: ${name}`);
+    });
+  });
+  
+  bar.hidden = false;
+}
+
+function clearHistory() {
+  try {
+    localStorage.removeItem(HISTORY_KEY);
+  } catch { /* noop */ }
+  renderHistory();
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function initHistory() {
+  renderHistory();
+  document.getElementById('historyClear')?.addEventListener('click', () => {
+    if (confirm('Verlauf wirklich löschen?')) {
+      clearHistory();
+      showToast('Verlauf gelöscht');
+    }
+  });
+}
 
 
+/* ═══════════════════════════════════════════════════════════
+   29. VERBESSERTE SHARING-TEXTE (natürlicher, persönlicher)
+   ═══════════════════════════════════════════════════════════ */
 
-
-
-
-
-
+function buildShareText() {
+  const p    = new URLSearchParams(window.location.search);
+  const name = p.get('name') || '';
+  const date = p.get('date') || '';
+  let text   = '';
+  
+  if (date) {
+    try {
+      const lifeVal = formatLifePathComponent(date);
+      const arch    = getArchetype('life', lifeVal);
+      const { base } = parseDisplayValue(lifeVal);
+      const meaning = EXPLANATIONS.life[base] || '';
+      const firstName = name.split(' ')[0] || 'Ich';
+      
+      // Persönlicher, natürlicher Einstieg
+      if (arch && arch.title) {
+        text += `✦ ${firstName} – Lebenszahl ${lifeVal} (${arch.title})`;
+      } else {
+        text += `✦ ${firstName} – Lebenszahl ${lifeVal}${meaning ? ': ' + meaning.substring(0, 40) : ''}`;
+      }
+      
+      if (arch && arch.teaser) {
+        const shortTeaser = arch.teaser.length > 60 ? arch.teaser.substring(0, 57) + '…' : arch.teaser;
+        text += '\n' + shortTeaser;
+      }
+      
+      text += '\n\nWie steht es mit deinen Zahlen?';
+    } catch(e) {
+      text += `✦ ${name || 'Mein'} Numerologie-Profil`;
+    }
+  } else {
+    text += `✦ ${name || 'Mein'} Numerologie-Profil`;
+  }
+  
+  text += '\n' + window.location.origin + window.location.pathname;
+  if (name && date) text += '?name=' + encodeURIComponent(name) + '&date=' + encodeURIComponent(date);
+  
+  return text;
+}

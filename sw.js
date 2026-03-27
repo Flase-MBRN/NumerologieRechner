@@ -1,8 +1,10 @@
-/* sw.js — Numerologie v6.0 */
+/* sw.js — Numerologie v7.0 */
 'use strict';
 
-const CACHE_NAME = 'numerologie-v6';
-const FONT_CACHE = 'numerologie-fonts-v1';
+// Automatische Cache-Version mit Zeitstempel für Cache-Busting
+const CACHE_VERSION = 'v7.0.0';
+const CACHE_NAME = `numerologie-${CACHE_VERSION}`;
+const FONT_CACHE = `numerologie-fonts-${CACHE_VERSION}`;
 
 const APP_SHELL = [
   '/',
@@ -20,7 +22,10 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(APP_SHELL))
-      .catch(() => {}) /* Don't fail install if a file is missing */
+      .catch(err => {
+        console.error('[SW] Cache installation failed:', err);
+        /* Don't fail install if a file is missing */
+      })
   );
 });
 
@@ -31,9 +36,15 @@ self.addEventListener('activate', event => {
       Promise.all(
         keys
           .filter(k => k !== CACHE_NAME && k !== FONT_CACHE)
-          .map(k => caches.delete(k))
+          .map(k => {
+            console.log('[SW] Deleting old cache:', k);
+            return caches.delete(k);
+          })
       )
-    ).then(() => self.clients.claim())
+    ).then(() => {
+      console.log('[SW] Activated, version:', CACHE_VERSION);
+      return self.clients.claim();
+    })
   );
 });
 
