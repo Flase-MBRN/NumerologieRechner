@@ -80,7 +80,7 @@
         <span class="brand-mark">
           <span class="brand-star" aria-hidden="true">✦</span>
           <span class="brand-name">Numerologie</span>
-          <span class="brand-version">v7.0</span>
+          <span class="brand-version">v8.0</span>
         </span>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Light Mode">☀</button>
       </div>
@@ -92,36 +92,36 @@
         <!-- System-ID Badge wie MBRN -->
         <div class="hero-system-badge">
           <span class="system-badge-dot" aria-hidden="true"></span>
-          <span class="system-badge-text">System · Numerologie · v7.0</span>
+          <span class="system-badge-text">System · Numerologie · v8.0</span>
         </div>
 
         <h1 class="hero-headline">
-          Deine Zahlen.<br>
-          <em class="hero-hl">Dein Archetypus.</em>
+          Dein numerologisches<br>
+          <em class="hero-hl">Profil — in 5 Sekunden.</em>
         </h1>
 
         <p class="hero-tagline">
-          36 numerologische Kennzahlen. Pythagoreisches System. Lokale Berechnung.
+          36 Kennzahlen. Ein System. Komplett kostenlos. Ohne Account.
         </p>
 
         <div class="hero-divider" aria-hidden="true"></div>
 
         <p class="hero-desc">
-          Entdecke deinen <strong>Lebens-Archetypus</strong> — in Sekunden, direkt in deinem Browser.
-          Keine Registrierung. Keine Datenspeicherung. Kein Backend.
+          Entdecke <strong>Lebenszahl, Archetypus, Seelenzahl</strong> und 33 weitere Parameter — 
+          berechnet lokal in deinem Browser, nie auf einem Server.
         </p>
 
-        <!-- Spec-Tags wie MBRN -->
+        <!-- Spec-Tags: Produkt-Value klar kommunizieren -->
         <div class="hero-specs">
-          <span class="hero-spec">🔒 Zero Data Egress</span>
-          <span class="hero-spec">⚡ Instant Execution</span>
-          <span class="hero-spec">◈ 36 Parameter</span>
-          <span class="hero-spec">✦ Open Access</span>
+          <span class="hero-spec">✦ Kostenlos</span>
+          <span class="hero-spec">⚡ Sofort</span>
+          <span class="hero-spec">🔒 Lokal</span>
+          <span class="hero-spec">◈ Ohne Account</span>
         </div>
 
-        <!-- Privacy-Micro-Note -->
+        <!-- Privacy-Micro-Note: Vertrauen etablieren -->
         <p class="hero-privacy-note">
-          <span aria-hidden="true">🔒</span> Deine Daten bleiben auf deinem Gerät. Keine Cloud, kein Login, keine Tracking.
+          <span aria-hidden="true">🔒</span> Deine Daten bleiben auf deinem Gerät. Nie gespeichert. Nie geteilt.
         </p>
         <button class="hero-info-btn" id="heroInfoBtn" type="button" aria-expanded="false">
           <span class="info-btn-icon" aria-hidden="true">◈</span>
@@ -158,11 +158,11 @@
             <span class="card-category-dot" aria-hidden="true"></span>
             <span>Pattern Analysis</span>
           </div>
-          <span class="card-tier card-tier--experimental">EXPERIMENTAL</span>
+          <span class="card-tier card-tier--public">FREE</span>
         </div>
 
         <h2 id="form-title" class="card-title">Numerologie-System</h2>
-        <p class="card-subtitle">Gib deine Daten ein. Das System berechnet 36 numerologische Parameter in Echtzeit.</p>
+        <p class="card-subtitle">Gib Name und Geburtstag ein. Das System berechnet sofort alle 36 Parameter — komplett kostenlos.</p>
 
         <form id="numerologyForm" novalidate autocomplete="on">
           <fieldset class="form-fieldset">
@@ -199,7 +199,7 @@
         </div>
       </section>
 
-      <!-- ERGEBNISSE -->
+        <!-- ═══ MODULE: ERGEBNISSE (Results Module) ═══ -->
       <section class="card results-card" aria-labelledby="results-title" id="resultsRegion">
         <div class="results-card-header">
           <h2 id="results-title" class="card-title">Dein Profil</h2>
@@ -341,7 +341,7 @@
       </section>
     </div><!-- /container -->
 
-    <!-- SHARE BAR -->
+    <!-- ═══ MODULE: TEILEN (Share Module) ═══ -->
     <div class="container container--full bar-wrap" id="shareBarWrap" hidden>
       <div class="share-bar">
         <p class="share-bar-headline">Zeig anderen wer du bist</p>
@@ -363,11 +363,18 @@
       </div>
     </div>
 
-    <!-- VERGLEICH -->
+    <!-- ═══ MODULE: VERGLEICH (Compare Module) ═══ -->
     <div class="container container--full" id="compareWrap" hidden>
       <section class="card compare-card" aria-labelledby="compare-title">
+        <div class="card-header-row">
+          <div class="card-category card-category--gold">
+            <span class="card-category-dot" aria-hidden="true"></span>
+            <span>Relationship Analysis</span>
+          </div>
+          <span class="card-tier card-tier--public">FREE</span>
+        </div>
         <h2 id="compare-title" class="card-title">Kompatibilität vergleichen</h2>
-        <p class="compare-intro">Wie gut harmonieren zwei Energien miteinander?</p>
+        <p class="compare-intro">Wie gut harmonieren zwei Energien miteinander? Vergleiche Lebenszahlen, Seelen- und Ausdruckszahlen.</p>
         <form id="compareForm" novalidate autocomplete="off">
           <div class="compare-inputs">
             <div class="compare-person">
@@ -405,12 +412,12 @@
       </section>
     </div>
 
-    <!-- CTA BAR -->
+    <!-- ═══ MODULE: CTA (Next Steps Module) ═══ -->
     <div class="container container--full bar-wrap" id="ctaBarWrap" hidden>
       <div class="cta-bar">
-        <p class="cta-bar-label">Weitermachen</p>
+        <p class="cta-bar-label">Was jetzt?</p>
         <div class="cta-bar-actions">
-          <button class="btn btn--cta" id="ctaBtnReset" type="button">↺ Anderen Namen testen</button>
+          <button class="btn btn--cta" id="ctaBtnReset" type="button">↺ Neu berechnen</button>
           <button class="btn btn--cta" id="ctaBtnCompare" type="button">◈ Kompatibilität prüfen</button>
         </div>
       </div>

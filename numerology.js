@@ -1,5 +1,5 @@
 /**
- * numerology.js — v7.0
+ * numerology.js — v8.0
  * ══════════════════════════════════════════════════════════
  *  Pythagorean Numerologie · 36 Kennzahlen
  *
@@ -10,7 +10,7 @@
  *  ✦ Quantum Score v2 (Varianz + Spread Kohärenz-Engine)
  *  ✦ Datum Auto-Format · ESC-Key Handler · iOS Banner · 9:16 Share
  *
- *  UI v7.0:
+ *  UI v8.0:
  *  ✦ Life Hero Display mit Archetypus
  *  ✦ Progressive Disclosure via Akkordeons
  *  ✦ Emotional Loading Overlay mit Cancel
@@ -1609,8 +1609,8 @@ function buildShareText() {
         text += '✦ Meine Lebenszahl ist die ' + lifeVal + (meaning ? ' – ' + meaning : '') + '.';
       }
       if (arch && arch.teaser) {
-        // Erste 60 Zeichen des Teasers
-        const short = arch.teaser.length > 70 ? arch.teaser.substring(0, 67) + '...' : arch.teaser;
+        // Kurzer, persönlicher Teaser
+        const short = arch.teaser.length > 80 ? arch.teaser.substring(0, 77) + '…' : arch.teaser;
         text += '\n' + short;
       }
     } catch(e) {
@@ -1619,7 +1619,7 @@ function buildShareText() {
   } else {
     text += '✦ Mein Numerologie-Profil';
   }
-  text += '\n\nFinde deinen Archetypus (kostenlos, 36 Zahlen):';
+  text += '\n\nKostenlos berechnen – komplett lokal im Browser:';
   text += '\n' + window.location.origin + window.location.pathname;
   if (name && date) text += '?name=' + encodeURIComponent(name) + '&date=' + encodeURIComponent(date);
   return text;
@@ -1686,7 +1686,7 @@ function validateName(name) {
 
 
 /* ═══════════════════════════════════════════════════════════
-   23. HAUPTFORM-CONTROLLER  v7.0
+   23. HAUPTFORM-CONTROLLER  v8.0
    ═══════════════════════════════════════════════════════════ */
 
 function initForm() {
@@ -2191,7 +2191,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
    26. PWA + ACCORDION + INIT  v5.0
    ═══════════════════════════════════════════════════════════ */
 
-const APP_VERSION = '6.0';
+const APP_VERSION = '8.0';
 
 async function registerSW() {
   if (!('serviceWorker' in navigator)) return;
