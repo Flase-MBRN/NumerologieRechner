@@ -1,5 +1,5 @@
 /**
- * numerology.js — v8.0
+ * numerology.js — v8.2
  * ══════════════════════════════════════════════════════════
  *  Pythagorean Numerologie · 36 Kennzahlen
  *
@@ -10,7 +10,7 @@
  *  ✦ Quantum Score v2 (Varianz + Spread Kohärenz-Engine)
  *  ✦ Datum Auto-Format · ESC-Key Handler · iOS Banner · 9:16 Share
  *
- *  UI v8.0:
+ *  UI v8.2:
  *  ✦ Life Hero Display mit Archetypus
  *  ✦ Progressive Disclosure via Akkordeons
  *  ✦ Emotional Loading Overlay mit Cancel
@@ -536,18 +536,18 @@ function isValidDate(dateStr) {
 
 const EXPLANATIONS = {
   life: {
-    1:'Neuanfang, Führung, Selbstbestimmung',2:'Harmonie, Kooperation, Sensibilität',
-    3:'Kreativität, Ausdruck, Kommunikation',4:'Stabilität, Ordnung, Disziplin',
-    5:'Flexibilität, Abenteuer, Veränderung',6:'Verantwortung, Familie, Fürsorge',
-    7:'Analyse, Rückzug, Weisheit',8:'Macht, Erfolg, materielles Geschick',
-    9:'Abschluss, Mitgefühl, Idealismus',11:'Intuition & Inspiration (Master 11)',
-    22:'Vision & Realisierung (Master 22)',33:'Lehrer / Heiler (Master 33)',
+    1:'Neuanfang, Führung, Selbstbestimmung — Du erschaffst neue Wege',2:'Harmonie, Kooperation, Sensibilität — Du verbindest Menschen',
+    3:'Kreativität, Ausdruck, Kommunikation — Du inspirierst durch Ideen',4:'Stabilität, Ordnung, Disziplin — Du baust Fundamente',
+    5:'Flexibilität, Abenteuer, Veränderung — Du lebst für das Neue',6:'Verantwortung, Familie, Fürsorge — Du heilst und schützt',
+    7:'Analyse, Rückzug, Weisheit — Du suchst die tiefe Wahrheit',8:'Macht, Erfolg, materielles Geschick — Du manifestierst Visionen',
+    9:'Abschluss, Mitgefühl, Idealismus — Du gibst für das Ganze',11:'Intuition & Inspiration — Du empfängst höhere Einsicht (Master 11)',
+    22:'Vision & Realisierung — Du baust das Große (Master 22)',33:'Lehrer & Heiler — Du dienst der Menschheit (Master 33)',
   },
   soul: {
-    1:'Innerer Antrieb',2:'Sehnsucht nach Harmonie',3:'Kreativität',
-    4:'Sicherheit & Struktur',5:'Sehnsucht nach Freiheit',6:'Fürsorge',
-    7:'Spirituelle Suche',8:'Starker Wille',9:'Empathie',
-    11:'Spirituelle Sensibilität',22:'Visionäre Kraft',33:'Dienst am Kollektiv',
+    1:'Innerer Antrieb nach Selbstständigkeit',2:'Sehnsucht nach Harmonie & Verbundenheit',3:'Kreative Sehnsucht nach Ausdruck',
+    4:'Sehnsucht nach Sicherheit & Struktur',5:'Sehnsucht nach Freiheit & Abenteuer',6:'Tiefe Sehnsucht zu fürsorgen & heilen',
+    7:'Spirituelle Suche nach Wahrheit',8:'Starker Wille nach Einfluss & Erfolg',9:'Empathie & Wunsch zu dienen',
+    11:'Höchste spirituelle Sensibilität',22:'Visionäre Kraft zur Manifestation',33:'Dienst am Kollektiv als Berufung',
   },
   expression: {
     1:'Direkter Ausdruck',2:'Diplomatisch',3:'Kommunikativ',4:'Pragmatisch',
@@ -2191,7 +2191,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
    26. PWA + ACCORDION + INIT  v5.0
    ═══════════════════════════════════════════════════════════ */
 
-const APP_VERSION = '8.0';
+const APP_VERSION = '8.2';
 
 async function registerSW() {
   if (!('serviceWorker' in navigator)) return;
