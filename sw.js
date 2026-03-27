@@ -1,20 +1,20 @@
-/* sw.js — Numerologie v5.0 */
+/* sw.js — Numerologie v4.0 */
 'use strict';
 
-const CACHE_NAME = 'numerologie-v5.0';
+const CACHE_NAME = 'numerologie-v4';
 const FONT_CACHE = 'numerologie-fonts-v1';
 
 const APP_SHELL = [
   '/',
   '/index.html',
   '/style.css',
-  '/numerologie.js',
+  '/numerology.js',
   '/manifest.json',
 ];
 
 /* ── Install: cache app shell ── */
 self.addEventListener('install', event => {
-  // self.skipWaiting();
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(APP_SHELL))
@@ -77,3 +77,7 @@ self.addEventListener('fetch', event => {
       )
   );
 });
+
+
+
+

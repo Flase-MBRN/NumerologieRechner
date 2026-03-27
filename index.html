@@ -5,21 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Numerologie · Was sagt dein Name über dich?</title>
   <meta name="description" content="Entdecke deinen Lebens-Archetypus: Lebenszahl, Seelenzahl, Karma und 33 weitere Kennzahlen — kostenlos, lokal, in Sekunden.">
-  <link rel="canonical" href="https://numerologie-calculator.neocities.org/">
+  <link rel="canonical" href="https://numerologie.app/">
   <meta property="og:type"        content="website">
-  <meta property="og:url"   content="https://numerologie-calculator.neocities.org/">
+  <meta property="og:url"         content="https://numerologie.app/">
   <meta property="og:title"       content="Was sagt dein Name wirklich über dich aus?">
   <meta property="og:description" content="Lebenszahl, Archetypus, Seelenzahl und 33 weitere Kennzahlen — kostenlos berechnen.">
-  <meta property="og:image" content="https://numerologie-calculator.neocities.org/og-image.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://numerologie-calculator.neocities.org/og-image.jpg">
+  <meta property="og:image"       content="https://numerologie.app/og-image.png">
   <meta property="og:image:width"  content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale"      content="de_DE">
   <meta name="twitter:card"       content="summary_large_image">
   <meta name="twitter:title"      content="Was sagt dein Name wirklich über dich aus?">
   <meta name="twitter:description" content="Lebenszahl, Archetypus, Seelenzahl — kostenlos berechnen.">
-  <meta name="twitter:image" content="https://numerologie-calculator.neocities.org/og-image.png">
+  <meta name="twitter:image"      content="https://numerologie.app/og-image.png">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#7c3aed">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -82,9 +80,10 @@
         <p class="hero-subline">
           Entdecke deinen <strong>Lebens-Archetypus</strong> — kostenlos, lokal, in Sekunden.
         </p>
-        <div class="trust-badge">
-          <span>🔒 100% Privat: Deine Daten verlassen niemals dein Gerät.</span>
-          <span>⚡ Lokal berechnet. Keine Speicherung.</span>
+        <div class="hero-trust" role="list">
+          <span role="listitem"><span aria-hidden="true">✓</span> Keine Datenspeicherung</span>
+          <span role="listitem"><span aria-hidden="true">✓</span> Lokal berechnet</span>
+          <span role="listitem"><span aria-hidden="true">✓</span> Kostenlos</span>
         </div>
         <button class="hero-info-btn" id="heroInfoBtn" type="button" aria-expanded="false">
           Was ist Numerologie? <span class="hero-info-caret" aria-hidden="true">↓</span>
@@ -347,23 +346,12 @@
 
   </main>
 
- <footer class="site-footer">
-    <div class="footer-content">
-      <p>&copy; 2026 Numerologie-Rechner</p>
-      <nav class="footer-nav">
-        <a href="#impressum" id="openImpressum">Impressum</a>
-        <a href="#datenschutz" id="openDatenschutz">Datenschutz</a>
-      </nav>
-      <p class="footer-note">Alle Berechnungen finden lokal in deinem Browser statt. Es werden keine persönlichen Daten auf Servern gespeichert oder geteilt.</p>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p class="footer-brand">✦ Numerologie</p>
+      <p class="footer-info">36 Zahlen · Lo-Shu Psychomatrix · Quantum Score v2 · Y-Vokal-Regel</p>
     </div>
   </footer>
-
-  <div id="legalModal" class="modal" hidden>
-    <div class="modal-content legal-text">
-      <button class="close-modal" id="closeLegalModal" type="button" aria-label="Schließen">&times;</button>
-      <div id="legalContent"></div>
-    </div>
-  </div>
 
   <!-- DETAIL MODAL -->
   <dialog class="detail-modal" id="detailModal" aria-modal="true" aria-labelledby="modalNumberType">
@@ -409,6 +397,13 @@
     </div>
   </dialog>
 
-  <script src="numerologie.js" defer></script>
+  <script src="numerology.js" defer></script>
 </body>
 </html>
+
+
+
+
+
+
+

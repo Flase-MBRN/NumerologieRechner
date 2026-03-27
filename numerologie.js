@@ -1,5 +1,5 @@
 /**
- * numerologie.js — v5.0
+ * numerology.js — v4.0
  * ══════════════════════════════════════════════════════════
  *  Pythagorean Numerologie · 36 Kennzahlen
  *
@@ -7,14 +7,14 @@
  *  ✦ Y-Vokal-Regel (Y als Vokal zwischen Konsonanten)
  *  ✦ Komponenten-Methode für Lebensweg (Masterzahlen-sicher)
  *  ✦ Lo-Shu Psychomatrix (3×3 aus Geburtsdatum)
- *  ✦ Energie-Resonanz v2 (Varianz + Verteilung Kohärenz-Engine)
+ *  ✦ Quantum Score v2 (Varianz + Spread Kohärenz-Engine)
  *
- *  UI v5.0:
+ *  UI v4.0:
  *  ✦ Life Hero Display mit Archetypus
  *  ✦ Progressive Disclosure via Akkordeons
  *  ✦ Emotional Loading Overlay
- *  ✦ Canvas Analyse teilen (1080×1080)
- *  ✦ Energie-Resonanz v2 mit Interpretation
+ *  ✦ Canvas Share Card (1080×1080)
+ *  ✦ Quantum Score v2 mit Interpretation
  * ══════════════════════════════════════════════════════════
  */
 
@@ -270,9 +270,9 @@ function loShuLines(freq) {
    ═══════════════════════════════════════════════════════════ */
 
 /**
- * Energie-Resonanz v2 — Kohärenz-Engine
+ * Quantum Score v2 — Kohärenz-Engine
  * Misst die Harmonie zwischen Lebenszahl, Seelenzahl und Ausdruckszahl
- * anhand von Varianz und Verteilung (statt einfacher Summe).
+ * anhand von Varianz und Spread (statt einfacher Summe).
  * Integriert aus quantum.v2.js — konfliktfrei in monolithischer Datei.
  */
 function calculateQuantumScore(name, date) {
@@ -284,26 +284,26 @@ function calculateQuantumScore(name, date) {
   const avg    = values.reduce((a, b) => a + b, 0) / 3;
 
   const variance = values.reduce((sum, v) => sum + Math.pow(v - avg, 2), 0) / 3;
-  const Verteilung   = Math.max(...values) - Math.min(...values);
+  const spread   = Math.max(...values) - Math.min(...values);
 
   const harmonyScore     = 100 - (variance * 8);
-  const dominancePenalty = Verteilung * 2;
+  const dominancePenalty = spread * 2;
   const final = Math.max(0, Math.min(100, harmonyScore - dominancePenalty));
 
   return {
     score:    Math.round(final * 10) / 10,
     avg:      Math.round(avg * 100) / 100,
     variance: Math.round(variance * 100) / 100,
-    Verteilung,
+    spread,
     values:   { life, soul, expression: expr },
   };
 }
 
-/** Interpretationstext für Energie-Resonanz v2 */
+/** Interpretationstext für Quantum Score v2 */
 function interpretQuantumScore(result) {
   const score    = Number(result?.score ?? 0);
   const variance = Number(result?.variance ?? 0);
-  const Verteilung   = Number(result?.Verteilung ?? 0);
+  const spread   = Number(result?.spread ?? 0);
 
   if (score >= 80) {
     return 'Deine Kernzahlen sind stark im Einklang — du wirkst klar, stabil und zielgerichtet.';
@@ -314,7 +314,7 @@ function interpretQuantumScore(result) {
       : 'Du hast eine gute Basis, aber einzelne Bereiche ziehen noch in unterschiedliche Richtungen.';
   }
   if (score >= 40) {
-    return Verteilung >= 5
+    return spread >= 5
       ? 'Zwischen deinen inneren und äußeren Anteilen besteht spürbare Reibung — genau dort liegt aber auch dein Wachstum.'
       : 'Du bist nicht unausgeglichen, aber noch nicht ganz im Fluss. Da ist Entwicklung drin.';
   }
@@ -1033,7 +1033,7 @@ const MODAL_DETAILS = {
   quantum: {
     icon: '⟐',
     title: 'Quantum Vibrations-Score',
-    calc: 'Harmonie-Score basierend auf Varianz und Verteilung der drei Kernzahlen (Leben, Seele, Ausdruck). Score = 100 − (Varianz × 8) − (Verteilung × 2). Je näher die Zahlen beieinander, desto höher der Score.',
+    calc: 'Harmonie-Score basierend auf Varianz und Spread der drei Kernzahlen (Leben, Seele, Ausdruck). Score = 100 − (Varianz × 8) − (Spread × 2). Je näher die Zahlen beieinander, desto höher der Score.',
     extended: {
       range: 'Ein hoher Score zeigt starke Resonanz zwischen Lebensweg, Seele und Ausdruck. Ein niedriger Score zeigt innere Spannung — und damit Wachstumspotenzial.',
     }
@@ -1261,7 +1261,7 @@ function appendQuantumTile(name, date, targetGridId) {
   const interpretation = interpretQuantumScore(result);
   const encodedResult  = JSON.stringify({
     score, avg: result.avg, variance: result.variance,
-    Verteilung: result.Verteilung, values: result.values,
+    spread: result.spread, values: result.values,
   });
 
   const tile = document.createElement('article');
@@ -1271,8 +1271,8 @@ function appendQuantumTile(name, date, targetGridId) {
   tile.setAttribute('data-quantum-result', encodedResult);
   tile.style.cursor = 'pointer';
   tile.innerHTML =
-    '<div class="result-title"><span>Energie-Resonanz</span>'
-    + '<button class="tooltip-btn" type="button" data-tooltip="Harmonie-Score deiner drei Kernzahlen via Varianz & Verteilung." aria-label="Info">ℹ</button></div>'
+    '<div class="result-title"><span>Quantum Score</span>'
+    + '<button class="tooltip-btn" type="button" data-tooltip="Harmonie-Score deiner drei Kernzahlen via Varianz & Spread." aria-label="Info">ℹ</button></div>'
     + '<div class="quantum-gauge">'
     +   '<div class="quantum-bar-track"><div class="quantum-bar-fill" style="width:' + score + '%;background:' + color + '"></div></div>'
     +   '<div class="quantum-score-value" style="color:' + color + '">' + pct + '%</div>'
@@ -1514,7 +1514,7 @@ function openModal(type, displayValue, sourceTile) {
     return;
   }
 
-  /* ── NEU v3.0: Energie-Resonanz Modal ── */
+  /* ── NEU v3.0: Quantum Score Modal ── */
   if (type === 'quantum') {
     /* Use the tile that was actually clicked, not the first in DOM */
     const quantumTile = sourceTile || document.querySelector('[data-modal-type="quantum"][data-quantum-result]');
@@ -1541,8 +1541,8 @@ function openModal(type, displayValue, sourceTile) {
         + ' · Ausdruck ' + result.values.expression
         + '\nDurchschnitt: ' + result.avg
         + ' · Varianz: ' + result.variance
-        + ' · Verteilung: ' + result.Verteilung
-      : 'Der Score misst die Harmonie (Varianz & Verteilung) deiner drei Kernzahlen. '
+        + ' · Spread: ' + result.spread
+      : 'Der Score misst die Harmonie (Varianz & Spread) deiner drei Kernzahlen. '
         + 'Je enger sie beieinander liegen, desto höher der Score.';
     document.getElementById('modalExtended').textContent = extText;
 
@@ -2029,7 +2029,7 @@ function initCompare() {
 
 
 /* ═══════════════════════════════════════════════════════════
-   25. CANVAS Analyse teilen  v5.0
+   25. CANVAS SHARE CARD  v5.0
    ═══════════════════════════════════════════════════════════ */
 
 function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -2200,7 +2200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch { showToast('Link: ' + window.location.href); }
   });
 
-  /* Analyse teilen — open */
+  /* Share Card — open */
   document.getElementById('shareBtnCard')?.addEventListener('click', () => {
     const name      = document.getElementById('name')?.value.trim() || new URLSearchParams(location.search).get('name') || '';
     const lifeVal   = document.getElementById('lifeHeroNum')?.textContent || '';
@@ -2214,18 +2214,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modal) { try { modal.showModal(); } catch(e) { modal.setAttribute('open',''); modal.style.display='flex'; } }
   });
 
-  /* Analyse teilen — close */
+  /* Share Card — close */
   document.getElementById('shareCardClose')?.addEventListener('click', () => {
     const modal = document.getElementById('shareCardModal');
     if (modal) { try { modal.close(); } catch(e) { modal.removeAttribute('open'); modal.style.display=''; } }
   });
 
-  /* Analyse teilen — click outside */
+  /* Share Card — click outside */
   document.getElementById('shareCardModal')?.addEventListener('click', function(e) {
     if (e.target === this) { try { this.close(); } catch(err) { this.removeAttribute('open'); this.style.display=''; } }
   });
 
-  /* Analyse teilen — native share with image */
+  /* Share Card — native share with image */
   document.getElementById('shareCardNative')?.addEventListener('click', async () => {
     const canvas = document.getElementById('shareCardCanvas');
     if (!canvas) return;
@@ -2247,7 +2247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch(e) { showToast('Teilen nicht möglich.'); }
   });
 
-  /* Analyse teilen — download */
+  /* Share Card — download */
   document.getElementById('shareCardDownload')?.addEventListener('click', () => {
     const canvas = document.getElementById('shareCardCanvas');
     if (!canvas) return;
@@ -2260,7 +2260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 'image/png');
   });
 
-  /* Analyse teilen — WhatsApp */
+  /* Share Card — WhatsApp */
   document.getElementById('shareCardWA')?.addEventListener('click', () => {
     window.open('https://wa.me/?text=' + encodeURIComponent(buildShareText()), '_blank', 'noopener,noreferrer');
   });
@@ -2288,32 +2288,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-const legalTexts = {
-  impressum: `
-    <h2>Impressum</h2>
-    <p>Angaben gemäß § 5 TMG:</p>
-    <p>Erik Klauß<br>erikk2k5@gmail.com<br>47139 Duisburg</p>
-    <p><strong>Kontakt:</strong><br>E-Mail: [erikk2k5@gmail.com]</p>
-  `,
-  datenschutz: `
-    <h2>Datenschutzerklärung</h2>
-    <p><strong>1. Lokale Verarbeitung</strong><br>Alle Daten werden ausschließlich lokal in deinem Browser verarbeitet. Es findet keine Übertragung an Server statt.</p>
-    <p><strong>2. Keine Speicherung</strong><br>Es werden keine persönlichen Daten dauerhaft gespeichert.</p>
-  `
-};
 
-document.getElementById('openImpressum')?.addEventListener('click', (e) => { e.preventDefault(); openLegalModal('impressum'); });
-document.getElementById('openDatenschutz')?.addEventListener('click', (e) => { e.preventDefault(); openLegalModal('datenschutz'); });
 
-function openLegalModal(type) {
-  const modal = document.getElementById('legalModal');
-  const content = document.getElementById('legalContent');
-  if (modal && content) {
-    content.innerHTML = legalTexts[type];
-    modal.hidden = false;
-  }
-}
 
-document.getElementById('closeLegalModal')?.addEventListener('click', () => {
-  document.getElementById('legalModal').hidden = true;
-});
+
+
+
+
+
+

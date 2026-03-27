@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Numerologie-Rechner",
   "short_name": "Numerologie",
-  "description": "Professionelle Numerologie-Analyse v5.0 — 36 Kennzahlen, Psychomatrix & Energie-Resonanz. 100% privat, lokal auf deinem Gerät berechnet & offline nutzbar.",
+  "description": "Pythagoreanische Numerologie v4.0 — 36 Kennzahlen, Lo-Shu Psychomatrix, Quantum Score v2, Y-Vokal-Regel. Kostenlos, lokal, offline.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -12,7 +12,6 @@
   "lang": "de",
   "dir": "ltr",
   "categories": ["lifestyle", "utilities"],
-  "version": "5.0",
   "icons": [
     {
       "src": "icon.svg",
@@ -43,3 +42,9 @@
   ],
   "screenshots": []
 }
+
+
+
+
+
+
