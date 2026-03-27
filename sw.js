@@ -1,7 +1,7 @@
-/* sw.js — Numerologie v5.0 */
+/* sw.js — Numerologie v6.0 */
 'use strict';
 
-const CACHE_NAME = 'numerologie-v5';
+const CACHE_NAME = 'numerologie-v6';
 const FONT_CACHE = 'numerologie-fonts-v1';
 
 const APP_SHELL = [

@@ -17,7 +17,8 @@
   <meta name="twitter:card"       content="summary_large_image">
   <meta name="twitter:title"      content="Was sagt dein Name wirklich über dich aus?">
   <meta name="twitter:description" content="Lebenszahl, Archetypus, Seelenzahl — kostenlos berechnen.">
-  <meta name="twitter:image"      content="https://flase-mbrn.github.io/NumerologieRechner/og-image.png">
+  <meta property="og:image:alt" content="Numerologie Rechner - Dein persönliches Zahlenprofil mit Lebenszahl, Seelenzahl und Archetyp">
+  <meta name="twitter:image:alt" content="Numerologie Rechner - Dein persönliches Zahlenprofil">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#7c3aed">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -45,7 +46,18 @@
 </head>
 <body>
 
-  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <!-- iOS Install Banner -->
+  <div id="iosInstallBanner" class="ios-install-banner" hidden>
+    <div class="ios-banner-inner">
+      <span class="ios-banner-icon">✦</span>
+      <div class="ios-banner-text">
+        <strong>Als App hinzufügen</strong>
+        <span>Tippe auf „Teilen“ und dann „Zum Home-Bildschirm“</span>
+      </div>
+      <button id="iosBannerDismiss" class="ios-banner-close" aria-label="Schließen">✕</button>
+    </div>
+  </div>
+    <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
   <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
   <div class="bg-grid" aria-hidden="true"></div>
 
@@ -55,6 +67,7 @@
       <div class="loading-star" aria-hidden="true">✦</div>
       <p class="loading-msg" id="loadingMsg">Analyse wird gestartet…</p>
       <div class="loading-bar-track"><div class="loading-bar" id="loadingBar"></div></div>
+      <button id="loadingCancel" class="btn btn--ghost loading-cancel" type="button">Abbrechen</button>
     </div>
   </div>
 
@@ -65,7 +78,7 @@
         <span class="brand-mark">
           <span class="brand-star" aria-hidden="true">✦</span>
           <span class="brand-name">Numerologie</span>
-          <span class="brand-version">v5.0</span>
+          <span class="brand-version">v6.0</span>
         </span>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Light Mode">☀</button>
       </div>
@@ -194,7 +207,7 @@
 
           <article class="profile-card pers-card" id="ps-personality" role="button" tabindex="0"
                    aria-label="Persönlichkeitszahl — für Details klicken">
-            <div class="pc-label">Wirkung</div>
+            <div class="pc-label">Persönlichkeit</div>
             <div class="pc-num ps-num" aria-live="polite"></div>
             <div class="pc-arch ps-arch"></div>
             <div class="pc-expl ps-expl"></div>
@@ -393,6 +406,13 @@
       <p class="share-card-hint">Lade die Karte herunter oder teile sie direkt.</p>
       <div class="share-card-canvas-wrap">
         <canvas id="shareCardCanvas" width="1080" height="1080" aria-label="Deine Numerologie-Karte"></canvas>
+      </div>
+      <div class="share-card-format">
+        <label class="format-label">Format:</label>
+        <div class="format-options">
+          <button class="format-btn is-active" data-format="square" type="button">1:1</button>
+          <button class="format-btn" data-format="story" type="button">9:16</button>
+        </div>
       </div>
       <div class="share-card-actions">
         <button class="btn btn--primary" id="shareCardNative" type="button">

@@ -1,5 +1,5 @@
 /**
- * numerology.js — v5.0
+ * numerology.js — v6.0
  * ══════════════════════════════════════════════════════════
  *  Pythagorean Numerologie · 36 Kennzahlen
  *
@@ -8,12 +8,13 @@
  *  ✦ Komponenten-Methode für Lebensweg (Masterzahlen-sicher)
  *  ✦ Lo-Shu Psychomatrix (3×3 aus Geburtsdatum)
  *  ✦ Quantum Score v2 (Varianz + Spread Kohärenz-Engine)
+ *  ✦ Datum Auto-Format · ESC-Key Handler · iOS Banner · 9:16 Share
  *
- *  UI v5.0:
+ *  UI v6.0:
  *  ✦ Life Hero Display mit Archetypus
  *  ✦ Progressive Disclosure via Akkordeons
- *  ✦ Emotional Loading Overlay
- *  ✦ Canvas Share Card (1080×1080)
+ *  ✦ Emotional Loading Overlay mit Cancel
+ *  ✦ Canvas Share Card (1080×1080 & 1080×1920)
  *  ✦ Quantum Score v2 mit Interpretation
  * ══════════════════════════════════════════════════════════
  */
@@ -1086,7 +1087,7 @@ function getModalExtended(type, displayValue) {
    ═══════════════════════════════════════════════════════════ */
 
 /** Version */
-const V5_VERSION = '5.0';
+const V6_VERSION = '6.0';
 
 /* ── Tile Buffers (batch DOM writes) ── */
 const _tileBuffers = {};
@@ -2167,7 +2168,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
    26. PWA + ACCORDION + INIT  v5.0
    ═══════════════════════════════════════════════════════════ */
 
-const APP_VERSION = '5.0';
+const APP_VERSION = '6.0';
 
 async function registerSW() {
   if (!('serviceWorker' in navigator)) return;
@@ -2189,12 +2190,216 @@ function initAccordions() {
   });
 }
 
+/* ═══════════════════════════════════════════════════════════
+   27. V6.0 FEATURES
+   ═══════════════════════════════════════════════════════════ */
+
+/* iOS Install Banner */
+function initIOSBanner() {
+  const banner = document.getElementById('iosInstallBanner');
+  const dismiss = document.getElementById('iosBannerDismiss');
+  if (!banner || !dismiss) return;
+  
+  // Show only on iOS Safari (not standalone)
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isStandalone = window.navigator.standalone === true;
+  const dismissed = localStorage.getItem('iosBannerDismissed');
+  
+  if (isIOS && !isStandalone && !dismissed) {
+    banner.hidden = false;
+  }
+  
+  dismiss.addEventListener('click', () => {
+    banner.hidden = true;
+    localStorage.setItem('iosBannerDismissed', '1');
+  });
+}
+
+/* Share Card Format Toggle */
+let currentShareFormat = 'square';
+function initShareCardFormat() {
+  const buttons = document.querySelectorAll('.format-btn');
+  const canvasWrap = document.querySelector('.share-card-canvas-wrap');
+  if (!buttons.length || !canvasWrap) return;
+  
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      currentShareFormat = btn.dataset.format;
+      canvasWrap.dataset.format = currentShareFormat;
+      
+      // Redraw with new format
+      const name = document.getElementById('name')?.value.trim() || '';
+      const lifeVal = document.getElementById('lifeHeroNum')?.textContent || '';
+      const archTitle = document.getElementById('lifeHeroArchetype')?.textContent || '';
+      const teaser = document.getElementById('lifeHeroTeaser')?.textContent || '';
+      const soulVal = document.getElementById('ps-soul')?.querySelector('.ps-num')?.textContent || '';
+      const exprVal = document.getElementById('ps-expression')?.querySelector('.ps-num')?.textContent || '';
+      if (lifeVal) drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal);
+    });
+  });
+}
+
+/* Loading Cancel */
+let loadingCancelled = false;
+function initLoadingCancel() {
+  const btn = document.getElementById('loadingCancel');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    loadingCancelled = true;
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) {
+      overlay.classList.remove('is-active');
+      setTimeout(() => overlay.hidden = true, 280);
+    }
+    showToast('Berechnung abgebrochen');
+  });
+}
+
+/* Global ESC Key Handler for all modals */
+function initESCKeyHandler() {
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    
+    const modals = ['detailModal', 'shareCardModal'];
+    modals.forEach(id => {
+      const modal = document.getElementById(id);
+      if (modal && (modal.open || modal.hasAttribute('open'))) {
+        try { modal.close(); } catch(err) { 
+          modal.removeAttribute('open'); 
+          modal.style.display = ''; 
+        }
+      }
+    });
+  });
+}
+
+/* Redraw Share Card with format support */
+function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
+  try {
+    const canvas = document.getElementById('shareCardCanvas');
+    if (!canvas) return;
+    
+    const isStory = currentShareFormat === 'story';
+    const W = 1080;
+    const H = isStory ? 1920 : 1080;
+    
+    canvas.width = W;
+    canvas.height = H;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) { console.error('Canvas context not available'); return; }
+    
+    /* Background */
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#09091a');
+    bg.addColorStop(1, '#05050f');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+    
+    /* Grid lines */
+    ctx.strokeStyle = 'rgba(124,58,237,0.04)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+    
+    /* Center glow */
+    const glowY = isStory ? H * 0.45 : H * 0.38;
+    const glow = ctx.createRadialGradient(W/2, glowY, 0, W/2, glowY, isStory ? 520 : 420);
+    glow.addColorStop(0, 'rgba(245,158,11,0.16)');
+    glow.addColorStop(0.5, 'rgba(124,58,237,0.05)');
+    glow.addColorStop(1, 'transparent');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+    
+    /* Top bar */
+    const topY = isStory ? 120 : 80;
+    const topLine = ctx.createLinearGradient(0, 0, W, 0);
+    topLine.addColorStop(0,'transparent'); topLine.addColorStop(0.25,'rgba(245,158,11,0.5)');
+    topLine.addColorStop(0.75,'rgba(245,158,11,0.5)'); topLine.addColorStop(1,'transparent');
+    ctx.strokeStyle = topLine; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, topY); ctx.lineTo(W, topY); ctx.stroke();
+    
+    /* Brand */
+    ctx.fillStyle = 'rgba(245,158,11,0.55)';
+    ctx.font = '500 34px "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('✦  NUMEROLOGIE  ✦', W/2, 54);
+    
+    /* Eyebrow */
+    ctx.fillStyle = 'rgba(167,139,250,0.55)';
+    ctx.font = '400 28px "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+    ctx.fillText('LEBENSZAHL', W/2, isStory ? H * 0.22 : H * 0.185);
+    
+    /* Big number */
+    const numY = isStory ? H * 0.55 : H * 0.505;
+    const numGrad = ctx.createLinearGradient(W/2-160, 0, W/2+160, 0);
+    numGrad.addColorStop(0,'#c8891e'); numGrad.addColorStop(0.5,'#f5c842'); numGrad.addColorStop(1,'#c8891e');
+    ctx.fillStyle = numGrad;
+    ctx.shadowColor = 'rgba(245,158,11,0.65)'; ctx.shadowBlur = 90;
+    ctx.font = 'bold ' + (isStory ? '380px' : '300px') + ' "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(lifeVal || '?', W/2, numY);
+    ctx.shadowBlur = 0;
+    
+    /* Divider */
+    const sepY = isStory ? H * 0.62 : H * 0.56;
+    const sep = ctx.createLinearGradient(W*0.2, 0, W*0.8, 0);
+    sep.addColorStop(0,'transparent'); sep.addColorStop(0.5,'rgba(245,158,11,0.3)'); sep.addColorStop(1,'transparent');
+    ctx.strokeStyle = sep; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(W*0.2, sepY); ctx.lineTo(W*0.8, sepY); ctx.stroke();
+    
+    /* Archetype */
+    ctx.shadowColor = 'rgba(167,139,250,0.20)'; ctx.shadowBlur = 24;
+    ctx.fillStyle = '#e8e8f4'; ctx.font = '600 ' + (isStory ? '72px' : '62px') + ' "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+    ctx.fillText(archTitle || '', W/2, isStory ? H * 0.68 : H * 0.638);
+    ctx.shadowBlur = 0;
+    
+    /* Teaser */
+    ctx.fillStyle = 'rgba(168,180,196,0.75)'; 
+    ctx.font = '300 ' + (isStory ? '38px' : '34px') + ' "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+    wrapCanvasText(ctx, teaser || '', W/2, isStory ? H * 0.74 : H * 0.700, isStory ? 900 : 820, isStory ? 58 : 52);
+    
+    /* Secondary numbers */
+    if (soulVal || exprVal) {
+      ctx.fillStyle = 'rgba(96,165,250,0.55)'; 
+      ctx.font = '600 ' + (isStory ? '36px' : '30px') + ' "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+      const parts = [];
+      if (soulVal) parts.push('Seele: ' + soulVal);
+      if (exprVal) parts.push('Ausdruck: ' + exprVal);
+      ctx.fillText(parts.join('   ·   '), W/2, isStory ? H * 0.86 : H * 0.83);
+    }
+    
+    /* Name */
+    ctx.fillStyle = 'rgba(167,139,250,0.60)'; 
+    ctx.font = '500 ' + (isStory ? '44px' : '38px') + ' "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+    ctx.fillText(name || '', W/2, isStory ? H * 0.92 : H * 0.888);
+    
+    /* Bottom bar */
+    const botY = isStory ? H - 100 : H - 80;
+    ctx.strokeStyle = topLine; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, botY); ctx.lineTo(W, botY); ctx.stroke();
+    
+    /* Footer */
+    ctx.fillStyle = 'rgba(245,158,11,0.38)'; 
+    ctx.font = '600 28px "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+    ctx.fillText('✦  numerologie.app', W/2, isStory ? H - 52 : H - 42);
+  } catch (err) {
+    console.error('drawShareCard error:', err);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initForm();
   initModal();
   initCompare();
   initAccordions();
+  initIOSBanner();
+  initShareCardFormat();
+  initLoadingCancel();
+  initESCKeyHandler();
   window.addEventListener('load', registerSW);
 
   if (window.innerWidth >= 768 && !new URLSearchParams(location.search).has('name')) {

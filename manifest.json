@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Numerologie",
   "short_name": "Numerologie",
-  "description": "Pythagoreanische Numerologie v5.0 — 36 Kennzahlen, Lo-Shu Psychomatrix, Quantum Score v2, Y-Vokal-Regel. Kostenlos, lokal, offline.",
+  "description": "Pythagoreanische Numerologie v6.0 — 36 Kennzahlen, Lo-Shu Psychomatrix, Quantum Score v2, Y-Vokal-Regel, 9:16 Share. Kostenlos, lokal, offline.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -40,7 +40,22 @@
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ],
-  "screenshots": []
+  "screenshots": [
+    {
+      "src": "og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Numerologie Rechner Hauptansicht"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Numerologie Mobile App"
+    }
+  ]
 }
 
 
