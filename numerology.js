@@ -1,5 +1,5 @@
 /**
- * numerology.js — v8.2
+ * numerology.js — v8.3
  * ══════════════════════════════════════════════════════════
  *  Pythagorean Numerologie · 36 Kennzahlen
  *
@@ -10,7 +10,7 @@
  *  ✦ Quantum Score v2 (Varianz + Spread Kohärenz-Engine)
  *  ✦ Datum Auto-Format · ESC-Key Handler · iOS Banner · 9:16 Share
  *
- *  UI v8.2:
+ *  UI v8.3:
  *  ✦ Life Hero Display mit Archetypus
  *  ✦ Progressive Disclosure via Akkordeons
  *  ✦ Emotional Loading Overlay mit Cancel
@@ -2191,7 +2191,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
    26. PWA + ACCORDION + INIT  v5.0
    ═══════════════════════════════════════════════════════════ */
 
-const APP_VERSION = '8.2';
+const APP_VERSION = '8.3';
 
 async function registerSW() {
   if (!('serviceWorker' in navigator)) return;
@@ -2203,12 +2203,31 @@ async function registerSW() {
 }
 
 function initAccordions() {
+  // Lazy-loading für Akkordeon-Inhalte v8.3
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.dataset.loaded = 'true';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '100px' });
+
+  document.querySelectorAll('.acc-body').forEach(body => {
+    body.dataset.loaded = 'false';
+    observer.observe(body);
+  });
+
   document.querySelectorAll('.acc-header').forEach(header => {
     header.addEventListener('click', () => {
       const expanded = header.getAttribute('aria-expanded') === 'true';
       const body     = document.getElementById(header.getAttribute('aria-controls'));
       header.setAttribute('aria-expanded', String(!expanded));
-      if (body) body.hidden = expanded;
+      if (body) {
+        body.hidden = expanded;
+        // Markiere als geladen wenn geöffnet
+        if (!expanded) body.dataset.loaded = 'true';
+      }
     });
   });
 }
@@ -2583,7 +2602,7 @@ function renderHistory() {
   items.innerHTML = history.map(h => {
     const shortName = h.name.length > 15 ? h.name.substring(0, 13) + '…' : h.name;
     const shortDate = h.date.replace(/\./g, '/');
-    return `<button class="history-chip" data-name="${escapeHtml(h.name)}" data-date="${escapeHtml(h.date)}" type="button">
+    return `<button class="history-chip" data-name="${escapeHtml(h.name)}" data-date="${escapeHtml(h.date)}" type="button" aria-pressed="false">
       <span class="h-name">${escapeHtml(shortName)}</span>
       <span class="h-date">${escapeHtml(shortDate)}</span>
     </button>`;
@@ -2592,6 +2611,10 @@ function renderHistory() {
   // Add click handlers
   items.querySelectorAll('.history-chip').forEach(chip => {
     chip.addEventListener('click', () => {
+      // Reset all chips
+      items.querySelectorAll('.history-chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
+      // Set active
+      chip.setAttribute('aria-pressed', 'true');
       const name = chip.dataset.name;
       const date = chip.dataset.date;
       const nameInput = document.getElementById('name');
