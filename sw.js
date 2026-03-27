@@ -1,7 +1,7 @@
-/* sw.js — Numerologie v4.0 */
+/* sw.js — Numerologie v5.0 */
 'use strict';
 
-const CACHE_NAME = 'numerologie-v4';
+const CACHE_NAME = 'numerologie-v5';
 const FONT_CACHE = 'numerologie-fonts-v1';
 
 const APP_SHELL = [
@@ -10,6 +10,8 @@ const APP_SHELL = [
   '/style.css',
   '/numerology.js',
   '/manifest.json',
+  '/impressum.html',
+  '/datenschutz.html',
 ];
 
 /* ── Install: cache app shell ── */
