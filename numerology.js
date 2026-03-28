@@ -1,5 +1,5 @@
 /**
- * numerology.js — v8.8 RC
+ * numerology.js — v8.9 FINAL
  * ══════════════════════════════════════════════════════════
  *  Pythagorean Numerologie · 36 Kennzahlen
  *

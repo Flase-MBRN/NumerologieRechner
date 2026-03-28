@@ -103,7 +103,20 @@
       </section>
 
       <section class="legal-section">
-        <h2>7. Änderungen dieser Erklärung</h2>
+        <h2>7. Deine Daten exportieren (DSGVO Art. 20)</h2>
+        <p>
+          Du kannst alle lokal gespeicherten Daten (Einstellungen, History) als JSON-Datei exportieren:
+        </p>
+        <button id="exportDataBtn" class="btn btn--secondary" type="button" style="margin-top: 12px;">
+          📥 Meine Daten exportieren
+        </button>
+        <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-mid);">
+          Enthält: Theme-Einstellung, letzte 5 Berechnungen (History)
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2>8. Änderungen dieser Erklärung</h2>
         <p>
           Diese Datenschutzerklärung kann bei Änderungen der Website angepasst werden. 
           Stand: März 2026
@@ -115,5 +128,36 @@
       </p>
     </div>
   </main>
+  <script>
+    // DSGVO Art. 20 - Datenexport
+    document.getElementById('exportDataBtn').addEventListener('click', function() {
+      const data = {
+        exportDate: new Date().toISOString(),
+        appVersion: '8.9',
+        data: {
+          theme: localStorage.getItem('theme') || 'dark',
+          history: JSON.parse(localStorage.getItem('numerologyHistory') || '[]')
+        }
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'numerologie-daten-export-' + new Date().toISOString().split('T')[0] + '.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      // Feedback
+      const btn = document.getElementById('exportDataBtn');
+      const originalText = btn.textContent;
+      btn.textContent = '✅ Export erfolgreich!';
+      setTimeout(function() {
+        btn.textContent = originalText;
+      }, 3000);
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://flase-mbrn.github.io/NumerologieRechner/sitemap.xml
+
+# Crawl-delay for bots
+Crawl-delay: 10
+
+# Disallow admin/private areas (none on this site)
+# Disallow: /admin/
+
+# Allow all public content
+Allow: /index.html
+Allow: /impressum.html
+Allow: /datenschutz.html
+Allow: /style.css
+Allow: /numerology.js
+Allow: /manifest.json
+Allow: /sw.js
+Allow: /assets/
+Allow: /icon-*.png
+
+# Block sensitive files
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /node_modules/
+Disallow: /*.md$
+Disallow: /README*
+Disallow: /LICENSE*

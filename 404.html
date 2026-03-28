@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Seite nicht gefunden | Numerologie Rechner</title>
+  <meta name="description" content="Die angeforderte Seite konnte nicht gefunden werden.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .error-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .error-code {
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+    .error-message {
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      color: var(--text);
+      margin-bottom: 30px;
+    }
+    .error-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cosmic-number {
+      font-size: 3rem;
+      margin: 20px 0;
+      filter: drop-shadow(0 0 20px var(--gold-glow));
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <main class="error-container">
+    <div class="error-code" aria-hidden="true">404</div>
+    <div class="cosmic-number" aria-hidden="true">✦</div>
+    <h1 class="error-message">
+      Diese Seite existiert nicht im Universum
+    </h1>
+    <p style="color: var(--text-mid); margin-bottom: 30px;">
+      Die angeforderte Seite konnte nicht gefunden werden.<br>
+      Vielleicht hilft dir eine andere Zahl weiter?
+    </p>
+    <div class="error-actions">
+      <a href="index.html" class="btn btn--primary">
+        🏠 Zur Startseite
+      </a>
+      <a href="index.html" class="btn btn--secondary">
+        🔮 Meine Zahlen berechnen
+      </a>
+    </div>
+    <p style="margin-top: 40px; font-size: 0.85rem; color: var(--text-dim);">
+      Fehlercode: 404 | <a href="mailto:erikk2k5@gmail.com" style="color: var(--accent-bright);">Problem melden</a>
+    </p>
+  </main>
+
+  <script>
+    // Report 404 to analytics if available
+    if (window.reportError) {
+      window.reportError(new Error('404 Page Not Found'), {
+        path: window.location.pathname,
+        referrer: document.referrer
+      });
+    }
+  </script>
+</body>
+</html>

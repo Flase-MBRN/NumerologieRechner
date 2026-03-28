@@ -1,8 +1,8 @@
-/* sw.js — Numerologie v7.0 */
+/* sw.js — Numerologie v8.9 FINAL */
 'use strict';
 
 // Automatische Cache-Version mit Zeitstempel für Cache-Busting
-const CACHE_VERSION = 'v7.0.0';
+const CACHE_VERSION = 'v8.9.0';
 const CACHE_NAME = `numerologie-${CACHE_VERSION}`;
 const FONT_CACHE = `numerologie-fonts-${CACHE_VERSION}`;
 
@@ -14,6 +14,12 @@ const APP_SHELL = [
   '/manifest.json',
   '/impressum.html',
   '/datenschutz.html',
+  '/nutzungsbedingungen.html',
+  '/404.html',
+  '/faq.html',
+  '/robots.txt',
+  '/sitemap.xml',
+  '/assets/js/offline-indicator.js',
 ];
 
 /* ── Install: cache app shell ── */
