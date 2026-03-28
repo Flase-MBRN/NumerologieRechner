@@ -1,5 +1,5 @@
 /**
- * numerology.js — v8.9 FINAL
+ * numerology.js — v1.0 FINAL
  * ══════════════════════════════════════════════════════════
  *  Pythagorean Numerologie · 36 Kennzahlen
  *
@@ -1774,6 +1774,14 @@ function initForm() {
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!updateFormState()) return;
+
+    /* ══ UX BOOST: Button Loading State ══ */
+    const originalBtnText = calcBtn.innerHTML;
+    calcBtn.disabled = true;
+    calcBtn.innerHTML = '<span class="btn-spinner-wrap" aria-hidden="true">⟳</span>Berechne dein Profil…';
+    calcBtn.style.opacity = '0.8';
+    
+    await new Promise(r => setTimeout(r, 250)); // 250ms für "Hochwertigkeits-Feeling"
 
     /* ── Loading Overlay ── */
     const overlay    = document.getElementById('loadingOverlay');

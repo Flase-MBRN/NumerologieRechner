@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Numerologie Rechner",
   "short_name": "Numerologie",
-  "description": "Pythagoreanische Numerologie v8.9 FINAL — 36 Kennzahlen, Lo-Shu Psychomatrix, Quantum Score v2, Y-Vokal-Regel, 9:16 Share. Kostenlos, lokal, offline.",
+  "description": "Pythagoreanische Numerologie v1.0 FINAL — 36 Kennzahlen, Lo-Shu Psychomatrix, Quantum Score v2, Y-Vokal-Regel, 9:16 Share. Kostenlos, lokal, offline.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

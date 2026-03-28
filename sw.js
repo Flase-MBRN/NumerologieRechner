@@ -1,8 +1,8 @@
-/* sw.js — Numerologie v8.9 FINAL */
+/* sw.js — Numerologie v1.0 FINAL */
 'use strict';
 
 // Automatische Cache-Version mit Zeitstempel für Cache-Busting
-const CACHE_VERSION = 'v8.9.0';
+const CACHE_VERSION = 'v1.0 FINAL';
 const CACHE_NAME = `numerologie-${CACHE_VERSION}`;
 const FONT_CACHE = `numerologie-fonts-${CACHE_VERSION}`;
 
