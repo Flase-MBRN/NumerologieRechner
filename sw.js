@@ -7,19 +7,19 @@ const CACHE_NAME = `numerologie-${CACHE_VERSION}`;
 const FONT_CACHE = `numerologie-fonts-${CACHE_VERSION}`;
 
 const APP_SHELL = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/numerology.js',
-  '/manifest.json',
-  '/impressum.html',
-  '/datenschutz.html',
-  '/nutzungsbedingungen.html',
-  '/404.html',
-  '/faq.html',
-  '/robots.txt',
-  '/sitemap.xml',
-  '/assets/js/offline-indicator.js',
+  '/NumerologieRechner/',
+  '/NumerologieRechner/index.html',
+  '/NumerologieRechner/style.css',
+  '/NumerologieRechner/numerology.js',
+  '/NumerologieRechner/manifest.json',
+  '/NumerologieRechner/impressum.html',
+  '/NumerologieRechner/datenschutz.html',
+  '/NumerologieRechner/nutzungsbedingungen.html',
+  '/NumerologieRechner/404.html',
+  '/NumerologieRechner/faq.html',
+  '/NumerologieRechner/robots.txt',
+  '/NumerologieRechner/sitemap.xml',
+  '/NumerologieRechner/assets/js/offline-indicator.js',
 ];
 
 /* ── Install: cache app shell ── */
@@ -90,7 +90,7 @@ self.addEventListener('fetch', event => {
           if (cached) return cached;
           /* Offline fallback for navigation */
           if (event.request.mode === 'navigate') {
-            return caches.match('/index.html');
+            return caches.match('/NumerologieRechner/index.html');
           }
         })
       )

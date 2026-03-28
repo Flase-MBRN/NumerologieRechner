@@ -1,11 +1,11 @@
 {
-  "id": "/",
+  "id": "/NumerologieRechner/",
   "name": "Numerologie Rechner",
   "short_name": "Numerologie v1.0",
   "version": "1.0.0",
   "description": "Pythagoreanische Numerologie v1.0 FINAL — 36 Kennzahlen, Lo-Shu Psychomatrix, Quantum Score v2, Y-Vokal-Regel, 9:16 Share. Kostenlos, lokal, offline.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/NumerologieRechner/",
+  "scope": "/NumerologieRechner/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#07070f",
@@ -15,19 +15,19 @@
   "categories": ["lifestyle", "utilities"],
   "icons": [
     {
-      "src": "assets/favicon/icon.svg",
+      "src": "/NumerologieRechner/assets/favicon/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "assets/favicon/android-chrome-192x192.png",
+      "src": "/NumerologieRechner/assets/favicon/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/favicon/android-chrome-512x512.png",
+      "src": "/NumerologieRechner/assets/favicon/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -37,20 +37,20 @@
     {
       "name": "Neue Berechnung",
       "short_name": "Berechnen",
-      "url": "/",
-      "icons": [{ "src": "assets/favicon/android-chrome-192x192.png", "sizes": "192x192" }]
+      "url": "/NumerologieRechner/",
+      "icons": [{ "src": "/NumerologieRechner/assets/favicon/android-chrome-192x192.png", "sizes": "192x192" }]
     }
   ],
   "screenshots": [
     {
-      "src": "og-image.png",
+      "src": "/NumerologieRechner/og-image.png",
       "sizes": "1200x630",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Numerologie Rechner Hauptansicht"
     },
     {
-      "src": "assets/favicon/android-chrome-512x512.png",
+      "src": "/NumerologieRechner/assets/favicon/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
