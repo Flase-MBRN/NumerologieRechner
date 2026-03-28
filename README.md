@@ -1,4 +1,4 @@
-# Numerologie Rechner v8.9 🧮✨
+# Numerologie Rechner v1.0 🧮✨
 
 [![Deploy Status](https://github.com/Flase-MBRN/NumerologieRechner/workflows/Deploy%20to%20GitHub%20Pages/badge.svg)](https://github.com/Flase-MBRN/NumerologieRechner/actions)
 [![CodeQL](https://github.com/Flase-MBRN/NumerologieRechner/workflows/CodeQL%20Security%20Scan/badge.svg)](https://github.com/Flase-MBRN/NumerologieRechner/security)

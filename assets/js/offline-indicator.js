@@ -1,5 +1,5 @@
 /**
- * Offline Indicator v8.9
+ * Offline Indicator v1.0
  * Zeigt visuelles Feedback wenn User offline ist
  * PWA Feature für bessere UX
  */

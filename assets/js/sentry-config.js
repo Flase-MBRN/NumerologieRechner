@@ -15,7 +15,7 @@
   // Konfiguration
   const SENTRY_DSN = 'YOUR_SENTRY_DSN_HERE'; // TODO: Ersetzen mit echter DSN
   const ENVIRONMENT = window.location.hostname === 'localhost' ? 'development' : 'production';
-  const RELEASE = '8.9.0'; // Sollte mit APP_VERSION übereinstimmen
+  const RELEASE = '1.0.0'; // Sollte mit APP_VERSION übereinstimmen
 
   // Sentry nur laden wenn DSN konfiguriert
   if (!SENTRY_DSN || SENTRY_DSN.includes('YOUR_SENTRY')) {
