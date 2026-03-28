@@ -1,5 +1,5 @@
 /* ================================================================
-   style.css — Numerologie v8.3
+   style.css — Numerologie v8.8 RC
    Ästhetik: Cosmic Premium · Violett × Gold
    Fonts: Cinzel (Display) + Outfit (Body)
    ================================================================
@@ -760,6 +760,7 @@
     pointer-events: none; animation: lifeGlow 3s ease-in-out infinite alternate;
   }
   .life-hero-archetype-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
+  .life-hero-icon { font-size: 1.6rem; line-height: 1; filter: drop-shadow(0 0 8px rgba(245,158,11,0.30)); }
   .life-hero-archetype { font-family: var(--f-display); font-size: clamp(1.05rem, 3vw, 1.4rem); font-weight: 600; color: var(--text); letter-spacing: 0.02em; }
   .life-hero-badge { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; padding: 3px 9px; background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.08)); border: 1px solid var(--gold-border); border-radius: 20px; color: var(--gold); }
   .life-hero-badge--master { background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(124,58,237,0.08)); border-color: var(--accent-border); color: var(--accent-bright); }
@@ -1595,24 +1596,120 @@
   }
   
   /* ================================================================
-     33  PRINT
+     33  PRINT  (v8.5 - A4/PDF optimiert)
      ================================================================ */
   @media print {
-    body { background: #fff !important; color: #000 !important; padding: 0 !important; }
+    @page {
+      size: A4;
+      margin: 15mm 12mm;
+    }
+    body {
+      background: #fff !important;
+      color: #000 !important;
+      padding: 0 !important;
+      font-size: 10pt !important;
+      line-height: 1.4 !important;
+    }
+    /* Nur Ergebnisbereiche anzeigen */
     .bg-orb, .bg-grid, .hero, .topbar, .form-card,
     .result-actions, .compare-card, .share-bar, .cta-bar, .bar-wrap,
     .loading-overlay, .share-card-modal, .site-footer,
-    .tooltip-btn, .results-hint, .life-hero-detail-btn { display: none !important; }
-    .card { border: 1px solid #ddd !important; box-shadow: none !important; background: #fff !important; }
-    .profile-card, .result-tile { border: 1px solid #ddd !important; background: #fff !important; opacity: 1 !important; transform: none !important; break-inside: avoid; }
-    .result-value, .life-hero-num, .pc-num { color: #000 !important; text-shadow: none !important; animation: none !important; filter: none !important; }
-    .life-hero-num { font-size: 3rem !important; }
-    .container { grid-template-columns: 1fr !important; }
+    .tooltip-btn, .results-hint, .life-hero-detail-btn,
+    .history-bar, .accordions { display: none !important; }
+    
+    /* Container für Druck optimieren */
+    .container {
+      max-width: 100% !important;
+      padding: 0 !important;
+      gap: 12px !important;
+    }
+    
+    /* Cards für Druck */
+    .card {
+      border: 1px solid #ccc !important;
+      box-shadow: none !important;
+      background: #fff !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin-bottom: 12px !important;
+      padding: 12px !important;
+    }
+    
+    /* Life Hero für Druck */
+    .life-hero-display {
+      border: 2px solid #d97706 !important;
+      background: linear-gradient(145deg, #fff8f0 0%, #fff 100%) !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin-bottom: 16px !important;
+    }
+    .life-hero-num {
+      color: #d97706 !important;
+      font-size: 2.5rem !important;
+      text-shadow: none !important;
+    }
+    .life-hero-archetype { color: #1a1830 !important; }
+    .life-hero-teaser { color: #4a4870 !important; }
+    .life-hero-icon { filter: none !important; }
+    
+    /* Profile Strip */
+    .profile-strip {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 8px !important;
+      break-inside: avoid;
+    }
+    .profile-card {
+      border: 1px solid #ccc !important;
+      background: #fff !important;
+      opacity: 1 !important;
+      transform: none !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .pc-num { color: #000 !important; text-shadow: none !important; }
+    .soul-card .pc-num { color: #2563eb !important; }
+    .expr-card .pc-num { color: #7c3aed !important; }
+    .pers-card .pc-num { color: #059669 !important; }
+    
+    /* Results Grid */
+    .results-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 8px !important;
+    }
+    .result-tile {
+      border: 1px solid #ccc !important;
+      background: #fff !important;
+      opacity: 1 !important;
+      transform: none !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      min-height: auto !important;
+      padding: 10px !important;
+    }
+    .result-value {
+      color: #000 !important;
+      text-shadow: none !important;
+      animation: none !important;
+    }
+    
+    /* Textfarben für Lesbarkeit */
+    .result-explanation, .pc-expl { color: #444 !important; }
+    .result-title, .pc-label { color: #666 !important; }
+    
+    /* Verhindere Umbrechen wichtiger Elemente */
+    .life-hero-display, .profile-strip, .results-grid {
+      break-before: auto;
+      break-after: auto;
+    }
+    
+    /* Footer für Druck */
+    .site-footer { display: none !important; }
   }
   
-  
   /* ================================================================
-     33  ACCESSIBILITY / REDUCED MOTION
+     34  ACCESSIBILITY / REDUCED MOTION
      ================================================================ */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -1625,10 +1722,5 @@
     .card { background: var(--card-bg-1) !important; }
     .detail-modal { background: var(--modal-bg) !important; }
   }
-  
-  
-  
-  
-  
   
   

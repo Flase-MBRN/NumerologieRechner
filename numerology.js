@@ -1,5 +1,5 @@
 /**
- * numerology.js — v8.3
+ * numerology.js — v8.8 RC
  * ══════════════════════════════════════════════════════════
  *  Pythagorean Numerologie · 36 Kennzahlen
  *
@@ -10,7 +10,7 @@
  *  ✦ Quantum Score v2 (Varianz + Spread Kohärenz-Engine)
  *  ✦ Datum Auto-Format · ESC-Key Handler · iOS Banner · 9:16 Share
  *
- *  UI v8.3:
+ *  UI v8.8 RC:
  *  ✦ Life Hero Display mit Archetypus
  *  ✦ Progressive Disclosure via Akkordeons
  *  ✦ Emotional Loading Overlay mit Cancel
@@ -698,18 +698,18 @@ function getExplanation(displayValue, type) {
 const ARCHETYPES = {
   /* Lebensweg: vollständiger Archetypus mit Teaser */
   life: {
-    1:  { title:'Der Pionier',      teaser:'Du bahnst neue Wege, wo andere zweifeln. Führung und Eigenständigkeit sind dein Lebensthema.',                        badge:null },
-    2:  { title:'Der Diplomat',     teaser:'Du verbindest Menschen. Deine Stärke liegt im Zuhören, Vermitteln und im feinen Gespür für andere.',                  badge:null },
-    3:  { title:'Der Kreative',     teaser:'Du inspirierst durch Ausdruck. Kreativität und Kommunikation sind der Kern deines Lebenswegs.',                       badge:null },
-    4:  { title:'Der Baumeister',   teaser:'Du erschaffst Dauerhaftes. Struktur, Beständigkeit und verlässliche Systeme sind dein Fundament.',                    badge:null },
-    5:  { title:'Der Abenteurer',   teaser:'Du lebst für das Neue. Wandel ist nicht Störung — er ist dein natürlicher Zustand.',                                  badge:null },
-    6:  { title:'Der Heiler',       teaser:'Du trägst Verantwortung. Fürsorge, Familie und das Heilen von Disharmonie formen deinen Lebensweg.',                  badge:null },
-    7:  { title:'Der Denker',       teaser:'Du suchst die Wahrheit, dort wo andere aufhören zu fragen. Tiefe, Analyse und Spiritualität leiten dich.',            badge:null },
-    8:  { title:'Der Macher',       teaser:'Du manifestierst. Macht, Erfolg und das verantwortungsvolle Gestalten materieller Realität sind dein Terrain.',       badge:null },
-    9:  { title:'Der Weise',        teaser:'Du gibst. Universelles Mitgefühl, Weisheit und das Loslassen alter Muster prägen deinen einzigartigen Lebensweg.',    badge:null },
-    11: { title:'Das Medium',       teaser:'Du empfängst, was anderen verborgen bleibt. Intuition auf höchstem Niveau — ein spiritueller Kanal.',                 badge:'✦ Masterzahl' },
-    22: { title:'Der Visionär',     teaser:'Du baust die Welt von morgen. Wenige tragen dieses seltene Potential zur großen Manifestation in sich.',              badge:'✦ Masterzahl' },
-    33: { title:'Der Lehrmeister',  teaser:'Du dienst dem Ganzen. Die seltenste und tiefste aller Zahlen — spirituelles Lehren auf höchstem Niveau.',             badge:'✦ Masterzahl · Selten' },
+    1:  { title:'Der Pionier',      teaser:'Du bahnst neue Wege, wo andere zweifeln. Führung und Eigenständigkeit sind dein Lebensthema.',                        badge:null, icon:'🚀' },
+    2:  { title:'Der Diplomat',     teaser:'Du verbindest Menschen. Deine Stärke liegt im Zuhören, Vermitteln und im feinen Gespür für andere.',                  badge:null, icon:'⚖️' },
+    3:  { title:'Der Kreative',     teaser:'Du inspirierst durch Ausdruck. Kreativität und Kommunikation sind der Kern deines Lebenswegs.',                       badge:null, icon:'🎨' },
+    4:  { title:'Der Baumeister',   teaser:'Du erschaffst Dauerhaftes. Struktur, Beständigkeit und verlässliche Systeme sind dein Fundament.',                    badge:null, icon:'🏛️' },
+    5:  { title:'Der Abenteurer',   teaser:'Du lebst für das Neue. Wandel ist nicht Störung — er ist dein natürlicher Zustand.',                                  badge:null, icon:'🧭' },
+    6:  { title:'Der Heiler',       teaser:'Du trägst Verantwortung. Fürsorge, Familie und das Heilen von Disharmonie formen deinen Lebensweg.',                  badge:null, icon:'💚' },
+    7:  { title:'Der Denker',       teaser:'Du suchst die Wahrheit, dort wo andere aufhören zu fragen. Tiefe, Analyse und Spiritualität leiten dich.',            badge:null, icon:'🔮' },
+    8:  { title:'Der Macher',       teaser:'Du manifestierst. Macht, Erfolg und das verantwortungsvolle Gestalten materieller Realität sind dein Terrain.',       badge:null, icon:'👑' },
+    9:  { title:'Der Weise',        teaser:'Du gibst. Universelles Mitgefühl, Weisheit und das Loslassen alter Muster prägen deinen einzigartigen Lebensweg.',    badge:null, icon:'🦉' },
+    11: { title:'Das Medium',       teaser:'Du empfängst, was anderen verborgen bleibt. Intuition auf höchstem Niveau — ein spiritueller Kanal.',                 badge:'✦ Masterzahl', icon:'✨' },
+    22: { title:'Der Visionär',     teaser:'Du baust die Welt von morgen. Wenige tragen dieses seltene Potential zur großen Manifestation in sich.',              badge:'✦ Masterzahl', icon:'🌟' },
+    33: { title:'Der Lehrmeister',  teaser:'Du dienst dem Ganzen. Die seltenste und tiefste aller Zahlen — spirituelles Lehren auf höchstem Niveau.',             badge:'✦ Masterzahl · Selten', icon:'📿' },
   },
   expression: {
     1:{title:'Der Leader'},      2:{title:'Der Vermittler'},   3:{title:'Der Kommunikator'},
@@ -718,10 +718,10 @@ const ARCHETYPES = {
     11:{title:'Der Inspirator'}, 22:{title:'Der Gestalter'},   33:{title:'Der Mentor'},
   },
   soul: {
-    1:{title:'Innerer Kämpfer'},       2:{title:'Stille Kraft'},         3:{title:'Kreative Seele'},
-    4:{title:'Stabiler Kern'},         5:{title:'Freier Geist'},         6:{title:'Liebendes Herz'},
-    7:{title:'Spiritueller Sucher'},   8:{title:'Ambitions-Seele'},      9:{title:'Mitgefühls-Herz'},
-    11:{title:'Intuitives Medium'},    22:{title:'Visionärs-Seele'},     33:{title:'Heiler-Seele'},
+    1:{title:'Innerer Kämpfer',       icon:'🔥'},       2:{title:'Stille Kraft',         icon:'🌊'},         3:{title:'Kreative Seele', icon:'🎭'},
+    4:{title:'Stabiler Kern',         icon:'🪨'},         5:{title:'Freier Geist',         icon:'🕊️'},         6:{title:'Liebendes Herz', icon:'❤️'},
+    7:{title:'Spiritueller Sucher',   icon:'🔭'},   8:{title:'Ambitions-Seele',      icon:'⚡'},      9:{title:'Mitgefühls-Herz', icon:'🤝'},
+    11:{title:'Intuitives Medium',    icon:'🌙'},    22:{title:'Visionärs-Seele',     icon:'🌠'},     33:{title:'Heiler-Seele', icon:'💫'},
   },
   personality: {
     1:{title:'Wirkt: selbstsicher & direkt'},  2:{title:'Wirkt: sanft & einfühlsam'},
@@ -1823,6 +1823,7 @@ function initForm() {
       const heroBadge  = document.getElementById('lifeHeroBadge');
       const heroTeaser = document.getElementById('lifeHeroTeaser');
       const heroBtn    = document.getElementById('lifeHeroDetailBtn');
+      const heroIcon   = document.getElementById('lifeHeroIcon');
       if (!heroDisp) return;
       if (heroNum) {
         heroNum.textContent = lifeVal;
@@ -1834,6 +1835,7 @@ function initForm() {
       const arch = getArchetype('life', lifeVal);
       if (arch) {
         if (heroArch)   heroArch.textContent   = arch.title;
+        if (heroIcon)   heroIcon.textContent   = arch.icon || '';
         if (heroTeaser) heroTeaser.textContent = arch.teaser;
         if (heroBadge && arch.badge) {
           heroBadge.textContent = arch.badge;
@@ -2191,7 +2193,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
    26. PWA + ACCORDION + INIT  v5.0
    ═══════════════════════════════════════════════════════════ */
 
-const APP_VERSION = '8.3';
+const APP_VERSION = '8.8';
 
 async function registerSW() {
   if (!('serviceWorker' in navigator)) return;
