@@ -42,8 +42,17 @@
   <meta name="apple-mobile-web-app-title" content="Numerologie">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap"></noscript>
+  
+  <!-- MBRN Design System -->
+  <link rel="stylesheet" href="../shared/styles/mbrn-theme.css">
+  <link rel="stylesheet" href="../shared/styles/mbrn-numerologie.css">
+  
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="comparison.css">
   <script>
     if (typeof HTMLDialogElement === 'undefined') {
       document.addEventListener('DOMContentLoaded', function() {
@@ -58,113 +67,50 @@
   </script>
 </head>
 <body>
-  <!-- Skip-Link für Accessibility -->
-  <a href="#main" class="skip-link">Zum Hauptinhalt springen</a>
+  <!-- MBRN Shared Navigation -->
+  <script src="../shared/navigation.js"></script>
 
-  <!-- iOS Install Banner -->
-  <div id="iosInstallBanner" class="ios-install-banner" hidden>
-    <div class="ios-banner-inner">
-      <span class="ios-banner-icon">✦</span>
-      <div class="ios-banner-text">
-        <strong>Als App hinzufügen</strong>
-        <span>Tippe auf „Teilen“ und dann „Zum Home-Bildschirm“</span>
-      </div>
-      <button id="iosBannerDismiss" class="ios-banner-close" aria-label="Schließen">✕</button>
-    </div>
-  </div>
-    <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <!-- BACKGROUND -->
+  <div class="bg-base"></div>
+  <div class="bg-glow bg-glow--1"></div>
+  <div class="bg-glow bg-glow--2"></div>
+  <div class="bg-grid"></div>
+
+  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
   <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
   <div class="bg-grid" aria-hidden="true"></div>
 
-  <!-- LOADING OVERLAY -->
-  <div class="loading-overlay" id="loadingOverlay" aria-hidden="true" hidden>
-    <div class="loading-inner">
-      <div class="loading-star" aria-hidden="true">✦</div>
-      <p class="loading-msg" id="loadingMsg">Analyse wird gestartet…</p>
-      <div class="loading-bar-track"><div class="loading-bar" id="loadingBar"></div></div>
-      <button id="loadingCancel" class="btn btn--ghost loading-cancel" type="button">Abbrechen</button>
-    </div>
-  </div>
+  <!-- HAUPTCONTAINER -->
+  <div class="container" id="main-container">
 
-  <!-- TOPBAR -->
-  <header class="site-header" role="banner">
-    <div class="topbar">
-      <div class="topbar-inner">
-        <span class="brand-mark">
-          <span class="brand-star" aria-hidden="true">✦</span>
-          <span class="brand-name">Numerologie</span>
-          <span class="brand-version">v1.0</span>
-        </span>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Light Mode">☀</button>
+    <!-- HEADER -->
+    <header class="header">
+      <span class="header-eyebrow">✦ KOSTENLOS · KEIN KONTO · OHNE WARTESCHLEIFE</span>
+      <h1 class="title">Dein numerologisches<br><span class="title-sub">Profil — in 5 Sekunden.</span></h1>
+      <p class="subtitle">36 Kennzahlen. Ein System. Komplett kostenlos. Ohne Account.</p>
+      <p class="subtitle-secondary">Entdecke <strong>Lebenszahl, Archetypus, Seelenzahl</strong> und 33 weitere Parameter — berechnet lokal in deinem Browser, nie auf einem Server.</p>
+      <div class="trust-row">
+        <span class="trust-badge">✦ Kostenlos</span>
+        <span class="trust-badge">⚡ Sofort</span>
+        <span class="trust-badge">🔒 Lokal</span>
+        <span class="trust-badge">◈ Ohne Account</span>
       </div>
-    </div>
-
-    <!-- HERO -->
-    <div class="hero">
-      <div class="hero-inner">
-        <!-- System-ID Badge wie MBRN -->
-        <div class="hero-system-badge">
-          <span class="system-badge-dot" aria-hidden="true"></span>
-          <span class="system-badge-text">System · Numerologie · v1.0 FINAL</span>
-        </div>
-
-        <h1 class="hero-headline">
-          Dein numerologisches<br>
-          <em class="hero-hl">Profil — in 5 Sekunden.</em>
-        </h1>
-
-        <p class="hero-tagline">
-          36 Kennzahlen. Ein System. Komplett kostenlos. Ohne Account.
-        </p>
-
-        <div class="hero-divider" aria-hidden="true"></div>
-
-        <p class="hero-desc">
-          Entdecke <strong>Lebenszahl, Archetypus, Seelenzahl</strong> und 33 weitere Parameter — 
-          berechnet lokal in deinem Browser, nie auf einem Server.
-        </p>
-
-        <!-- Spec-Tags: Produkt-Value klar kommunizieren -->
-        <div class="hero-specs">
-          <span class="hero-spec">✦ Kostenlos</span>
-          <span class="hero-spec">⚡ Sofort</span>
-          <span class="hero-spec">🔒 Lokal</span>
-          <span class="hero-spec">◈ Ohne Account</span>
-        </div>
-
-        <!-- Privacy-Micro-Note: Vertrauen etablieren -->
-        <p class="hero-privacy-note">
-          <span aria-hidden="true">🔒</span> Deine Daten bleiben auf deinem Gerät. Nie gespeichert. Nie geteilt.
-        </p>
-        <button class="hero-info-btn" id="heroInfoBtn" type="button" aria-expanded="false">
-          <span class="info-btn-icon" aria-hidden="true">◈</span>
-          <span class="info-btn-text">System-Details</span>
-          <span class="hero-info-caret" aria-hidden="true">↓</span>
-        </button>
-        <div class="hero-info-body" id="heroInfoBody" hidden>
-          <p><strong>Numerologie</strong> verbindet Zahlen mit Lebensmustern. Jeder Buchstabe deines Namens trägt eine Schwingung.</p>
-          <p>Dieses System nutzt: <strong>Pythagoreisches Zahlensystem</strong> · <strong>Y-Vokal-Regel</strong> · <strong>Komponenten-Methode</strong> · <strong>Lo-Shu Psychomatrix</strong></p>
-        </div>
-
-        <!-- Scroll-Indicator wie MBRN -->
-        <div class="hero-scroll" aria-hidden="true">
-          <span class="hero-scroll-text">System starten</span>
-          <span class="hero-scroll-arrow">↓</span>
-        </div>
+      <p class="privacy-note">
+        <span aria-hidden="true">🔒</span> Deine Daten bleiben auf deinem Gerät. Nie gespeichert. Nie geteilt.
+      </p>
+      <button class="info-btn" id="heroInfoBtn" type="button" aria-expanded="false">
+        <span class="info-btn-icon" aria-hidden="true">◈</span>
+        <span class="info-btn-text">System-Details</span>
+        <span class="info-btn-caret" aria-hidden="true">↓</span>
+      </button>
+      <div class="info-body" id="heroInfoBody" hidden>
+        <p><strong>Numerologie</strong> verbindet Zahlen mit Lebensmustern. Jeder Buchstabe deines Namens trägt eine Schwingung.</p>
+        <p>Dieses System nutzt: <strong>Pythagoreisches Zahlensystem</strong> · <strong>Y-Vokal-Regel</strong> · <strong>Komponenten-Methode</strong> · <strong>Lo-Shu Psychomatrix</strong></p>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main class="content" id="main" role="main">
-    <div class="container">
-
-        <!-- Letzte Berechnungen (wird per JS befüllt) -->
-        <div class="history-bar" id="historyBar" hidden>
-          <span class="history-label">Zuletzt berechnet:</span>
-          <div class="history-items" id="historyItems"></div>
-          <button class="history-clear" id="historyClear" type="button" aria-label="Verlauf löschen">✕</button>
-        </div>
-      <section class="card form-card" aria-labelledby="form-title">
+    <!-- FORMULAR -->
+    <section class="card form-card" aria-labelledby="form-title">
         <!-- MBRN-Style Card Header mit Category und Tier -->
         <div class="card-header-row">
           <div class="card-category card-category--core">
@@ -195,7 +141,7 @@
             </div>
             <div class="button-row">
               <button type="submit" id="calcBtn" class="btn btn--primary btn--calc" aria-controls="resultsRegion">
-                <span class="btn-spinner-wrap" aria-hidden="true">✦</span>System starten
+                <span class="btn-spinner-wrap" aria-hidden="true">✦</span>Berechnen
               </button>
               <button type="button" id="exampleBtn" class="btn btn--ghost" aria-label="Beispieldaten einfügen">Beispiel</button>
               <button type="reset" id="resetBtn" class="btn btn--secondary">Zurücksetzen</button>
@@ -220,14 +166,35 @@
           <div class="card-spec">Shareable Output-Card</div>
         </div>
       </section>
+      </section>
 
         <!-- ═══ MODULE: ERGEBNISSE (Results Module) ═══ -->
       <section class="card results-card" aria-labelledby="results-title" id="resultsRegion">
+        <!-- Phase 2: Streak Display -->
+        <div class="streak-display" id="streakDisplay" hidden></div>
+        
         <div class="results-card-header">
           <h2 id="results-title" class="card-title">Dein Profil</h2>
           <div class="result-actions" id="resultActions" hidden>
+            <button class="btn btn--ghost icon-btn" id="compareBtn" type="button" onclick="document.getElementById('compareWrap').hidden = false; document.getElementById('compareWrap').scrollIntoView({behavior: 'smooth'});" aria-label="Vergleichen" title="Mit anderem Profil vergleichen">⚖️</button>
             <button class="btn btn--ghost icon-btn" id="printBtn" type="button" aria-label="Drucken">🖨</button>
           </div>
+        </div>
+
+        <!-- Phase 2: Trust Badges -->
+        <div class="trust-badges" id="trustBadges">
+          <span class="trust-badge" title="Berechnet lokal in deinem Browser">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            Local-First
+          </span>
+          <span class="trust-badge" title="Keine Daten verlassen dein Gerät">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            Zero Tracking
+          </span>
+          <span class="trust-badge" title="Basierend auf pythagoreischer Numerologie">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+            Pythagoreisch
+          </span>
         </div>
 
         <!-- Leer-Zustand -->
@@ -485,22 +452,6 @@
 
   </main>
 
-  <footer class="site-footer" role="contentinfo">
-    <div class="footer-inner">
-      <p class="footer-brand">✦ Numerologie</p>
-      <p class="footer-info">36 Zahlen · Lo-Shu Psychomatrix · Quantum Score v2 · Y-Vokal-Regel</p>
-      <nav class="footer-legal" aria-label="Rechtliche Informationen">
-        <a href="impressum.html">Impressum</a>
-        <span aria-hidden="true">·</span>
-        <a href="datenschutz.html">Datenschutz</a>
-        <span aria-hidden="true">·</span>
-        <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
-        <span aria-hidden="true">·</span>
-        <a href="faq.html">FAQ</a>
-      </nav>
-    </div>
-  </footer>
-
   <!-- DETAIL MODAL -->
   <dialog class="detail-modal" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="modalNumberType" aria-describedby="modalShortExpl">
     <div class="modal-inner">
@@ -554,6 +505,8 @@
 
   <script src="assets/js/sentry-config.js"></script>
   
+  <script src="assets/js/offline-indicator.js"></script>
+  
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
@@ -588,12 +541,62 @@
   
   <script src="assets/js/offline-indicator.js"></script>
   <script src="numerology.js" defer></script>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="mbrn-footer">
+    <div class="mbrn-footer-inner">
+      <div class="mbrn-footer-brand">
+        <span class="mbrn-footer-brand-logo">✦</span>
+        <span>MBRN Tools</span>
+      </div>
+      
+      <div class="mbrn-footer-links">
+        <a href="https://flase-mbrn.github.io/MBRN/" class="mbrn-footer-link" target="_blank" rel="noopener">Hauptseite</a>
+        <span class="mbrn-footer-divider">|</span>
+        <a href="impressum.html" class="mbrn-footer-link">Impressum</a>
+        <span class="mbrn-footer-divider">|</span>
+        <a href="datenschutz.html" class="mbrn-footer-link">Datenschutz</a>
+      </div>
+      
+      <p class="mbrn-footer-copyright">© 2026 MBRN. Built to be used.</p>
+    </div>
+  </footer>
+
+  <!-- ===== LEGAL MODAL ===== -->
+  <div class="mbrn-legal-modal-overlay" id="legal-modal">
+    <div class="mbrn-legal-modal">
+      <div class="mbrn-legal-modal-header">
+        <h3 class="mbrn-legal-modal-title">Impressum & Datenschutz</h3>
+        <button class="mbrn-legal-modal-close" onclick="closeLegalModal()" type="button">✕</button>
+      </div>
+      <div class="mbrn-legal-modal-content">
+        <p><strong>Keine Datenspeicherung</strong><br>Alle Berechnungen erfolgen vollständig lokal in deinem Browser. Es werden keine Daten an Server übertragen.</p>
+        
+        <p><strong>Impressum (Angaben gemäß § 5 TMG)</strong><br>Max Mustermann<br>Musterstraße 1<br>12345 Musterstadt<br>Kontakt: kontakt@mbrn-tools.de</p>
+        
+        <p><strong>Datenschutz (DSGVO)</strong><br>Diese Webseite nutzt Google Fonts. Es findet kein Tracking statt. Alle Berechnungen erfolgen lokal im Browser.</p>
+        
+        <p class="privacy-small">© 2026 MBRN Tools · Built to be used.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openLegalModal() {
+      document.getElementById('legal-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLegalModal() {
+      document.getElementById('legal-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('legal-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeLegalModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLegalModal();
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
 
