@@ -23,6 +23,61 @@
 
 
 /* ═══════════════════════════════════════════════════════════
+   SECURITY UTILITIES - XSS Protection & Safe DOM Operations
+   ═══════════════════════════════════════════════════════════ */
+
+/**
+ * XSS-Schutz: HTML-Entities escapen
+ * Verhindert Injection über User-Input
+ */
+function escapeHtml(str) {
+  if (!str || typeof str !== 'string') return '';
+  return str.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+/**
+ * Sichere String-Sanitization (entfernt alle HTML-artigen Zeichen)
+ */
+function safeString(str) {
+  if (!str || typeof str !== 'string') return '';
+  return str.replace(/[<>\"'&]/g, '');
+}
+
+/**
+ * Sichere Number-Parsing mit Constraints
+ */
+function safeNumber(value, min = -Infinity, max = Infinity, fallback = 0) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return fallback;
+  return Math.max(min, Math.min(max, num));
+}
+
+/**
+ * Sichere DOM-Operation: Element leeren
+ */
+function safeClear(element) {
+  if (!element) return;
+  while (element.firstChild) element.removeChild(element.firstChild);
+}
+
+/**
+ * Sichere DOM-Operation: Text setzen
+ */
+function safeSetText(element, value) {
+  if (!element) return;
+  element.textContent = String(value ?? '');
+}
+
+/**
+ * Sichere URL-Validierung
+ */
+function isSafeUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  return /^https?:\/\//i.test(url) || url.startsWith('/') || url.startsWith('#');
+}
+
+
+/* ═══════════════════════════════════════════════════════════
    1. KONSTANTEN
    ═══════════════════════════════════════════════════════════ */
 
@@ -1475,19 +1530,100 @@ function openModal(type, displayValue, sourceTile) {
       const barW  = maxCount > 0 ? Math.round((count / maxCount) * 100) : 0;
       const pct   = Math.round((count / total) * 100);
       const isDom = count === maxCount && count > 0;
-      html += '<div class="modal-plane-row' + (isDom ? ' modal-plane-row--dom' : '') + '">'
-        + '<div class="modal-plane-header">'
-        +   '<span class="modal-plane-label">' + label + '</span>'
-        +   '<span class="modal-plane-num">' + count + ' <small>(' + pct + '%)</small></span>'
-        + '</div>'
-        + '<div class="modal-plane-track">'
-        +   '<div class="modal-plane-fill" style="width:' + barW + '%;background:' + color + '"></div>'
-        + '</div>'
-        + '<p class="modal-plane-desc">' + desc + '</p>'
-        + '</div>';
+      // SECURITY: DOM Konstruktion statt HTML-String
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'modal-plane-row' + (isDom ? ' modal-plane-row--dom' : '');
+      
+      const headerDiv = document.createElement('div');
+      headerDiv.className = 'modal-plane-header';
+      
+      const labelSpan = document.createElement('span');
+      labelSpan.className = 'modal-plane-label';
+      labelSpan.textContent = label;
+      
+      const numSpan = document.createElement('span');
+      numSpan.className = 'modal-plane-num';
+      numSpan.textContent = count + ' ';
+      const small = document.createElement('small');
+      small.textContent = '(' + pct + '%)';
+      numSpan.appendChild(small);
+      
+      headerDiv.append(labelSpan, numSpan);
+      
+      const trackDiv = document.createElement('div');
+      trackDiv.className = 'modal-plane-track';
+      const fillDiv = document.createElement('div');
+      fillDiv.className = 'modal-plane-fill';
+      fillDiv.style.width = barW + '%';
+      fillDiv.style.background = color;
+      trackDiv.appendChild(fillDiv);
+      
+      const descP = document.createElement('p');
+      descP.className = 'modal-plane-desc';
+      descP.textContent = desc;
+      
+      rowDiv.append(headerDiv, trackDiv, descP);
+      
+      // Append to container instead of building HTML string
+      const container = document.getElementById('modalExtended');
+      if (container && !container.querySelector('.modal-planes')) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'modal-planes';
+        container.appendChild(wrapper);
+      }
+      const wrapper = document.getElementById('modalExtended')?.querySelector('.modal-planes');
+      if (wrapper) wrapper.appendChild(rowDiv);
     });
-    html += '</div>';
-    document.getElementById('modalExtended').innerHTML = html;
+    // Clear previous content and use DOM structure
+    const modalExtended = document.getElementById('modalExtended');
+    if (modalExtended) {
+      safeClear(modalExtended);
+      const wrapper = document.createElement('div');
+      wrapper.className = 'modal-planes';
+      
+      entries.forEach(({ key, count }) => {
+        const { label, color, desc } = pd[key];
+        const barW  = maxCount > 0 ? Math.round((count / maxCount) * 100) : 0;
+        const pct   = Math.round((count / total) * 100);
+        const isDom = count === maxCount && count > 0;
+        
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'modal-plane-row' + (isDom ? ' modal-plane-row--dom' : '');
+        
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'modal-plane-header';
+        
+        const labelSpan = document.createElement('span');
+        labelSpan.className = 'modal-plane-label';
+        labelSpan.textContent = label;
+        
+        const numSpan = document.createElement('span');
+        numSpan.className = 'modal-plane-num';
+        numSpan.textContent = count + ' ';
+        const small = document.createElement('small');
+        small.textContent = '(' + pct + '%)';
+        numSpan.appendChild(small);
+        
+        headerDiv.append(labelSpan, numSpan);
+        
+        const trackDiv = document.createElement('div');
+        trackDiv.className = 'modal-plane-track';
+        const fillDiv = document.createElement('div');
+        fillDiv.className = 'modal-plane-fill';
+        fillDiv.style.width = barW + '%';
+        fillDiv.style.background = color;
+        trackDiv.appendChild(fillDiv);
+        
+        const descP = document.createElement('p');
+        descP.className = 'modal-plane-desc';
+        descP.textContent = desc;
+        
+        rowDiv.append(headerDiv, trackDiv, descP);
+        wrapper.appendChild(rowDiv);
+      });
+      
+      modalExtended.appendChild(wrapper);
+    }
     modal.showModal();
     document.getElementById('modalClose').focus();
     return;
@@ -1507,36 +1643,83 @@ function openModal(type, displayValue, sourceTile) {
     const strong   = Object.entries(freq).filter(([,v]) => v >= 3).map(([k,v]) => `${k}(${v}×)`);
     const activeL  = loShuLines(freq);
 
-    let html = '<div class="modal-lo-shu">';
-
-    // 3×3 Gitter im Modal
-    html += '<div class="modal-lo-shu-grid">';
-    LO_SHU_LAYOUT.forEach(row => {
-      row.forEach(num => {
-        const count = freq[num] || 0;
-        const cls = 'modal-lo-shu-cell'
-          + (count === 0 ? ' lo-shu-cell--missing' : '')
-          + (count >= 3  ? ' lo-shu-cell--strong'  : '');
-        const dots = count === 0 ? '–' : '●'.repeat(Math.min(count, 4)) + (count > 4 ? `+${count-4}` : '');
-        html += `<div class="${cls}"><span class="lo-shu-num">${num}</span><span class="lo-shu-dots">${dots}</span></div>`;
+    const modalExtended = document.getElementById('modalExtended');
+    if (modalExtended) {
+      // SECURITY: DOM-API statt innerHTML
+      safeClear(modalExtended);
+      
+      const container = document.createElement('div');
+      container.className = 'modal-lo-shu';
+      
+      // 3×3 Gitter sicher konstruieren
+      const grid = document.createElement('div');
+      grid.className = 'modal-lo-shu-grid';
+      
+      LO_SHU_LAYOUT.forEach(row => {
+        row.forEach(num => {
+          const count = freq[num] || 0;
+          const cell = document.createElement('div');
+          cell.className = 'modal-lo-shu-cell'
+            + (count === 0 ? ' lo-shu-cell--missing' : '')
+            + (count >= 3  ? ' lo-shu-cell--strong'  : '');
+          
+          const numSpan = document.createElement('span');
+          numSpan.className = 'lo-shu-num';
+          numSpan.textContent = String(num);
+          
+          const dotsSpan = document.createElement('span');
+          dotsSpan.className = 'lo-shu-dots';
+          dotsSpan.textContent = count === 0 ? '–' : '●'.repeat(Math.min(count, 4)) + (count > 4 ? '+' + (count-4) : '');
+          
+          cell.appendChild(numSpan);
+          cell.appendChild(dotsSpan);
+          grid.appendChild(cell);
+        });
       });
-    });
-    html += '</div>';
-
-    if (missing.length > 0) {
-      html += `<div class="modal-lo-shu-info modal-lo-shu-info--missing"><strong>Fehlende Zahlen (${missing.length}):</strong> ${missing.join(', ')} — Diese Energien dürfen bewusst entwickelt werden.</div>`;
+      
+      container.appendChild(grid);
+      
+      // Info-Boxen sicher hinzufügen
+      if (missing.length > 0) {
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'modal-lo-shu-info modal-lo-shu-info--missing';
+        const strong = document.createElement('strong');
+        strong.textContent = 'Fehlende Zahlen (' + missing.length + '): ';
+        infoDiv.appendChild(strong);
+        infoDiv.appendChild(document.createTextNode(missing.join(', ') + ' — Diese Energien dürfen bewusst entwickelt werden.'));
+        container.appendChild(infoDiv);
+      }
+      
+      if (strong.length > 0) {
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'modal-lo-shu-info modal-lo-shu-info--strong';
+        const strongEl = document.createElement('strong');
+        strongEl.textContent = 'Starke Zahlen: ';
+        infoDiv.appendChild(strongEl);
+        infoDiv.appendChild(document.createTextNode(strong.join(', ') + ' — Dominante Energiefelder deiner Persönlichkeit.'));
+        container.appendChild(infoDiv);
+      }
+      
+      if (activeL.length > 0) {
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'modal-lo-shu-info modal-lo-shu-info--lines';
+        const strong = document.createElement('strong');
+        strong.textContent = 'Aktive Linien (' + activeL.length + '):';
+        infoDiv.appendChild(strong);
+        activeL.forEach(line => {
+          infoDiv.appendChild(document.createElement('br'));
+          infoDiv.appendChild(document.createTextNode(line));
+        });
+        container.appendChild(infoDiv);
+      } else {
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'modal-lo-shu-info';
+        infoDiv.textContent = 'Keine vollständigen Linien — das bedeutet viele offene Entwicklungsfelder.';
+        container.appendChild(infoDiv);
+      }
+      
+      modalExtended.appendChild(container);
     }
-    if (strong.length > 0) {
-      html += `<div class="modal-lo-shu-info modal-lo-shu-info--strong"><strong>Starke Zahlen:</strong> ${strong.join(', ')} — Dominante Energiefelder deiner Persönlichkeit.</div>`;
-    }
-    if (activeL.length > 0) {
-      html += `<div class="modal-lo-shu-info modal-lo-shu-info--lines"><strong>Aktive Linien (${activeL.length}):</strong><br>${activeL.join('<br>')}</div>`;
-    } else {
-      html += `<div class="modal-lo-shu-info">Keine vollständigen Linien — das bedeutet viele offene Entwicklungsfelder.</div>`;
-    }
-
-    html += '</div>';
-    document.getElementById('modalExtended').innerHTML = html;
     modal.showModal();
     document.getElementById('modalClose').focus();
     return;
@@ -1988,9 +2171,10 @@ function initForm() {
       const lifeArch = getArchetype('life', lifeVal);
       const { base: lb } = parseDisplayValue(lifeVal);
       const archName = lifeArch?.title || '';
-      shareTextEl.innerHTML = 'Meine <strong>Lebenszahl</strong> ist die <strong>' + lifeVal + '</strong>'
-        + (archName ? ' – <strong>' + archName + '</strong>' : '')
-        + '. Seele: <strong>' + soulVal + '</strong> · Ausdruck: <strong>' + expressionVal + '</strong>.';
+      // SECURITY: textContent statt innerHTML - verhindert XSS
+      shareTextEl.textContent = 'Meine Lebenszahl ist die ' + lifeVal
+        + (archName ? ' – ' + archName : '')
+        + '. Seele: ' + soulVal + ' · Ausdruck: ' + expressionVal + '.';
     }
     ['shareBarWrap','ctaBarWrap','compareWrap'].forEach(id => {
       const el = document.getElementById(id);
@@ -2056,12 +2240,23 @@ function initCompare() {
   if (!form || !resEl) return;
   form.addEventListener('submit', e => {
     e.preventDefault();
-    const n1 = document.getElementById('compareName1')?.value.trim();
-    const d1 = document.getElementById('compareDate1')?.value.trim();
-    const n2 = document.getElementById('compareName2')?.value.trim();
-    const d2 = document.getElementById('compareDate2')?.value.trim();
-    if (!validateName(n1).ok || !isValidDate(d1) || !validateName(n2).ok || !isValidDate(d2)) {
-      resEl.innerHTML = '<p class="compare-error">Bitte alle Felder korrekt ausfüllen.</p>';
+    // SECURITY: Input validieren und escapen
+    const n1Raw = document.getElementById('compareName1')?.value?.trim() || '';
+    const d1 = document.getElementById('compareDate1')?.value?.trim() || '';
+    const n2Raw = document.getElementById('compareName2')?.value?.trim() || '';
+    const d2 = document.getElementById('compareDate2')?.value?.trim() || '';
+    
+    // XSS-Schutz: Alle Userdaten escapen
+    const n1 = escapeHtml(n1Raw);
+    const n2 = escapeHtml(n2Raw);
+    
+    if (!validateName(n1Raw).ok || !isValidDate(d1) || !validateName(n2Raw).ok || !isValidDate(d2)) {
+      // SECURITY: Kein innerHTML mit dynamischem Content
+      const errEl = document.createElement('p');
+      errEl.className = 'compare-error';
+      errEl.textContent = 'Bitte alle Felder korrekt ausfüllen.';
+      safeClear(resEl);
+      resEl.appendChild(errEl);
       return;
     }
     const calc = (nm, dt) => ({
@@ -2070,30 +2265,85 @@ function initCompare() {
       expression:  reduceForceSingle(calculateExpressionSum(nm)),
       personality: reduceForceSingle(calculatePersonalitySum(nm)),
     });
-    const p1   = calc(n1, d1), p2 = calc(n2, d2);
+    const p1   = calc(n1Raw, d1), p2 = calc(n2Raw, d2);
     const dims = [
       { key:'life', label:'Lebenszahl' }, { key:'soul', label:'Seelenzahl' },
       { key:'expression', label:'Ausdruckszahl' }, { key:'personality', label:'Persönlichkeit' },
     ];
-    let total = 0, rows = '';
+    let total = 0;
+    
+    // SECURITY: DOM-API statt HTML-String-Konstruktion
+    safeClear(resEl);
+    
+    // Container für Rows
+    const rowsContainer = document.createElement('div');
+    rowsContainer.className = 'compat-rows';
+    
     dims.forEach(({ key, label }) => {
       const score = numberHarmony(p1[key], p2[key]);
       total += score;
       const color = score >= 80 ? 'var(--life)' : score >= 65 ? 'var(--gold)' : 'var(--soul)';
-      rows += '<div class="compat-row">'
-        + '<div class="compat-label">' + label + '</div>'
-        + '<div class="compat-nums">' + p1[key] + ' · ' + p2[key] + '</div>'
-        + '<div class="compat-bar-wrap"><div class="compat-bar" style="width:' + score + '%;background:' + color + '"></div></div>'
-        + '<div class="compat-pct">' + score + '%</div></div>';
+      
+      // Sichere DOM-Konstruktion statt innerHTML
+      const row = document.createElement('div');
+      row.className = 'compat-row';
+      
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'compat-label';
+      labelDiv.textContent = label;
+      
+      const numsDiv = document.createElement('div');
+      numsDiv.className = 'compat-nums';
+      numsDiv.textContent = p1[key] + ' · ' + p2[key];
+      
+      const barWrap = document.createElement('div');
+      barWrap.className = 'compat-bar-wrap';
+      const bar = document.createElement('div');
+      bar.className = 'compat-bar';
+      bar.style.width = score + '%';
+      bar.style.background = color;
+      barWrap.appendChild(bar);
+      
+      const pctDiv = document.createElement('div');
+      pctDiv.className = 'compat-pct';
+      pctDiv.textContent = score + '%';
+      
+      row.append(labelDiv, numsDiv, barWrap, pctDiv);
+      rowsContainer.appendChild(row);
     });
+    
     const overall = Math.round(total / dims.length);
     const emoji   = overall >= 80 ? '✦' : overall >= 65 ? '◈' : '◉';
     const lbl     = overall >= 80 ? 'Hohe Harmonie' : overall >= 65 ? 'Gute Basis' : 'Wachstumspotenzial';
-    resEl.innerHTML = '<div class="compat-header"><div class="compat-names">' + n1 + ' <span>✦</span> ' + n2 + '</div>'
-      + '<div class="compat-overall"><span class="compat-score">' + overall + '%</span><span class="compat-label-big">' + emoji + ' ' + lbl + '</span></div></div>'
-      + '<div class="compat-rows">' + rows + '</div>';
+    
+    // Header sicher konstruieren
+    const header = document.createElement('div');
+    header.className = 'compat-header';
+    
+    const namesDiv = document.createElement('div');
+    namesDiv.className = 'compat-names';
+    // SECURITY: Bereits escaped via escapeHtml()
+    namesDiv.innerHTML = n1 + ' <span>✦</span> ' + n2; // Span ist statisch sicher
+    
+    const overallDiv = document.createElement('div');
+    overallDiv.className = 'compat-overall';
+    
+    const scoreSpan = document.createElement('span');
+    scoreSpan.className = 'compat-score';
+    scoreSpan.textContent = overall + '%';
+    
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'compat-label-big';
+    labelSpan.textContent = emoji + ' ' + lbl;
+    
+    overallDiv.append(scoreSpan, labelSpan);
+    header.appendChild(namesDiv);
+    header.appendChild(overallDiv);
+    
+    resEl.appendChild(header);
+    resEl.appendChild(rowsContainer);
   });
-  form.addEventListener('reset', () => { resEl.innerHTML = ''; });
+  form.addEventListener('reset', () => { safeClear(resEl); });
 }
 
 
@@ -2627,36 +2877,54 @@ function renderHistory() {
     return;
   }
   
-  items.innerHTML = history.map(h => {
-    const shortName = h.name.length > 15 ? h.name.substring(0, 13) + '…' : h.name;
-    const shortDate = h.date.replace(/\./g, '/');
-    return `<button class="history-chip" data-name="${escapeHtml(h.name)}" data-date="${escapeHtml(h.date)}" type="button" aria-pressed="false">
-      <span class="h-name">${escapeHtml(shortName)}</span>
-      <span class="h-date">${escapeHtml(shortDate)}</span>
-    </button>`;
-  }).join('');
+  // SECURITY: DOM-API statt innerHTML
+  safeClear(items);
   
-  // Add click handlers
-  items.querySelectorAll('.history-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      // Reset all chips
+  history.forEach(h => {
+    // XSS-Schutz: Daten escapen
+    const name = escapeHtml(h.name || '');
+    const date = escapeHtml(h.date || '');
+    const shortName = name.length > 15 ? name.substring(0, 13) + '…' : name;
+    const shortDate = date.replace(/\./g, '/');
+    
+    // Sichere DOM-Konstruktion
+    const btn = document.createElement('button');
+    btn.className = 'history-chip';
+    btn.setAttribute('data-name', h.name); // Original für interne Verwendung
+    btn.setAttribute('data-date', h.date);
+    btn.type = 'button';
+    btn.setAttribute('aria-pressed', 'false');
+    
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'h-name';
+    nameSpan.textContent = shortName;
+    
+    const dateSpan = document.createElement('span');
+    dateSpan.className = 'h-date';
+    dateSpan.textContent = shortDate;
+    
+    btn.appendChild(nameSpan);
+    btn.appendChild(dateSpan);
+    
+    // Click Handler
+    btn.addEventListener('click', () => {
       items.querySelectorAll('.history-chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
-      // Set active
-      chip.setAttribute('aria-pressed', 'true');
-      const name = chip.dataset.name;
-      const date = chip.dataset.date;
+      btn.setAttribute('aria-pressed', 'true');
+      const n = btn.dataset.name;
+      const d = btn.dataset.date;
       const nameInput = document.getElementById('name');
       const dateInput = document.getElementById('birthdate');
-      if (nameInput) nameInput.value = name;
-      if (dateInput) dateInput.value = date;
-      // Trigger update and submit
+      if (nameInput) nameInput.value = n;
+      if (dateInput) dateInput.value = d;
       const form = document.getElementById('numerologyForm');
       if (form) {
         form.dispatchEvent(new Event('input', { bubbles: true }));
         setTimeout(() => form.dispatchEvent(new Event('submit')), 100);
       }
-      showToast(`Geladen: ${name}`);
+      showToast(`Geladen: ${escapeHtml(n)}`);
     });
+    
+    items.appendChild(btn);
   });
   
   bar.hidden = false;
@@ -2667,11 +2935,6 @@ function clearHistory() {
     localStorage.removeItem(HISTORY_KEY);
   } catch { /* noop */ }
   renderHistory();
-}
-
-function escapeHtml(str) {
-  if (!str) return '';
-  return str.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
 function initHistory() {

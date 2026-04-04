@@ -5,7 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Finde deine persönliche Zahl – Numerologie Rechner</title>
   <meta name="description" content="Gib deinen Namen ein und entdecke, was die Zahlen über dich verraten. Kostenlos, direkt im Browser, ohne Datenspeicherung.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://js.sentry-cdn.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://sentry.io; manifest-src 'self'; worker-src 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;">
+  
+  <!-- Security Headers (GitHub Pages compatible via meta tags) -->
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="no-referrer">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), fullscreen=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()">
+  
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="version" content="v1.0">
   <link rel="canonical" href="https://flase-mbrn.github.io/NumerologieRechner/">
@@ -107,18 +115,8 @@
     }
   </style>
   
-  <script>
-    if (typeof HTMLDialogElement === 'undefined') {
-      document.addEventListener('DOMContentLoaded', function() {
-        ['detailModal','shareCardModal'].forEach(function(id) {
-          var d = document.getElementById(id);
-          if (!d) return;
-          d.showModal = function() { d.setAttribute('open',''); d.style.display='flex'; };
-          d.close    = function() { d.removeAttribute('open'); d.style.display=''; };
-        });
-      });
-    }
-  </script>
+  <!-- Externe Scripts (CSP Compliance) -->
+  <script src="assets/js/inline-scripts.js" defer></script>
 </head>
 <body>
 
@@ -181,14 +179,16 @@
             <div class="input-group">
               <label for="name" class="input-label">Dein vollständiger Name</label>
               <input type="text" id="name" name="name" autocomplete="name" inputmode="text"
-                placeholder="Vorname Nachname" aria-describedby="nameError nameHint">
+                placeholder="Vorname Nachname" aria-describedby="nameError nameHint"
+                minlength="2" maxlength="100" pattern="[A-Za-zÄäÖöÜüß\- ]{2,100}" required>
               <p class="input-hint" id="nameHint">Umlaute, ß und Bindestriche funktionieren automatisch.</p>
               <div class="error-msg" id="nameError" role="alert" aria-live="polite"></div>
             </div>
             <div class="input-group">
               <label for="birthdate" class="input-label">Dein Geburtstag</label>
               <input type="text" id="birthdate" name="birthdate" autocomplete="bday" inputmode="numeric"
-                pattern="\d{2}\.\d{2}\.\d{4}" placeholder="TT.MM.JJJJ" aria-describedby="dateError">
+                pattern="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)[0-9]{2}" placeholder="TT.MM.JJJJ" 
+                aria-describedby="dateError" minlength="10" maxlength="10" required>
               <div class="error-msg" id="dateError" role="alert" aria-live="polite"></div>
             </div>
             <div class="button-row">
@@ -423,11 +423,13 @@
               <div class="compare-person-label">Person 1</div>
               <div class="input-group">
                 <label for="compareName1" class="input-label">Name</label>
-                <input type="text" id="compareName1" inputmode="text" placeholder="Vorname Nachname">
+                <input type="text" id="compareName1" inputmode="text" placeholder="Vorname Nachname"
+                  minlength="2" maxlength="100" pattern="[A-Za-zÄäÖöÜüß\- ]{2,100}" required>
               </div>
               <div class="input-group">
                 <label for="compareDate1" class="input-label">Geburtsdatum</label>
-                <input type="text" id="compareDate1" inputmode="numeric" placeholder="TT.MM.JJJJ">
+                <input type="text" id="compareDate1" inputmode="numeric" placeholder="TT.MM.JJJJ"
+                  pattern="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)[0-9]{2}" minlength="10" maxlength="10" required>
               </div>
             </div>
             <div class="compare-divider" aria-hidden="true">✦</div>
@@ -435,11 +437,13 @@
               <div class="compare-person-label">Person 2</div>
               <div class="input-group">
                 <label for="compareName2" class="input-label">Name</label>
-                <input type="text" id="compareName2" inputmode="text" placeholder="Vorname Nachname">
+                <input type="text" id="compareName2" inputmode="text" placeholder="Vorname Nachname"
+                  minlength="2" maxlength="100" pattern="[A-Za-zÄäÖöÜüß\- ]{2,100}" required>
               </div>
               <div class="input-group">
                 <label for="compareDate2" class="input-label">Geburtsdatum</label>
-                <input type="text" id="compareDate2" inputmode="numeric" placeholder="TT.MM.JJJJ">
+                <input type="text" id="compareDate2" inputmode="numeric" placeholder="TT.MM.JJJJ"
+                  pattern="(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)[0-9]{2}" minlength="10" maxlength="10" required>
               </div>
             </div>
           </div>
@@ -597,7 +601,7 @@
     <div class="mbrn-legal-modal">
       <div class="mbrn-legal-modal-header">
         <h3 class="mbrn-legal-modal-title">Impressum & Datenschutz</h3>
-        <button class="mbrn-legal-modal-close" onclick="closeLegalModal()" type="button">✕</button>
+        <button class="mbrn-legal-modal-close" id="legalModalClose" type="button">✕</button>
       </div>
       <div class="mbrn-legal-modal-content">
         <p><strong>Keine Datenspeicherung</strong><br>Alle Berechnungen erfolgen vollständig lokal in deinem Browser. Es werden keine Daten an Server übertragen.</p>
@@ -611,58 +615,12 @@
     </div>
   </div>
 
-  <script>
-    function openLegalModal() {
-      document.getElementById('legal-modal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeLegalModal() {
-      document.getElementById('legal-modal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    document.getElementById('legal-modal').addEventListener('click', function(e) {
-      if (e.target === this) closeLegalModal();
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeLegalModal();
-    });
-  </script>
-  
   <!-- Theme Toggle -->
   <button class="fr-theme-btn" id="frThemeBtn" aria-label="Hell/Dunkel wechseln">☀</button>
   
-  <script>
-    (function(){
-      const saved = localStorage.getItem('fr-theme');
-      const theme = saved || 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
-      
-      const btn = document.getElementById('frThemeBtn');
-      if(!btn) return;
-      
-      const isDark = saved === 'dark';
-      btn.textContent = isDark ? '☀' : '☾';
-      btn.setAttribute('aria-label', isDark ? 'Light Mode aktivieren' : 'Dark Mode aktivieren');
-      
-      btn.addEventListener('click', function(){
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('fr-theme', next);
-        btn.textContent = next === 'dark' ? '☀' : '☾';
-        btn.setAttribute('aria-label', next === 'dark' ? 'Light Mode aktivieren' : 'Dark Mode aktivieren');
-      });
-    })();
-  </script>
-  
-  <!-- PWA Service Worker -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(() => console.log('[PWA] Service Worker aktiv'))
-        .catch((err) => console.log('[PWA] Fehler', err));
-    }
-  </script>
+  <!-- Scripts (extern für CSP Compliance) -->
+  <script src="assets/js/sentry-config.js"></script>
+  <script src="assets/js/offline-indicator.js"></script>
+  <script src="numerology.js" defer></script>
 </body>
 </html>
-
