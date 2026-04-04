@@ -1057,6 +1057,20 @@
   .modal-calc-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-bright); opacity: 0.65; }
   .modal-calc { font-size: 0.78rem; color: var(--text-mid); line-height: 1.55; }
   
+  /* Modal Bullet-Points für Stärken/Herausforderungen */
+  .modal-bullets { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 22px; text-align: left; }
+  @media (min-width: 480px) { .modal-bullets { grid-template-columns: 1fr 1fr; } }
+  .bullet-section { background: rgba(255,255,255,0.022); border: 1px solid var(--border-dim); border-radius: var(--r-md); padding: 14px 16px; }
+  [data-theme="light"] .bullet-section { background: rgba(0,0,0,0.022); }
+  .bullet-section h4 { font-family: var(--f-head); font-size: 0.70rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 10px; color: var(--gold); }
+  .bullet-section ul { margin: 0; padding-left: 16px; list-style: none; }
+  .bullet-section li { font-size: 0.82rem; color: var(--text-mid); line-height: 1.6; margin-bottom: 6px; position: relative; padding-left: 12px; }
+  .bullet-section li::before { content: '›'; position: absolute; left: -12px; color: var(--accent-bright); font-weight: 600; }
+  .bullet-section:first-child h4 { color: var(--accent-bright); }
+  .bullet-section:first-child li::before { content: '✦'; }
+  .bullet-section:last-child h4 { color: var(--danger); }
+  .bullet-section:last-child li::before { content: '△'; color: var(--danger); }
+  
   /* Planes modal */
   .modal-planes { display: flex; flex-direction: column; gap: 14px; margin-bottom: 4px; }
   .modal-plane-row { padding: 12px 14px; border-radius: var(--r-md); background: rgba(255,255,255,0.018); border: 1px solid var(--border-dim); }

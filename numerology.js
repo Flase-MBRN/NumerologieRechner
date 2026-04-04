@@ -72,7 +72,8 @@ function reducePreserveMaster(n) {
 function formatValue(rawSum) {
   const normal = reduceForceSingle(rawSum);
   const master = reducePreserveMaster(rawSum);
-  if (MASTER_NUMBERS.has(master) && master !== normal) return `${normal}/${master}`;
+  // Bei Meisterzahlen nur die Meisterzahl anzeigen (nicht "2/11")
+  if (MASTER_NUMBERS.has(master) && master !== normal) return String(master);
   return String(normal);
 }
 function parseDisplayValue(displayValue) {
@@ -171,7 +172,8 @@ function formatLifePathComponent(date) {
   const raw = calculateLifePathComponent(date);
   if (raw === null) return '—'; // Fehlerfall
   const base = reduceForceSingle(raw);
-  if (MASTER_NUMBERS.has(raw) && raw !== base) return `${base}/${raw}`;
+  // Bei Meisterzahlen nur die Meisterzahl anzeigen
+  if (MASTER_NUMBERS.has(raw) && raw !== base) return String(raw);
   return String(raw);
 }
 
@@ -752,18 +754,18 @@ const MODAL_DETAILS = {
     icon:'☽',title:'Lebenszahl',
     calc:'Komponenten-Methode: Tag, Monat, Jahr werden einzeln reduziert und addiert. Masterzahlen bleiben erhalten.',
     extended:{
-      1:'Du bist zum Anführer und Pionier berufen. Eigenständigkeit und das Öffnen neuer Wege sind deine wichtigsten Lernfelder.',
-      2:'Dein Weg führt zur Meisterschaft in Kooperation und Empathie. Harmonie ist dein tiefstes Bedürfnis.',
-      3:'Kreativität und Kommunikation stehen im Zentrum deines Lebenswegs. Du bist zum Inspirieren geboren.',
-      4:'Disziplin, Verlässlichkeit und systematischer Aufbau zeichnen deinen Lebensweg aus.',
-      5:'Freiheit, Wandel und Erfahrungshunger sind deine Lebensmotoren.',
-      6:'Verantwortung, Familie und das Heilen von Disharmonie sind deine natürlichen Domänen.',
-      7:'Als Denker und spiritueller Sucher entschlüsselst du Geheimnisse, die anderen verborgen bleiben.',
-      8:'Du lernst, Macht und materielle Ressourcen mit Integrität zu verwalten.',
-      9:'Mitgefühl, universelle Liebe und das Loslassen alter Muster prägen deinen Weg.',
-      11:'Als spiritueller Kanal ist deine Intuition außergewöhnlich scharf. Du wirst zum Licht für andere.',
-      22:'Du trägst die Fähigkeit, Visionen in handfeste Realität umzuwandeln.',
-      33:'Selbstloser Dienst und spirituelles Lehren auf höchstem Niveau sind deine Berufung.',
+      1:{strengths:['Führungsstärke','Eigenständigkeit','Pioniergeist'],challenges:['Geduld','Kooperation']},
+      2:{strengths:['Empathie','Diplomatie','Harmonie'],challenges:['Selbstbehauptung','Alleinsein']},
+      3:{strengths:['Kreativität','Kommunikation','Inspiration'],challenges:['Fokus','Disziplin']},
+      4:{strengths:['Stabilität','Verlässlichkeit','Struktur'],challenges:['Flexibilität','Spontanität']},
+      5:{strengths:['Abenteuerlust','Anpassungsfähigkeit','Freiheit'],challenges:['Konstanz','Verantwortung']},
+      6:{strengths:['Fürsorge','Verantwortung','Heilung'],challenges:['Grenzen setzen','Eigene Bedürfnisse']},
+      7:{strengths:['Analytik','Spiritualität','Tiefe'],challenges:['Öffnung','Praktisches']},
+      8:{strengths:['Macht','Erfolg','Manifestation'],challenges:['Demut','Gleichgewicht']},
+      9:{strengths:['Mitgefühl','Weisheit','Idealismus'],challenges:['Loslassen','Eigeninteresse']},
+      11:{strengths:['Intuition','Inspiration','spirituelle Tiefe'],challenges:['Überempfindlichkeit','Zweifel']},
+      22:{strengths:['Vision','Manifestation','Großes schaffen'],challenges:['Perfektionismus','Druck']},
+      33:{strengths:['Heilung','Lehren','selbstloser Dienst'],challenges:['Selbstaufopferung','Grenzen']},
     }
   },
   soul:{
@@ -1076,9 +1078,25 @@ function getModalExtended(type, displayValue) {
   }
   const { base, master } = parseDisplayValue(String(displayValue));
   const key = master || base;
-  let text = ext[key] || ext[base] || '';
-  if (master && ext[master] && ext[master] !== text) text += ' ' + ext[master];
-  return text;
+  const data = ext[key] || ext[base];
+  if (!data) return '';
+  
+  // Neu: Bullet-Points Format für Stärken und Herausforderungen
+  if (typeof data === 'object' && data.strengths && data.challenges) {
+    let html = '<div class="modal-bullets">';
+    html += '<div class="bullet-section"><h4>✦ Stärken</h4><ul>';
+    data.strengths.forEach(s => html += `<li>${s}</li>`);
+    html += '</ul></div>';
+    html += '<div class="bullet-section"><h4>△ Herausforderungen</h4><ul>';
+    data.challenges.forEach(c => html += `<li>${c}</li>`);
+    html += '</ul></div>';
+    html += '</div>';
+    return html;
+  }
+  
+  // Fallback für alte String-Format
+  if (typeof data === 'string') return data;
+  return '';
 }
 
 
