@@ -2,7 +2,7 @@
 <html lang="de" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Numerologie Rechner · Berechne dein persönliches Zahlenprofil kostenlos</title>
   <meta name="description" content="Entdecke deine Lebenszahl, Archetypus, Seelenzahl und 33 weitere numerologische Kennzahlen. Berechne sofort kostenlos im Browser — 100% lokal, ohne Datenspeicherung.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://js.sentry-cdn.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://sentry.io; manifest-src 'self'; worker-src 'self';">
@@ -90,6 +90,15 @@
       z-index: 1000;
       transition: all 0.2s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    @media (max-width: 480px) {
+      .fr-theme-btn {
+        top: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
     }
     .fr-theme-btn:hover {
       border-color: var(--fr-accent);
