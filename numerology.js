@@ -1585,7 +1585,7 @@ function openModal(type, displayValue, sourceTile) {
   document.getElementById('modalValue').className =
     'modal-value' + (MASTER_NUMBERS.has(master ?? base) ? ' master' : '');
   document.getElementById('modalShortExpl').textContent = getExplanation(String(displayValue), type);
-  document.getElementById('modalExtended').textContent  = getModalExtended(type, displayValue);
+  document.getElementById('modalExtended').innerHTML  = getModalExtended(type, displayValue);
 
   try { modal.showModal(); } catch(e) { modal.setAttribute('open',''); modal.style.display='flex'; }
   document.getElementById('modalClose').focus();
