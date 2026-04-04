@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Numerologie Rechner · Berechne dein persönliches Zahlenprofil kostenlos</title>
-  <meta name="description" content="Entdecke deine Lebenszahl, Archetypus, Seelenzahl und 33 weitere numerologische Kennzahlen. Berechne sofort kostenlos im Browser — 100% lokal, ohne Datenspeicherung.">
+  <title>Finde deine persönliche Zahl – Numerologie Rechner</title>
+  <meta name="description" content="Gib deinen Namen ein und entdecke, was die Zahlen über dich verraten. Kostenlos, direkt im Browser, ohne Datenspeicherung.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://js.sentry-cdn.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://sentry.io; manifest-src 'self'; worker-src 'self';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="version" content="v1.0">
   <link rel="canonical" href="https://flase-mbrn.github.io/NumerologieRechner/">
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://flase-mbrn.github.io/NumerologieRechner/">
-  <meta property="og:title"       content="Numerologie Rechner · Berechne dein persönliches Zahlenprofil">
-  <meta property="og:description" content="Entdecke deine Lebenszahl, Archetypus, Seelenzahl und 33 weitere numerologische Kennzahlen. Berechne sofort kostenlos — 100% lokal, ohne Datenspeicherung.">
+  <meta property="og:title"       content="Finde deine persönliche Zahl – Numerologie Rechner">
+  <meta property="og:description" content="Gib deinen Namen ein und entdecke, was die Zahlen über dich verraten. Kostenlos und sofort.">
   <meta property="og:image"       content="https://flase-mbrn.github.io/NumerologieRechner/og-image.png">
   <meta property="og:image:width"  content="1200">
   <meta property="og:image:height" content="630">
@@ -138,26 +138,26 @@
     <!-- HEADER -->
     <header class="header">
       <span class="header-eyebrow">✦ KOSTENLOS · KEIN KONTO · OHNE WARTESCHLEIFE</span>
-      <h1 class="title">Dein numerologisches<br><span class="title-sub">Profil — in 5 Sekunden.</span></h1>
-      <p class="subtitle">36 Kennzahlen. Ein System. Komplett kostenlos. Ohne Account.</p>
-      <p class="subtitle-secondary">Entdecke <strong>Lebenszahl, Archetypus, Seelenzahl</strong> und 33 weitere Parameter — berechnet lokal in deinem Browser, nie auf einem Server.</p>
+      <h1 class="title">Deine Zahl – <span class="title-sub">in 5 Sekunden.</span></h1>
+      <p class="subtitle">Gib deinen Namen ein. Finde heraus, was die Zahlen über dich sagen.</p>
+      <p class="subtitle-secondary">Entdecke <strong>deine persönliche Zahl, dein Archetypus</strong> und vieles mehr — alles direkt in deinem Browser.</p>
       <div class="trust-row">
         <span class="trust-badge">✦ Kostenlos</span>
         <span class="trust-badge">⚡ Sofort</span>
-        <span class="trust-badge">🔒 Lokal</span>
-        <span class="trust-badge">◈ Ohne Account</span>
+        <span class="trust-badge">🔒 Bleibt privat</span>
+        <span class="trust-badge">◈ Kein Konto</span>
       </div>
       <p class="privacy-note">
         <span aria-hidden="true">🔒</span> Deine Daten bleiben auf deinem Gerät. Nie gespeichert. Nie geteilt.
       </p>
       <button class="info-btn" id="heroInfoBtn" type="button" aria-expanded="false">
         <span class="info-btn-icon" aria-hidden="true">◈</span>
-        <span class="info-btn-text">System-Details</span>
+        <span class="info-btn-text">Wie funktioniert das?</span>
         <span class="info-btn-caret" aria-hidden="true">↓</span>
       </button>
       <div class="info-body" id="heroInfoBody" hidden>
-        <p><strong>Numerologie</strong> verbindet Zahlen mit Lebensmustern. Jeder Buchstabe deines Namens trägt eine Schwingung.</p>
-        <p>Dieses System nutzt: <strong>Pythagoreisches Zahlensystem</strong> · <strong>Y-Vokal-Regel</strong> · <strong>Komponenten-Methode</strong> · <strong>Lo-Shu Psychomatrix</strong></p>
+        <p><strong>Numerologie</strong> ordnet Zahlen deinem Namen und Geburtstag zu. Jede Zahl steht für bestimmte Eigenschaften.</p>
+        <p>Unser System nutzt das <strong>Pythagoreische System</strong> — eine der bekanntesten Methoden weltweit.</p>
       </div>
     </header>
 
@@ -167,36 +167,36 @@
         <div class="card-header-row">
           <div class="card-category card-category--core">
             <span class="card-category-dot" aria-hidden="true"></span>
-            <span>Pattern Analysis</span>
+            <span>Dein Ergebnis</span>
           </div>
-          <span class="card-tier card-tier--public">FREE</span>
+          <span class="card-tier card-tier--public">KOSTENLOS</span>
         </div>
 
-        <h2 id="form-title" class="card-title">Numerologie-System</h2>
-        <p class="card-subtitle">Gib Name und Geburtstag ein. Das System berechnet sofort alle 36 Parameter — komplett kostenlos.</p>
+        <h2 id="form-title" class="card-title">Finde deine Zahl</h2>
+        <p class="card-subtitle">Gib einfach deinen vollständigen Namen und deinen Geburtstag ein. Wir zeigen dir sofort dein persönliches Ergebnis.</p>
 
         <form id="numerologyForm" novalidate autocomplete="on">
           <fieldset class="form-fieldset">
             <legend class="sr-only">Numerologie Eingabefelder</legend>
             <div class="input-group">
-              <label for="name" class="input-label">Vollständiger Geburtsname</label>
+              <label for="name" class="input-label">Dein vollständiger Name</label>
               <input type="text" id="name" name="name" autocomplete="name" inputmode="text"
                 placeholder="Vorname Nachname" aria-describedby="nameError nameHint">
-              <p class="input-hint" id="nameHint">Umlaute, ß und Bindestriche werden automatisch verarbeitet.</p>
+              <p class="input-hint" id="nameHint">Umlaute, ß und Bindestriche funktionieren automatisch.</p>
               <div class="error-msg" id="nameError" role="alert" aria-live="polite"></div>
             </div>
             <div class="input-group">
-              <label for="birthdate" class="input-label">Geburtsdatum</label>
+              <label for="birthdate" class="input-label">Dein Geburtstag</label>
               <input type="text" id="birthdate" name="birthdate" autocomplete="bday" inputmode="numeric"
                 pattern="\d{2}\.\d{2}\.\d{4}" placeholder="TT.MM.JJJJ" aria-describedby="dateError">
               <div class="error-msg" id="dateError" role="alert" aria-live="polite"></div>
             </div>
             <div class="button-row">
               <button type="submit" id="calcBtn" class="btn btn--primary btn--calc" aria-controls="resultsRegion">
-                <span class="btn-spinner-wrap" aria-hidden="true">✦</span>Berechnen
+                <span class="btn-spinner-wrap" aria-hidden="true">✦</span>Ergebnis anzeigen
               </button>
-              <button type="button" id="exampleBtn" class="btn btn--ghost" aria-label="Beispieldaten einfügen">Beispiel</button>
-              <button type="reset" id="resetBtn" class="btn btn--secondary">Zurücksetzen</button>
+              <button type="button" id="exampleBtn" class="btn btn--ghost" aria-label="Beispiel ausprobieren">Beispiel</button>
+              <button type="reset" id="resetBtn" class="btn btn--secondary">Neu starten</button>
             </div>
           </fieldset>
         </form>
@@ -204,18 +204,18 @@
         <!-- Scientific Disclaimer -->
         <div class="scientific-disclaimer" style="margin-top: 20px; padding: 16px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px;">
           <p style="font-size: 0.85rem; color: var(--text-mid); margin: 0; line-height: 1.5;">
-            <strong style="color: var(--gold);">ℹ Hinweis:</strong> Numerologie dient der persönlichen Reflexion und Unterhaltung. 
-            Die Deutungen haben <strong>keine wissenschaftliche Grundlage</strong> und ersetzen keine professionelle Beratung. 
+            <strong style="color: var(--gold);">ℹ Hinweis:</strong> Numerologie ist spannend zum Nachdenken. 
+            Die Deutungen haben <strong>keine wissenschaftliche Grundlage</strong>. 
             <a href="faq.html#wissenschaft" style="color: var(--accent-bright);">Mehr erfahren →</a>
           </p>
         </div>
 
         <!-- System-Specs wie MBRN -->
         <div class="card-specs">
-          <div class="card-spec">36 numerologische Parameter</div>
-          <div class="card-spec">Lo-Shu Psychomatrix</div>
-          <div class="card-spec">Kompatibilitäts-Engine</div>
-          <div class="card-spec">Shareable Output-Card</div>
+          <div class="card-spec">Deine persönliche Zahl</div>
+          <div class="card-spec">Archetypus</div>
+          <div class="card-spec">Wie gut ihr zusammenpasst</div>
+          <div class="card-spec">Karte zum Teilen</div>
         </div>
       </section>
       </section>
@@ -226,7 +226,7 @@
         <div class="streak-display" id="streakDisplay" hidden></div>
         
         <div class="results-card-header">
-          <h2 id="results-title" class="card-title">Dein Profil</h2>
+          <h2 id="results-title" class="card-title">Dein Ergebnis</h2>
           <div class="result-actions" id="resultActions" hidden>
             <button class="btn btn--ghost icon-btn" id="compareBtn" type="button" onclick="document.getElementById('compareWrap').hidden = false; document.getElementById('compareWrap').scrollIntoView({behavior: 'smooth'});" aria-label="Vergleichen" title="Mit anderem Profil vergleichen">⚖️</button>
             <button class="btn btn--ghost icon-btn" id="printBtn" type="button" aria-label="Drucken">🖨</button>
@@ -235,13 +235,13 @@
 
         <!-- Phase 2: Trust Badges -->
         <div class="trust-badges" id="trustBadges">
-          <span class="trust-badge" title="Berechnet lokal in deinem Browser">
+          <span class="trust-badge" title="Berechnet in deinem Browser">
             <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-            Local-First
+            Bleibt privat
           </span>
           <span class="trust-badge" title="Keine Daten verlassen dein Gerät">
             <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-            Zero Tracking
+            Kein Tracking
           </span>
           <span class="trust-badge" title="Basierend auf pythagoreischer Numerologie">
             <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
@@ -252,7 +252,7 @@
         <!-- Leer-Zustand -->
         <div class="results-empty" id="resultsEmpty">
           <div class="results-empty-icon" aria-hidden="true">✦</div>
-          <p class="results-empty-text"><strong>Gib deinen Namen und Geburtstag ein</strong><br>und entdecke deine 36 persönlichen Zahlen.</p>
+          <p class="results-empty-text"><strong>Gib deinen Namen und Geburtstag ein</strong><br>und entdecke deine persönliche Zahl.</p>
           <p class="results-empty-hint" style="font-size: 0.7rem; color: var(--text-dim); margin-top: 8px;">🔒 Daten bleiben auf deinem Gerät</p>
         </div>
 
@@ -282,24 +282,24 @@
         <!-- ═══ PROFIL-STRIP: Seele · Ausdruck · Persönlichkeit ═══ -->
         <div class="profile-strip" id="profileStrip" hidden aria-label="Kernzahlen">
           <article class="profile-card soul-card" id="ps-soul" role="button" tabindex="0"
-                   aria-label="Seelenzahl — für Details klicken">
-            <div class="pc-label">Seele</div>
+                   aria-label="Innere Zahl — für Details klicken">
+            <div class="pc-label">Innere Zahl</div>
             <div class="pc-num ps-num" aria-live="polite"></div>
             <div class="pc-arch ps-arch"></div>
             <div class="pc-expl ps-expl"></div>
           </article>
 
           <article class="profile-card expr-card" id="ps-expression" role="button" tabindex="0"
-                   aria-label="Ausdruckszahl — für Details klicken">
-            <div class="pc-label">Ausdruck</div>
+                   aria-label="Äußere Zahl — für Details klicken">
+            <div class="pc-label">Äußere Zahl</div>
             <div class="pc-num ps-num" aria-live="polite"></div>
             <div class="pc-arch ps-arch"></div>
             <div class="pc-expl ps-expl"></div>
           </article>
 
           <article class="profile-card pers-card" id="ps-personality" role="button" tabindex="0"
-                   aria-label="Persönlichkeitszahl — für Details klicken">
-            <div class="pc-label">Persönlichkeit</div>
+                   aria-label="Persönlichkeit — für Details klicken">
+            <div class="pc-label">Wie andere dich sehen</div>
             <div class="pc-num ps-num" aria-live="polite"></div>
             <div class="pc-arch ps-arch"></div>
             <div class="pc-expl ps-expl"></div>
@@ -411,12 +411,12 @@
         <div class="card-header-row">
           <div class="card-category card-category--gold">
             <span class="card-category-dot" aria-hidden="true"></span>
-            <span>Relationship Analysis</span>
+            <span>Zusammenpassen</span>
           </div>
-          <span class="card-tier card-tier--public">FREE</span>
+          <span class="card-tier card-tier--public">KOSTENLOS</span>
         </div>
-        <h2 id="compare-title" class="card-title">Kompatibilität vergleichen</h2>
-        <p class="compare-intro">Wie gut harmonieren zwei Energien miteinander? Vergleiche Lebenszahlen, Seelen- und Ausdruckszahlen.</p>
+        <h2 id="compare-title" class="card-title">Wie gut ihr zusammenpasst</h2>
+        <p class="compare-intro">Vergleiche zwei Personen und sieh, wie eure Zahlen zueinander passen.</p>
         <form id="compareForm" novalidate autocomplete="off">
           <div class="compare-inputs">
             <div class="compare-person">
@@ -445,9 +445,9 @@
           </div>
           <div class="button-row">
             <button type="submit" class="btn btn--primary">
-              <span class="btn-icon" aria-hidden="true">◈</span> Kompatibilität berechnen
+              <span class="btn-icon" aria-hidden="true">◈</span> Wie gut passt es?
             </button>
-            <button type="reset" class="btn btn--secondary">Zurücksetzen</button>
+            <button type="reset" class="btn btn--secondary">Neu starten</button>
           </div>
         </form>
         <div id="compareResults" aria-live="polite"></div>
@@ -459,8 +459,8 @@
       <div class="cta-bar">
         <p class="cta-bar-label">Was jetzt?</p>
         <div class="cta-bar-actions">
-          <button class="btn btn--cta" id="ctaBtnReset" type="button">↺ Neu berechnen</button>
-          <button class="btn btn--cta" id="ctaBtnCompare" type="button">◈ Kompatibilität prüfen</button>
+          <button class="btn btn--cta" id="ctaBtnReset" type="button">↺ Neue Berechnung</button>
+          <button class="btn btn--cta" id="ctaBtnCompare" type="button">◈ Zusammenpassen prüfen</button>
         </div>
       </div>
     </div>
@@ -651,7 +651,7 @@
   </script>
   
   <!-- Theme Toggle -->
-  <button class="fr-theme-btn" id="frThemeBtn" aria-label="Theme wechseln">☀</button>
+  <button class="fr-theme-btn" id="frThemeBtn" aria-label="Hell/Dunkel wechseln">☀</button>
   
   <script>
     (function(){
