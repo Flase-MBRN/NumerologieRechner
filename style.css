@@ -1256,7 +1256,7 @@
     transition: opacity var(--t-m) var(--ease), transform var(--t-m) var(--ease);
     box-shadow: 0 8px 26px rgba(0,0,0,0.75);
   }
-  [data-theme="light"] .toast { background: rgba(248,247,255,0.99); }
+  [data-theme="light"] .toast { background: rgba(240,239,248,0.95); }
   .toast--show { opacity: 1; transform: translateX(-50%) translateY(0); }
   
   
