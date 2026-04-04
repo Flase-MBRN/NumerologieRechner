@@ -53,7 +53,8 @@ export function reducePreserveMaster(n) {
 export function formatValue(rawSum) {
   const normal = reduceForceSingle(rawSum);
   const master = reducePreserveMaster(rawSum);
-  if (MASTER_NUMBERS.has(master) && master !== normal) return `${normal}/${master}`;
+  // Bei Meisterzahlen nur die Meisterzahl anzeigen (z.B. "11" statt "2/11")
+  if (MASTER_NUMBERS.has(master) && master !== normal) return String(master);
   return String(normal);
 }
 
