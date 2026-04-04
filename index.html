@@ -18,10 +18,10 @@
   <meta property="og:image:height" content="630">
   <meta property="og:locale"      content="de_DE">
   <meta name="twitter:card"       content="summary_large_image">
-  <meta name="twitter:title"      content="Numerologie Rechner · Berechne dein persönliches Zahlenprofil">
-  <meta name="twitter:description" content="Entdecke deine Lebenszahl, Archetypus, Seelenzahl und 33 weitere numerologische Kennzahlen. Berechne sofort kostenlos.">
-  <meta property="og:image:alt" content="Numerologie Rechner - Dein persönliches Zahlenprofil mit Lebenszahl, Seelenzahl und Archetyp">
-  <meta name="twitter:image:alt" content="Numerologie Rechner - Dein persönliches Zahlenprofil">
+  <meta name="twitter:title"      content="Numerologie Rechner · Finde deine Zahl">
+  <meta name="twitter:description" content="Entdecke deine persönlichen Zahlen. Berechne sofort kostenlos.">
+  <meta property="og:image:alt" content="Numerologie Rechner - Deine persönliche Zahl">
+  <meta name="twitter:image:alt" content="Numerologie Rechner - Deine persönliche Zahl">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#7c3aed">
   <meta name="msapplication-TileColor" content="#7c3aed">
@@ -152,12 +152,12 @@
       </p>
       <button class="info-btn" id="heroInfoBtn" type="button" aria-expanded="false">
         <span class="info-btn-icon" aria-hidden="true">◈</span>
-        <span class="info-btn-text">Wie funktioniert das?</span>
+        <span class="info-btn-text">Wie geht das?</span>
         <span class="info-btn-caret" aria-hidden="true">↓</span>
       </button>
       <div class="info-body" id="heroInfoBody" hidden>
-        <p><strong>Numerologie</strong> ordnet Zahlen deinem Namen und Geburtstag zu. Jede Zahl steht für bestimmte Eigenschaften.</p>
-        <p>Unser System nutzt das <strong>Pythagoreische System</strong> — eine der bekanntesten Methoden weltweit.</p>
+        <p><strong>Numerologie</strong> ordnet Zahlen deinem Namen und Geburtstag zu. Jede Zahl steht für Eigenschaften.</p>
+        <p>Wir nutzen das <strong>Pythagoreische System</strong> — eine bekannte Methode weltweit.</p>
       </div>
     </header>
 
@@ -173,7 +173,7 @@
         </div>
 
         <h2 id="form-title" class="card-title">Finde deine Zahl</h2>
-        <p class="card-subtitle">Gib einfach deinen vollständigen Namen und deinen Geburtstag ein. Wir zeigen dir sofort dein persönliches Ergebnis.</p>
+        <p class="card-subtitle">Gib deinen Namen und Geburtstag ein. Wir zeigen dir sofort dein Ergebnis.</p>
 
         <form id="numerologyForm" novalidate autocomplete="on">
           <fieldset class="form-fieldset">
@@ -204,8 +204,8 @@
         <!-- Scientific Disclaimer -->
         <div class="scientific-disclaimer" style="margin-top: 20px; padding: 16px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px;">
           <p style="font-size: 0.85rem; color: var(--text-mid); margin: 0; line-height: 1.5;">
-            <strong style="color: var(--gold);">ℹ Hinweis:</strong> Numerologie ist spannend zum Nachdenken. 
-            Die Deutungen haben <strong>keine wissenschaftliche Grundlage</strong>. 
+            <strong style="color: var(--gold);">ℹ Hinweis:</strong> Numerologie ist zum Spaß. 
+            Die Deutungen sind <strong>nicht wissenschaftlich</strong>. 
             <a href="faq.html#wissenschaft" style="color: var(--accent-bright);">Mehr erfahren →</a>
           </p>
         </div>
@@ -213,7 +213,7 @@
         <!-- System-Specs wie MBRN -->
         <div class="card-specs">
           <div class="card-spec">Deine persönliche Zahl</div>
-          <div class="card-spec">Archetypus</div>
+          <div class="card-spec">Innerer und äußerer Typ</div>
           <div class="card-spec">Wie gut ihr zusammenpasst</div>
           <div class="card-spec">Karte zum Teilen</div>
         </div>
@@ -298,7 +298,7 @@
           </article>
 
           <article class="profile-card pers-card" id="ps-personality" role="button" tabindex="0"
-                   aria-label="Persönlichkeit — für Details klicken">
+                   aria-label="Wie andere dich sehen — für Details klicken">
             <div class="pc-label">Wie andere dich sehen</div>
             <div class="pc-num ps-num" aria-live="polite"></div>
             <div class="pc-arch ps-arch"></div>
@@ -334,7 +334,7 @@
           <div class="acc-section">
             <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-talents-body">
               <span class="acc-icon" aria-hidden="true">✦</span>
-              <span class="acc-title">Persönlichkeit &amp; Talente</span>
+              <span class="acc-title">Stärken & Eigenschaften</span>
               <span class="acc-count" id="acc-talents-count"></span>
               <span class="acc-chevron" aria-hidden="true">›</span>
             </button>
@@ -346,7 +346,7 @@
           <div class="acc-section">
             <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-lifecycle-body">
               <span class="acc-icon" aria-hidden="true">◷</span>
-              <span class="acc-title">Lebensweg &amp; Phasen</span>
+              <span class="acc-title">Lebensweg</span>
               <span class="acc-count" id="acc-lifecycle-count"></span>
               <span class="acc-chevron" aria-hidden="true">›</span>
             </button>
@@ -358,7 +358,7 @@
           <div class="acc-section">
             <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-soul-body">
               <span class="acc-icon" aria-hidden="true">⚖</span>
-              <span class="acc-title">Karma &amp; Psyche</span>
+              <span class="acc-title">Seele & Verhalten</span>
               <span class="acc-count" id="acc-soul-count"></span>
               <span class="acc-chevron" aria-hidden="true">›</span>
             </button>
@@ -370,7 +370,7 @@
           <div class="acc-section">
             <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-now-body">
               <span class="acc-icon" aria-hidden="true">◐</span>
-              <span class="acc-title">Aktueller Moment</span>
+              <span class="acc-title">Dieses Jahr</span>
               <span class="acc-count" id="acc-now-count"></span>
               <span class="acc-chevron" aria-hidden="true">›</span>
             </button>
@@ -386,7 +386,7 @@
     <!-- ═══ MODULE: TEILEN (Share Module) ═══ -->
     <div class="container container--full bar-wrap" id="shareBarWrap" hidden>
       <div class="share-bar">
-        <p class="share-bar-headline">Zeig anderen wer du bist</p>
+        <p class="share-bar-headline">Zeig anderen, wer du bist</p>
         <p class="share-bar-text" id="shareBarText"></p>
         <div class="share-bar-actions">
           <button class="btn btn--share-card" id="shareBtnCard" type="button">
@@ -465,38 +465,37 @@
       </div>
     </div>
 
-    <!-- ARCHITEKTUR SECTION (MBRN-Style) -->
+  <!-- ARCHITEKTUR SECTION (MBRN-Style) -->
     <div class="container container--full" style="margin-top: 40px;">
       <section class="arch-card" aria-labelledby="arch-title">
         <div class="arch-header">
-          <p class="arch-eyebrow">✦ Design-Entscheidungen</p>
-          <h2 id="arch-title" class="arch-title">Local-First Architecture</h2>
+          <p class="arch-eyebrow">✦ So funktioniert's</p>
+          <h2 id="arch-title" class="arch-title">Alles in deinem Browser</h2>
           <p class="arch-desc">
-            Dieses System folgt dem MBRN-Architekturprinzip: Alle Berechnungen, Daten und Outputs
-            entstehen ausschließlich in deinem Browser. Kein Backend, keine Datenbank,
-            keine Abhängigkeit von externen Servern. Das ist keine Einschränkung. Es ist eine bewusste Entscheidung für deine Privatsphäre.
+            Alle Berechnungen passen direkt in deinem Browser. Kein Server, keine Datenbank,
+            keine Abhängigkeit von anderen. Das ist nicht nur sicher, sondern auch schneller.
           </p>
         </div>
         <div class="arch-specs">
           <div class="arch-spec">
             <div class="arch-spec-icon">🔒</div>
-            <div class="arch-spec-title">Zero Data Egress</div>
-            <div class="arch-spec-text">Keine personenbezogenen Daten verlassen den Browser</div>
+            <div class="arch-spec-title">Daten bleiben bei dir</div>
+            <div class="arch-spec-text">Nichts wird hochgeladen</div>
           </div>
           <div class="arch-spec">
             <div class="arch-spec-icon">⚡</div>
-            <div class="arch-spec-title">Instant Execution</div>
-            <div class="arch-spec-text">Kein Server-Roundtrip — alle Berechnungen in Echtzeit</div>
+            <div class="arch-spec-title">Sofort berechnet</div>
+            <div class="arch-spec-text">Kein Warten, alles geht direkt</div>
           </div>
           <div class="arch-spec">
             <div class="arch-spec-icon">∞</div>
-            <div class="arch-spec-title">Persistent Access</div>
-            <div class="arch-spec-text">Kein Account, kein Ablaufdatum, kein Paywall</div>
+            <div class="arch-spec-title">Kein Konto nötig</div>
+            <div class="arch-spec-text">Einfach öffnen und loslegen</div>
           </div>
           <div class="arch-spec">
             <div class="arch-spec-icon">◈</div>
-            <div class="arch-spec-title">Portable State</div>
-            <div class="arch-spec-text">URL-kodierter State für Cross-Device ohne Login</div>
+            <div class="arch-spec-title">Teilen via Link</div>
+            <div class="arch-spec-text">Dein Ergebnis als URL</div>
           </div>
         </div>
       </section>
@@ -516,7 +515,7 @@
       <p class="modal-short" id="modalShortExpl"></p>
       <div class="modal-extended" id="modalExtended"></div>
       <div class="modal-calc-box">
-        <span class="modal-calc-label">Berechnungsformel</span>
+        <span class="modal-calc-label">So wird berechnet</span>
         <span class="modal-calc" id="modalCalc"></span>
       </div>
     </div>
@@ -526,10 +525,10 @@
   <dialog class="share-card-modal" id="shareCardModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle" aria-describedby="shareDesc">
     <div class="share-card-modal-inner">
       <button class="modal-close" id="shareCardClose" type="button" aria-label="Schließen">✕</button>
-      <h2 class="share-card-title" id="shareTitle">Deine Numerologie-Karte</h2>
+      <h2 class="share-card-title" id="shareTitle">Deine Karte</h2>
       <p class="share-card-hint" id="shareDesc">Lade die Karte herunter oder teile sie direkt.</p>
       <div class="share-card-canvas-wrap">
-        <canvas id="shareCardCanvas" width="1080" height="1080" aria-label="Deine Numerologie-Karte"></canvas>
+        <canvas id="shareCardCanvas" width="1080" height="1080" aria-label="Deine Karte"></canvas>
       </div>
       <div class="share-card-format">
         <label class="format-label">Format:</label>
@@ -565,7 +564,7 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Numerologie Rechner",
-    "description": "Berechne deine 36 persönlichen Zahlen: Lebenszahl, Seelenzahl, Karma — kostenlos und lokal im Browser.",
+    "description": "Berechne deine persönlichen Zahlen: Lebenszahl, Seelenzahl, Karma — kostenlos und lokal im Browser.",
     "url": "https://flase-mbrn.github.io/NumerologieRechner/",
     "applicationCategory": "LifestyleApplication",
     "operatingSystem": "Any",
@@ -610,7 +609,7 @@
         <a href="datenschutz.html" class="mbrn-footer-link">Datenschutz</a>
       </div>
       
-      <p class="mbrn-footer-copyright">© 2026 MBRN. Built to be used.</p>
+      <p class="mbrn-footer-copyright">© 2026 MBRN. Einfach loslegen.</p>
     </div>
   </footer>
 
