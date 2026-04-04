@@ -7,6 +7,25 @@
   'use strict';
   
   // ============================================
+  // SECURITY UTILITIES - XSS Protection
+  // ============================================
+  
+  function escapeHtml(str) {
+    if (!str || typeof str !== 'string') return '';
+    return str.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  
+  function safeSetText(element, text) {
+    if (!element) return;
+    element.textContent = String(text ?? '');
+  }
+  
+  function safeClear(element) {
+    if (!element) return;
+    while (element.firstChild) element.removeChild(element.firstChild);
+  }
+  
+  // ============================================
   // 1. RETENTION: LocalStorage Profile History
   // ============================================
   
@@ -69,29 +88,58 @@
       
       const history = this.getAll();
       if (history.length === 0) {
-        container.innerHTML = '<p class="history-empty">Noch keine Profile gespeichert</p>';
+        // SECURITY FIX: Use safe DOM API instead of innerHTML
+        safeClear(container);
+        const emptyMsg = document.createElement('p');
+        emptyMsg.className = 'history-empty';
+        emptyMsg.textContent = 'Noch keine Profile gespeichert';
+        container.appendChild(emptyMsg);
         return;
       }
       
-      container.innerHTML = history.map(entry => `
-        <div class="history-item" data-id="${entry.id}">
-          <div class="history-info">
-            <span class="history-name">${this.escapeHtml(entry.name)}</span>
-            <span class="history-date">${entry.date} · Lebenszahl ${entry.lifePath}</span>
-          </div>
-          <div class="history-actions">
-            <button class="btn btn--ghost btn--sm" onclick="window.loadProfileFromHistory('${entry.url}')">Laden</button>
-            <button class="btn btn--ghost btn--sm" onclick="window.shareHistoryItem(${entry.id})">Teilen</button>
-          </div>
-        </div>
-      `).join('');
+      // SECURITY FIX: Build DOM safely instead of using innerHTML
+      safeClear(container);
+      
+      history.forEach(entry => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'history-item';
+        itemDiv.setAttribute('data-id', entry.id);
+        
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'history-info';
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'history-name';
+        nameSpan.textContent = entry.name;
+        
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'history-date';
+        safeSetText(dateSpan, `${entry.date} · Lebenszahl ${entry.lifePath}`);
+        
+        infoDiv.appendChild(nameSpan);
+        infoDiv.appendChild(dateSpan);
+        
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'history-actions';
+        
+        const loadBtn = document.createElement('button');
+        loadBtn.className = 'btn btn--ghost btn--sm';
+        loadBtn.textContent = 'Laden';
+        loadBtn.onclick = () => window.loadProfileFromHistory(entry.url);
+        
+        const shareBtn = document.createElement('button');
+        shareBtn.className = 'btn btn--ghost btn--sm';
+        shareBtn.textContent = 'Teilen';
+        shareBtn.onclick = () => window.shareHistoryItem(entry.id);
+        
+        actionsDiv.appendChild(loadBtn);
+        actionsDiv.appendChild(shareBtn);
+        
+        itemDiv.appendChild(infoDiv);
+        itemDiv.appendChild(actionsDiv);
+        container.appendChild(itemDiv);
+      });
     },
-    
-    escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
   };
   
   // Usage Streak Tracking
