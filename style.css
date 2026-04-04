@@ -292,6 +292,24 @@
 
 [data-theme="light"] .bg-grid { opacity: 0.5; }
 
+/* === LIGHT MODE OVERRIDES === */
+[data-theme="light"] .bg-base {
+  background: radial-gradient(ellipse at 25% 40%, #f0f0f5 0%, #e8e8f0 60%);
+}
+
+[data-theme="light"] .bg-glow--1 {
+  opacity: 0.15;
+}
+
+[data-theme="light"] .bg-glow--2 {
+  opacity: 0.12;
+}
+
+[data-theme="light"] .mbrn-footer {
+  background: transparent;
+  border-top: 1px solid var(--border);
+}
+
 /* DARK MODE TOGGLE - Numerologie */
 #mode-toggle-btn {
   position: fixed;
