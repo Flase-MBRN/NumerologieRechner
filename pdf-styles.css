@@ -1,0 +1,67 @@
+/* PDF Section Styles */
+.pdf-section {
+  margin: 24px 0;
+  padding: 20px;
+  background: var(--bg-mid);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--r-md);
+  text-align: center;
+}
+
+.pdf-header h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px 0;
+}
+
+.pdf-header p {
+  color: var(--text-mid);
+  font-size: 14px;
+  margin: 0 0 16px 0;
+}
+
+.pdf-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--r-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.pdf-download-btn:hover {
+  background: var(--accent-bright);
+  transform: translateY(-1px);
+}
+
+.pdf-download-btn:disabled {
+  background: var(--bg-mid);
+  color: var(--text-dim);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pdf-section {
+    padding: 16px;
+  }
+  
+  .pdf-header h3 {
+    font-size: 16px;
+  }
+  
+  .pdf-download-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}

@@ -61,6 +61,8 @@
   
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="comparison.css">
+  <link rel="stylesheet" href="premium.css">
+  <link rel="stylesheet" href="pdf-styles.css">
   
   <!-- FINANZRECHNER THEME SYSTEM -->
   <style>
@@ -379,7 +381,56 @@
             </div>
           </div>
 
+          <!-- Premium Akkordeons -->
+          <div class="acc-section premium-only" data-premium="true">
+            <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-jahres-body">
+              <span class="acc-icon" aria-hidden="true">📅</span>
+              <span class="acc-title">Jahres-Prognose 2026</span>
+              <span class="premium-indicator">🔒 Premium</span>
+              <span class="acc-chevron" aria-hidden="true">›</span>
+            </button>
+            <div class="acc-body" id="acc-jahres-body" hidden>
+              <div class="results-grid results-grid--extra acc-grid" id="acc-jahres-grid" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="acc-section premium-only" data-premium="true">
+            <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-meisterzahlen-body">
+              <span class="acc-icon" aria-hidden="true">⭐</span>
+              <span class="acc-title">Meisterzahlen & Karmazahlen</span>
+              <span class="premium-indicator">🔒 Premium</span>
+              <span class="acc-chevron" aria-hidden="true">›</span>
+            </button>
+            <div class="acc-body" id="acc-meisterzahlen-body" hidden>
+              <div class="results-grid results-grid--extra acc-grid" id="acc-meisterzahlen-grid" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="acc-section premium-only" data-premium="true">
+            <button class="acc-header" type="button" aria-expanded="false" aria-controls="acc-partnerschaft-body">
+              <span class="acc-icon" aria-hidden="true">💑</span>
+              <span class="acc-title">Partnerschafts-Analyse</span>
+              <span class="premium-indicator">🔒 Premium</span>
+              <span class="acc-chevron" aria-hidden="true">›</span>
+            </button>
+            <div class="acc-body" id="acc-partnerschaft-body" hidden>
+              <div class="results-grid results-grid--extra acc-grid" id="acc-partnerschaft-grid" aria-live="polite"></div>
+            </div>
+          </div>
+
         </div><!-- /accordions -->
+
+        <!-- PDF Download Section -->
+        <div class="pdf-section" id="pdfSection" hidden>
+          <div class="pdf-header">
+            <h3>📄 Dein Report als PDF</h3>
+            <p>Lade deinen kompletten Numerologie-Report als professionelles PDF herunter.</p>
+          </div>
+          <button class="pdf-download-btn" id="pdfDownloadBtn">
+            <span>📄</span>
+            PDF herunterladen
+          </button>
+        </div>
       </section>
     </div><!-- /container -->
 
@@ -647,6 +698,8 @@
   </script>
   <script src="../shared/utils/logger.js"></script>
   <script src="../shared/security/csp-generator.js"></script>
+  <script src="premium.js"></script>
+  <script src="pdf-gen.js"></script>
   <script src="numerology.js" defer></script>
 </body>
 </html>
