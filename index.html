@@ -619,9 +619,31 @@
   <button class="fr-theme-btn" id="frThemeBtn" aria-label="Hell/Dunkel wechseln">☀</button>
   
   <!-- Scripts (extern für CSP Compliance) -->
+  <script src="https://flase-mbrn.github.io/shared/scripts/theme-manager.js"></script>
   <script src="https://flase-mbrn.github.io/shared/scripts/state-validator.js"></script>
   <script src="assets/js/sentry-config.js"></script>
   <script src="assets/js/offline-indicator.js"></script>
+  <script>
+  // Theme Toggle Integration
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeBtn = document.getElementById('frThemeBtn');
+    if (themeBtn && window.themeManager) {
+      // Initial icon
+      themeBtn.textContent = window.themeManager.isDark() ? '☀' : '☾';
+      
+      // Click handler
+      themeBtn.addEventListener('click', () => {
+        window.themeManager.toggle();
+        themeBtn.textContent = window.themeManager.isDark() ? '☀' : '☾';
+      });
+      
+      // Listen for theme changes
+      window.themeManager.onChange((detail) => {
+        themeBtn.textContent = detail.theme === 'dark' ? '☀' : '☾';
+      });
+    }
+  });
+  </script>
   <script src="numerology.js" defer></script>
 </body>
 </html>

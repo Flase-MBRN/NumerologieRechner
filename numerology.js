@@ -1855,9 +1855,10 @@ function showToast(msg) {
 
 
 /* ═══════════════════════════════════════════════════════════
-   21. THEME TOGGLE
+   21. THEME TOGGLE - DEPRECATED: Using theme-manager.js instead
    ═══════════════════════════════════════════════════════════ */
 
+/*
 function initTheme() {
   const saved = localStorage.getItem('nTheme') || 'dark';
   const btn   = document.getElementById('themeToggle');
@@ -1872,6 +1873,7 @@ function initTheme() {
     btn.setAttribute('aria-label', next === 'dark' ? 'Light Mode' : 'Dark Mode');
   });
 }
+*/
 
 
 /* ═══════════════════════════════════════════════════════════
@@ -2711,7 +2713,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initTheme();
+  // initTheme(); // DEPRECATED: Using theme-manager.js instead
   initForm();
   initModal();
   initCompare();
