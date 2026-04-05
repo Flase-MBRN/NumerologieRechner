@@ -2538,7 +2538,7 @@ function initIOSBanner() {
 }
 
 /* Share Card Format Toggle */
-let currentShareFormat = 'square';
+var currentShareFormat = 'square';
 function initShareCardFormat() {
   const buttons = document.querySelectorAll('.format-btn');
   const canvasWrap = document.querySelector('.share-card-canvas-wrap');

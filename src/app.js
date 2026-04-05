@@ -40,7 +40,9 @@ const AppState = {
         this.history = JSON.parse(saved).slice(0, 5);
       }
     } catch (e) {
-      console.log('[MBRN] No history found');
+      if (window.MBRNLogger) {
+        window.MBRNLogger.debug('[MBRN] No history found');
+      }
     }
   },
   
@@ -79,7 +81,9 @@ function checkUrlParams() {
   // Check for compare parameter
   const compareParams = parseCompareParams();
   if (compareParams) {
-    console.log('[MBRN] Compare mode detected:', compareParams);
+    if (window.MBRNLogger) {
+      window.MBRNLogger.debug('[MBRN] Compare mode detected:', compareParams);
+    }
     return { mode: 'compare', data: compareParams };
   }
   
@@ -94,7 +98,9 @@ function checkUrlParams() {
  * Haupt-Initialisierung
  */
 export function initApp() {
-  console.log('[MBRN] Initializing...');
+  if (window.MBRNLogger) {
+    window.MBRNLogger.debug('[MBRN] Initializing...');
+  }
   
   AppState.init();
   const urlState = checkUrlParams();
@@ -109,7 +115,9 @@ export function initApp() {
     AppState.compareData = urlState.data;
   }
   
-  console.log('[MBRN] Ready');
+  if (window.MBRNLogger) {
+    window.MBRNLogger.debug('[MBRN] Ready');
+  }
   return AppState;
 }
 

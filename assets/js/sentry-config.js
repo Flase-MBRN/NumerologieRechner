@@ -13,13 +13,13 @@
   'use strict';
 
   // Konfiguration
-  const SENTRY_DSN = 'https://a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6@o123456.ingest.sentry.io/654321'; // Production DSN
+  const SENTRY_DSN = null; // Deaktiviert - ersetze mit echtem DSN wenn Sentry aktiv werden soll
   const ENVIRONMENT = window.location.hostname === 'localhost' ? 'development' : 'production';
   const RELEASE = '2.1.0'; // Numerologie Premium Version
 
   // Sentry nur laden wenn DSN konfiguriert
-  if (!SENTRY_DSN || SENTRY_DSN.includes('YOUR_SENTRY')) {
-    console.warn('[Sentry] DSN nicht konfiguriert - Error Tracking inaktiv');
+  if (!SENTRY_DSN || SENTRY_DSN.includes('YOUR_SENTRY') || SENTRY_DSN.includes('654321')) {
+    // Sentry deaktiviert - kein Error Tracking
     return;
   }
 
