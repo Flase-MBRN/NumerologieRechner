@@ -2731,6 +2731,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('printBtn')?.addEventListener('click', () => window.print());
 
+  /* Compare Button - moved from inline onclick handler for CSP compliance */
+  document.getElementById('compareBtn')?.addEventListener('click', () => {
+    const compareWrap = document.getElementById('compareWrap');
+    if (compareWrap) {
+      compareWrap.hidden = false;
+      compareWrap.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
   /* Share Bar — WhatsApp text */
   document.getElementById('shareBtnWA')?.addEventListener('click', () => {
     window.open('https://wa.me/?text=' + encodeURIComponent(buildShareText()), '_blank', 'noopener,noreferrer');

@@ -230,7 +230,7 @@
         <div class="results-card-header">
           <h2 id="results-title" class="card-title">Dein Ergebnis</h2>
           <div class="result-actions" id="resultActions" hidden>
-            <button class="btn btn--ghost icon-btn" id="compareBtn" type="button" onclick="document.getElementById('compareWrap').hidden = false; document.getElementById('compareWrap').scrollIntoView({behavior: 'smooth'});" aria-label="Vergleichen" title="Mit anderem Profil vergleichen">⚖️</button>
+            <button class="btn btn--ghost icon-btn" id="compareBtn" type="button" aria-label="Vergleichen" title="Mit anderem Profil vergleichen">⚖️</button>
             <button class="btn btn--ghost icon-btn" id="printBtn" type="button" aria-label="Drucken">🖨</button>
           </div>
         </div>
@@ -589,8 +589,8 @@
   </dialog>
 
   <script src="assets/js/sentry-config.js"></script>
-  
   <script src="assets/js/offline-indicator.js"></script>
+  <script src="assets/js/theme-init.js"></script>
   
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -624,7 +624,6 @@
   }
   </script>
   
-  <script src="assets/js/offline-indicator.js"></script>
   <script src="numerology.js" defer></script>
 
   <!-- ===== FOOTER ===== -->
@@ -675,27 +674,7 @@
   <script src="https://flase-mbrn.github.io/shared/scripts/state-validator.js"></script>
   <script src="assets/js/sentry-config.js"></script>
   <script src="assets/js/offline-indicator.js"></script>
-  <script>
-  // Theme Toggle Integration
-  document.addEventListener('DOMContentLoaded', () => {
-    const themeBtn = document.getElementById('frThemeBtn');
-    if (themeBtn && window.themeManager) {
-      // Initial icon
-      themeBtn.textContent = window.themeManager.isDark() ? '☀' : '☾';
-      
-      // Click handler
-      themeBtn.addEventListener('click', () => {
-        window.themeManager.toggle();
-        themeBtn.textContent = window.themeManager.isDark() ? '☀' : '☾';
-      });
-      
-      // Listen for theme changes
-      window.themeManager.onChange((detail) => {
-        themeBtn.textContent = detail.theme === 'dark' ? '☀' : '☾';
-      });
-    }
-  });
-  </script>
+  <script src="assets/js/theme-init.js"></script>
   <script src="https://flase-mbrn.github.io/shared/utils/logger.js"></script>
   <script src="https://flase-mbrn.github.io/shared/security/csp-generator.js"></script>
   <script src="premium.js"></script>

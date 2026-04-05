@@ -2,7 +2,7 @@
 'use strict';
 
 // Automatische Cache-Version mit Zeitstempel für Cache-Busting
-const CACHE_VERSION = 'v1.1 CSP FIX';
+const CACHE_VERSION = 'v1.2 CSP CLEANUP';
 const CACHE_NAME = `numerologie-${CACHE_VERSION}`;
 const FONT_CACHE = `numerologie-fonts-${CACHE_VERSION}`;
 
