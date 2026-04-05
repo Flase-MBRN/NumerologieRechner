@@ -217,7 +217,7 @@ function calculateLifePathComponent(date) {
     const year  = reducePreserveMaster(digitSum(parseInt(yStr, 10)));
     return reducePreserveMaster(day + month + year);
   } catch (err) {
-    console.error('calculateLifePathComponent error:', err);
+      logger.error('calculateLifePathComponent error:', err);
     return null; // Expliziter Fehler statt 0
   }
 }
@@ -2212,7 +2212,7 @@ function initForm() {
       if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 400);
     } catch (err) {
-      console.error('Berechnungsfehler:', err);
+      logger.error('Berechnungsfehler:', err);
       clearInterval(msgInterval);
       clearInterval(barInterval);
       if (overlay) {
@@ -2374,7 +2374,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
     const canvas = document.getElementById('shareCardCanvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    if (!ctx) { console.error('Canvas context not available'); return; }
+    if (!ctx) { logger.error('Canvas context not available'); return; }
   const W = 1080, H = 1080;
 
   /* Background */
@@ -2462,7 +2462,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
   ctx.fillStyle = 'rgba(245,158,11,0.38)'; ctx.font = '600 28px "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
   ctx.fillText('✦  numerologie.app', W/2, H-42);
   } catch (err) {
-    console.error('drawShareCard error:', err);
+    logger.error('drawShareCard error:', err);
   }
 }
 
@@ -2611,7 +2611,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
     canvas.height = H;
     
     const ctx = canvas.getContext('2d');
-    if (!ctx) { console.error('Canvas context not available'); return; }
+    if (!ctx) { logger.error('Canvas context not available'); return; }
     
     /* Background */
     const bg = ctx.createLinearGradient(0, 0, 0, H);
@@ -2708,7 +2708,7 @@ function drawShareCard(name, lifeVal, archTitle, teaser, soulVal, exprVal) {
     ctx.font = '600 28px "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
     ctx.fillText('✦  numerologie.app', W/2, isStory ? H - 52 : H - 42);
   } catch (err) {
-    console.error('drawShareCard error:', err);
+    logger.error('drawShareCard error:', err);
   }
 }
 

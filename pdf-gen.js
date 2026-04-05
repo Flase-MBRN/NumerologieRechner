@@ -249,7 +249,7 @@ class NumerologiePDFGenerator {
       
       return true;
     } catch (error) {
-      console.error('[PDF Generator] Fehler beim Download:', error);
+      logger.error('[PDF Generator] Fehler beim Download:', error);
       throw error;
     }
   }

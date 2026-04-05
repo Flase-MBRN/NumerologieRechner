@@ -56,7 +56,7 @@ class NumerologiePremium {
         }
       }
     } catch (e) {
-      console.warn('[Premium] Konnte Status nicht laden:', e);
+      logger.warn('[Premium] Konnte Status nicht laden:', e);
     }
   }
   
@@ -73,7 +73,7 @@ class NumerologiePremium {
       };
       localStorage.setItem(this.config.storageKey, JSON.stringify(data));
     } catch (e) {
-      console.warn('[Premium] Konnte Status nicht speichern:', e);
+      logger.warn('[Premium] Konnte Status nicht speichern:', e);
     }
   }
   
