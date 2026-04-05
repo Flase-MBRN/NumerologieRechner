@@ -2564,7 +2564,7 @@ function initShareCardFormat() {
 }
 
 /* Loading Cancel */
-let loadingCancelled = false;
+var loadingCancelled = false;
 function initLoadingCancel() {
   const btn = document.getElementById('loadingCancel');
   if (!btn) return;
